@@ -1,12 +1,19 @@
-import React from "react";
-import { Navigate, useLocation } from "react-router-dom";
-import { useAuth } from "../../hooks/useAuth";
+import { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import useAuth from "./useAuth";
 
 function RequireAuth({ children }: { children: JSX.Element }) {
-  const { user, isFetchingUser } = useAuth();
+  const { user, isFetchingUser, getUserError, userLoaded } = useAuth();
   const location = useLocation();
+  const navigate = useNavigate();
 
-  if (!user && !isFetchingUser) return <Navigate to="/login" state={{ from: location }} replace />;
+  useEffect(() => {
+    if (getUserError || (!isFetchingUser && !userLoaded && !user)) {
+      navigate("/login", { state: { from: location } });
+    }
+  }, [user, isFetchingUser, getUserError, userLoaded]);
+
+  if (!user) return null;
 
   return children;
 }

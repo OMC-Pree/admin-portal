@@ -1,6 +1,7 @@
+import { Button, Grid, Input, InputLabel, Stack, TextField, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "../../hooks/useAuth";
+import useAuth from "./useAuth";
 
 interface ILocation {
   state: {
@@ -13,7 +14,7 @@ interface ILocation {
 function LoginPage() {
   const navigate = useNavigate();
   const location = useLocation() as ILocation;
-  const { user, isFetchingUser, signin } = useAuth();
+  const { user, isFetchingUser, accessMessage, signin } = useAuth();
 
   const from = location.state?.from?.pathname || "/";
 
@@ -36,17 +37,25 @@ function LoginPage() {
   if (isFetchingUser) return null;
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Email: <input name="email" type="text" />
-        </label>{" "}
-        <label>
-          Password: <input name="password" type="password" />
-        </label>{" "}
-        <button type="submit">Login</button>
-      </form>
-    </div>
+    <Stack alignItems="center" mt={10}>
+      <Stack
+        component="form"
+        onSubmit={handleSubmit}
+        sx={{ width: "fit-content" }}
+        alignItems="center"
+      >
+        <TextField label="email" name="email" type="text" sx={{ width: 400 }} />
+        <TextField label="password" name="password" type="password" sx={{ width: "100%" }} />
+        <Button type="submit" variant="contained" sx={{ mt: 6, width: "fit-content" }}>
+          Login
+        </Button>
+      </Stack>
+      {accessMessage && (
+        <Typography variant="body1" color="error" mt={3}>
+          Access denied
+        </Typography>
+      )}
+    </Stack>
   );
 }
 

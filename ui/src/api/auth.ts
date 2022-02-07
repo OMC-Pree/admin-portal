@@ -40,8 +40,8 @@ export const authApi = idpApi.injectEndpoints({
         body,
       }),
     }),
-    decryptToken: builder.query<TokenDecryptResponse, string>({
-      query: (encryptedToken: string) => ({
+    decryptToken: builder.query<TokenDecryptResponse, string | null>({
+      query: (encryptedToken: string | null) => ({
         url: `token/decrypt`,
         method: "GET",
         headers: {

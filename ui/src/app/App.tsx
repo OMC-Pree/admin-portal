@@ -2,12 +2,16 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import LoginPage from "../features/Auth/LoginPage";
 import RequireAuth from "../features/Auth/RequireAuth";
+import AppHeader from "../components/AppHeader";
+import { Box } from "@mui/material";
+import Home from "../pages/Home";
 
-function App() {
-  return (
-    <div className="App">
+const App = () => (
+  <div className="App">
+    <AppHeader />
+    <Box sx={{ margin: 2 }}>
       <Routes>
-        <Route path="/" element={<div>Home</div>} />
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/public" element={<div>Public</div>} />
         <Route
@@ -19,8 +23,8 @@ function App() {
           }
         />
       </Routes>
-    </div>
-  );
-}
+    </Box>
+  </div>
+);
 
 export default App;
