@@ -47,22 +47,16 @@ export type UserAddress = {
 };
 
 export type UserMyAccountResponse = {
-  data: User[];
+  data: IUser[];
 };
 
-export type User = {
-  id: string;
+export interface INewUser {
   type: UserType;
   managerUserID: string;
   coachUserID: string;
   clientUserID: string;
-  planId: string;
   permissions: string[];
   email: string;
-  emailVerified: boolean;
-  password: string;
-  resetToken: string | null;
-  resetTokenExpiry: string | null;
   title: string;
   pronoun: string;
   firstName: string;
@@ -70,7 +64,17 @@ export type User = {
   dateOfBirth: string;
   phones: UserPhoneNumber[];
   addresses: UserAddress[];
+}
+
+export interface IUser extends INewUser {
+  id: string;
+  airTableId: string;
+  emailVerified: boolean;
+  password: string;
+  resetToken: string | null;
+  resetTokenExpiry: string | null;
+  planId: string;
   metadata: Record<string, unknown>;
-  createdAt: Record<string, unknown>;
-  updatedAt: Record<string, unknown>;
-};
+  createdAt: string;
+  updatedAt: string;
+}

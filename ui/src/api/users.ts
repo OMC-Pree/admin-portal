@@ -1,9 +1,26 @@
-import { ChangePasswordRequest, GetUsersResponse, IdpStandardResponse } from "../models/httpCalls";
+import {
+  ChangePasswordRequest,
+  GetUsersRequest,
+  GetUsersResponse,
+  IdpStandardResponse,
+} from "../models/httpCalls";
 import { UserMyAccountResponse } from "../models/user";
 import { idpApi } from "./idpApi";
 
 export const clientsApi = idpApi.injectEndpoints({
   endpoints: (builder) => ({
+    getUsers: builder.query<GetUsersResponse, GetUsersRequest>({
+      query: (params) => ({
+        url: "users",
+        params,
+      }),
+    }),
+    getCoaches: builder.query<GetUsersResponse, GetUsersRequest>({
+      query: (params) => ({
+        url: "users",
+        params: { ...params, type: "coach" },
+      }),
+    }),
     getClientsByCoachId: builder.query<GetUsersResponse, string | undefined>({
       query: (id: string) => `users?coachUserID=${id}`,
     }),
@@ -27,6 +44,9 @@ export const clientsApi = idpApi.injectEndpoints({
 });
 
 export const {
+  useGetUsersQuery,
+  useLazyGetCoachesQuery,
+  useGetCoachesQuery,
   useChangePasswordMutation,
   useGetClientsByCoachIdQuery,
   useGetUserByIdQuery,

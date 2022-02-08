@@ -1,8 +1,8 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAuth from "./useAuth";
 
-function RequireAuth({ children }: { children: JSX.Element }) {
+function RequireAuth({ children }: { children: JSX.Element | JSX.Element[] }) {
   const { user, isFetchingUser, getUserError, userLoaded } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ function RequireAuth({ children }: { children: JSX.Element }) {
 
   if (!user) return null;
 
-  return children;
+  return <>{children}</>;
 }
 
 export default RequireAuth;

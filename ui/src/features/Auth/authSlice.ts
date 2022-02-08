@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { LoginResponse } from "../../models/httpCalls";
-import { User } from "../../models/user";
+import { IUser } from "../../models/user";
 
 type AuthState = {
-  user: User | null;
+  user: IUser | null;
   token: string | null;
 };
 
@@ -16,7 +16,7 @@ const slice = createSlice({
       state.token = encryptedJWTToken;
       localStorage.setItem("token", encryptedJWTToken);
     },
-    setUser: (state, { payload }: PayloadAction<User>) => {
+    setUser: (state, { payload }: PayloadAction<IUser>) => {
       state.user = payload;
     },
     logout: (state) => {
@@ -31,6 +31,6 @@ export const { setToken, setUser, logout } = slice.actions;
 
 export default slice.reducer;
 
-export const selectCurrentUser = (state: RootState): User | null => state.auth.user;
+export const selectCurrentUser = (state: RootState): IUser | null => state.auth.user;
 
 export const selectToken = (state: RootState): string | null => state.auth.token;

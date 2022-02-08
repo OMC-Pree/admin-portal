@@ -1,14 +1,16 @@
 import React from "react";
 import { Stack, Typography } from "@mui/material";
-import { NavLink } from "react-router-dom";
-import useAuth from "../features/Auth/useAuth";
+import { Navigate } from "react-router-dom";
+import useAuth from "../features/auth/useAuth";
 
 const Home = () => {
   const { user } = useAuth();
+
+  if (user) return <Navigate to="/coaches" />;
+
   return (
     <Stack>
       <Typography variant="h4">Home</Typography>
-      {user && <NavLink to="/protected">Protected route</NavLink>}
     </Stack>
   );
 };

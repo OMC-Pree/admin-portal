@@ -4,13 +4,13 @@ import { useDecryptTokenQuery, useLoginMutation } from "../../api/auth";
 import { useMyAccountQuery } from "../../api/users";
 import { useAppDispatch, useAppSelector } from "../../hooks/store";
 import { IdpErrorResponse } from "../../models/httpCalls";
-import { User, UserPermissions, UserType } from "../../models/user";
+import { IUser, UserPermissions, UserType } from "../../models/user";
 import { logout, selectCurrentUser, selectToken, setToken, setUser } from "./authSlice";
 
 const ACCESS_DENIED_MESSAGE = "You do not have access";
 
 interface IUseAuthReturnValues {
-  user: User | null;
+  user: IUser | null;
   token: string | null;
   isFetchingUser: boolean;
   getUserError: boolean;

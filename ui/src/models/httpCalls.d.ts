@@ -1,10 +1,10 @@
-import { User, UserRole } from "./user";
+import { IUser, UserRole } from "./user";
 
 export type IdpErrors = string[];
 export interface IdpStandardResponse {
   data: unknown[];
   errors: IdpErrors;
-  meta: unknown;
+  meta: { [key: string]: unknown };
 }
 
 export type IdpErrorResponse = {
@@ -16,8 +16,26 @@ export type IdpRequestErrorListProps = {
   apiResponse: IdpErrorResponse;
 };
 
+export interface GetUsersRequest {
+  id?: string;
+  email?: string;
+  type?: string;
+  coachUserID?: string;
+  managerUserID?: string;
+  clientUserID?: string;
+  planId?: string;
+  airTableId?: string;
+  associateUserId?: string;
+  lastEvaluatedKey?: string;
+  max?: number;
+}
+
 export interface GetUsersResponse extends IdpStandardResponse {
-  data: User[];
+  data: IUser[];
+  meta: {
+    count: number;
+    lastEvaluatedKey?: string;
+  };
 }
 export interface LoginRequest {
   email: string;
@@ -45,7 +63,7 @@ export type RegisterUserRequest = {
 };
 
 export type RegisterUserResponse = {
-  data: Array<User>;
+  data: Array<IUser>;
   meta: Record<string, unknown>;
   errors: string[];
 };

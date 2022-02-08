@@ -1,8 +1,9 @@
-import { User, UserType } from "../../models/user";
+import { IUser, UserType } from "../../models/user";
 
-export const USERS_DATA: User[] = [
+export const USERS_DATA: IUser[] = [
   {
     id: "7a59ebab-c39e-4f07-846d-a00212ec68b8",
+    airTableId: "",
     type: UserType.COACH,
     managerUserID: "",
     coachUserID: "",
@@ -22,11 +23,12 @@ export const USERS_DATA: User[] = [
     phones: [],
     addresses: [],
     metadata: {},
-    createdAt: {},
-    updatedAt: {},
+    createdAt: "",
+    updatedAt: "",
   },
   {
     id: "dfd48ccb-ccfa-4fb2-a2e8-f80ee3c643a6",
+    airTableId: "",
     firstName: "Adam",
     lastName: "Client",
     email: "adam@email.com",
@@ -52,7 +54,7 @@ export const USERS_DATA: User[] = [
     ],
     addresses: [],
     metadata: {},
-    createdAt: {},
-    updatedAt: {},
+    createdAt: "",
+    updatedAt: "",
   },
 ];

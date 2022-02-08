@@ -1,4 +1,4 @@
-import { Button, Grid, Input, InputLabel, Stack, TextField, Typography } from "@mui/material";
+import { Button, Stack, TextField, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAuth from "./useAuth";
@@ -43,18 +43,19 @@ function LoginPage() {
         onSubmit={handleSubmit}
         sx={{ width: "fit-content" }}
         alignItems="center"
+        spacing={3}
       >
         <TextField label="email" name="email" type="text" sx={{ width: 400 }} />
         <TextField label="password" name="password" type="password" sx={{ width: "100%" }} />
-        <Button type="submit" variant="contained" sx={{ mt: 6, width: "fit-content" }}>
+        <Button type="submit" variant="contained" sx={{ width: "fit-content" }}>
           Login
         </Button>
+        {accessMessage && (
+          <Typography variant="body1" color="error" mt={3}>
+            Access denied
+          </Typography>
+        )}
       </Stack>
-      {accessMessage && (
-        <Typography variant="body1" color="error" mt={3}>
-          Access denied
-        </Typography>
-      )}
     </Stack>
   );
 }

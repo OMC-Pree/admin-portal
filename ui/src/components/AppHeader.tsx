@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Stack, Typography } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
-import useAuth from "../features/Auth/useAuth";
+import useAuth from "../features/auth/useAuth";
 
 function AppHeader() {
   const { user, logout } = useAuth();
@@ -16,7 +16,7 @@ function AppHeader() {
       justifyContent="space-between"
       sx={{ p: 2, borderBottom: "1px solid grey" }}
     >
-      <Typography variant="h4" onClick={goHome} sx={{ cursor: "pointer" }}>
+      <Typography variant="h5" onClick={goHome} sx={{ cursor: "pointer" }}>
         Admin Portal
       </Typography>
       {!user && location.pathname !== "/login" && <Button onClick={goLogin}>Login</Button>}
