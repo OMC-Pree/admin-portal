@@ -2,12 +2,12 @@ import React from "react";
 import { Stack, TextField, Tooltip } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
 
-interface ICoachListFilterProps {
+interface ITableListFilterProps {
   filter: string;
   setFilter: (value: string) => void;
 }
 
-const CoachListFilter = ({ filter, setFilter }: ICoachListFilterProps) => (
+const TableListFilter = ({ filter, setFilter }: ITableListFilterProps) => (
   <Stack direction="row" alignItems="center" spacing={1} sx={{ width: "100%" }}>
     <TextField
       label="filter"
@@ -25,4 +25,4 @@ const CoachListFilter = ({ filter, setFilter }: ICoachListFilterProps) => (
   </Stack>
 );
 
-export default CoachListFilter;
+export default TableListFilter;

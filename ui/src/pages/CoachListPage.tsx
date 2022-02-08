@@ -3,7 +3,7 @@ import { Button, Stack, Typography } from "@mui/material";
 import RequireAuth from "../features/auth/RequireAuth";
 import useCoaches from "../features/coaches/useCoaches";
 import CoachList from "../features/coaches/coachList/CoachList";
-import CoachListFilter from "../features/coaches/coachList/CoachListFilter";
+import TableListFilter from "../components/Table/TableListFilter";
 
 function CoachListPage() {
   const { coaches } = useCoaches();
@@ -32,7 +32,7 @@ function CoachListPage() {
           spacing={{ xs: 1, md: 4 }}
           sx={{ flexGrow: 1 }}
         >
-          <CoachListFilter filter={filter} setFilter={setFilter} />
+          <TableListFilter filter={filter} setFilter={setFilter} />
           <Stack direction="row" spacing={1}>
             <Button variant="contained" sx={{ width: 150 }}>
               New user

@@ -1,12 +1,12 @@
-import { LoginRequest } from "../../models/httpCalls";
-import { USERS_DATA } from "../data/users";
-import { MockRestHandler } from "../types";
-import { TEST_PASSWORD } from "../constants";
+import { LoginRequest } from "../../../models/httpCalls";
+import { MOCK_USERS } from "../../data/mockUsers";
+import { MockRestHandler } from "../../types";
+import { TEST_PASSWORD } from "../../constants";
 
 export const postUserSignin: MockRestHandler = (req, res, ctx) => {
   const { email, password } = req.body as LoginRequest;
-  const userEmails = USERS_DATA.map((user) => user.email);
-  const user = USERS_DATA.find((user) => user.email === email);
+  const userEmails = MOCK_USERS.map((user) => user.email);
+  const user = MOCK_USERS.find((user) => user.email === email);
   if (userEmails.includes(email) && password === TEST_PASSWORD) {
     return res(
       ctx.status(200),

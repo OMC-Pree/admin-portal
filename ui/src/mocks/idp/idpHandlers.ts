@@ -1,27 +1,22 @@
 import { rest, RestHandler } from "msw";
-import { postUserChangePassword } from "./postUserChangePassword";
-import { postUserEmailVerified } from "./postUserEmailVerified";
-import { postUserForgotPassword } from "./postUserForgotPassword";
-import { getUserMyAccount } from "./getUserMyAccount";
-import { postUserRecoverPassword } from "./postUserRecoverPassword";
-import { postUserRegister } from "./postUserRegister";
-import { postUserSignin } from "./postUserSignin";
-import { getUsers } from "./getUsers";
+import { getUserMyAccount } from "./get/getUserMyAccount";
+import { postUserSignin } from "./post/postUserSignin";
+import { getTokenDecrypt } from "./get/getTokenDecrypt";
+import { getUsers } from "./get/getUsers";
 
-export const idpBaseUrl = process.env.REACT_APP_IDP_BASE_URL;
+export const idpBaseUrl =
+  process.env.NODE_ENV === "test"
+    ? process.env.REACT_APP_TEST_IDP_BASE_URL
+    : process.env.REACT_APP_DEV_IDP_BASE_URL;
 
 let handlers: RestHandler[] = [];
 
 if (process.env.NODE_ENV === "test" || process.env.REACT_APP_MSW_IDP === "true") {
   handlers = [
+    rest.post(`${idpBaseUrl}user/signin`, postUserSignin),
+    rest.get(`${idpBaseUrl}token/decrypt`, getTokenDecrypt),
     rest.get(`${idpBaseUrl}users`, getUsers),
     rest.get(`${idpBaseUrl}user/myaccount`, getUserMyAccount),
-    rest.post(`${idpBaseUrl}user/signin`, postUserSignin),
-    rest.post(`${idpBaseUrl}user/forgot-password`, postUserForgotPassword),
-    rest.post(`${idpBaseUrl}user/recover-password`, postUserRecoverPassword),
-    rest.post(`${idpBaseUrl}user/email-verified`, postUserEmailVerified),
-    rest.post(`${idpBaseUrl}user/register`, postUserRegister),
-    rest.post(`${idpBaseUrl}user/myaccount/password`, postUserChangePassword),
   ];
 }
 

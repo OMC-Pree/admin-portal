@@ -11,28 +11,28 @@ import {
 import { IUser } from "../../../models/user";
 import { SortOrder } from "../../../components/Table/table";
 import EnhancedTableHead from "../../../components/Table/EnhancedTableHead";
-import { ICoachTableData } from "../coach";
-import { formatDate, formatTableData, getComparator, headCells } from "./coachListHelpers";
+import { formatTableData, getComparator, headCells } from "./clientListHelpers";
 import { useNavigate } from "react-router-dom";
 import { COLOURS } from "../../../theme/colours";
+import { IClientTableData } from "../client";
 
-interface ICoachListProps {
-  coaches: IUser[];
+interface IClientListProps {
+  clients: IUser[];
 }
 
-function CoachList({ coaches }: ICoachListProps) {
+function ClientList({ clients }: IClientListProps) {
   const navigate = useNavigate();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [order, setOrder] = React.useState<SortOrder>("asc");
-  const [orderBy, setOrderBy] = React.useState<keyof ICoachTableData>("lastName");
-  const rows = formatTableData(coaches);
+  const [orderBy, setOrderBy] = React.useState<keyof IClientTableData>("lastName");
+  const rows = formatTableData(clients);
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   const onSort = (event: React.MouseEvent<unknown>, property: string) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
-    setOrderBy(property as keyof ICoachTableData);
+    setOrderBy(property as keyof IClientTableData);
   };
 
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
@@ -61,24 +61,18 @@ function CoachList({ coaches }: ICoachListProps) {
             : rows
           )
             .sort(getComparator(order, orderBy))
-            .map((coach) => (
+            .map((client) => (
               <TableRow
-                key={coach.id}
-                onClick={() => navigate(`/coach/${coach.id}`)}
+                key={client.id}
+                onClick={() => navigate(`/client/${client.id}`)}
                 sx={{ cursor: "pointer", "&:hover": { bgcolor: COLOURS.PURPLE[100] } }}
-                title={`open details page for ${coach.firstName} ${coach.lastName}`}
+                title={`open details page for ${client.firstName} ${client.lastName}`}
               >
-                <TableCell sx={{ minWidth: 200 }}>{coach.id}</TableCell>
-                <TableCell sx={{ minWidth: 104 }}>{coach.airTableId}</TableCell>
-                <TableCell sx={{ minWidth: 96 }}>{coach.firstName}</TableCell>
-                <TableCell sx={{ minWidth: 96 }}>{coach.lastName}</TableCell>
-                <TableCell>{coach.email}</TableCell>
-                <TableCell sx={{ minWidth: 72 }}>
-                  {coach.dateOfBirth ? formatDate(coach.dateOfBirth) : "-"}
-                </TableCell>
-                <TableCell sx={{ minWidth: 72 }}>{coach.type}</TableCell>
-                <TableCell sx={{ minWidth: 72 }}>{coach.permissions}</TableCell>
-                <TableCell sx={{ minWidth: 72 }}>{formatDate(coach.createdAt)}</TableCell>
+                <TableCell sx={{ minWidth: 96 }}>{client.firstName}</TableCell>
+                <TableCell sx={{ minWidth: 96 }}>{client.lastName}</TableCell>
+                <TableCell>{client.email}</TableCell>
+                <TableCell sx={{ minWidth: 200 }}>{client.id}</TableCell>
+                <TableCell sx={{ minWidth: 104 }}>{client.airTableId}</TableCell>
               </TableRow>
             ))}
           {emptyRows > 0 && (
@@ -111,4 +105,4 @@ function CoachList({ coaches }: ICoachListProps) {
   );
 }
 
-export default CoachList;
+export default ClientList;

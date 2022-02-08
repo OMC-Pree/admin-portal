@@ -66,7 +66,7 @@ export const authApi = idpApi.injectEndpoints({
 });
 
 export const {
-  useDecryptTokenQuery,
+  useLazyDecryptTokenQuery,
   useEmailVerifiedQuery,
   useLoginMutation,
   useForgotPasswordMutation,
