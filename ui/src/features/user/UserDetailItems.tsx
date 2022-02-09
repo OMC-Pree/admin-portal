@@ -49,6 +49,7 @@ const UserDetailItems = ({ user }: IUserDetailItemsProps) => {
       if (value && ["dateOfBirth", "createdAt"].includes(prop)) {
         value = format(parseISO(value as string), "dd-MM-yyyy");
       } else if (prop === "permissions") {
+        value = value || [];
         value = (value as UserPermissions[])
           .map((perm) => upperFirst(startCase(perm).toLowerCase()))
           .join(", ");
