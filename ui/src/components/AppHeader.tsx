@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Box, Button, MenuItem, MenuList, Stack, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../features/auth/useAuth";
 import NavLink from "./NavLink";
 import { COLOURS } from "../theme/colours";
 import ArrowLeft from "@mui/icons-material/ArrowLeft";
 import ArrowDropDown from "@mui/icons-material/ArrowDropDown";
+import HeaderMenu from "./HeaderMenu";
 
 const navHeight = 65;
 
@@ -53,13 +54,7 @@ function AppHeader() {
             zIndex: 10,
           }}
         >
-          <MenuList sx={{ padding: 0 }}>
-            <MenuItem onClick={onLogout}>
-              <Typography sx={{ color: COLOURS.PINK[600] }} variant="button">
-                LOGOUT
-              </Typography>
-            </MenuItem>
-          </MenuList>
+          <HeaderMenu onLogout={onLogout} onCloseMenu={() => setMenuOpen(false)} />
         </Box>
       )}
     </Box>

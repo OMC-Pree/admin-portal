@@ -18,13 +18,19 @@ const slice = createSlice({
     addCoaches: (state, { payload }: PayloadAction<IUser[]>) => {
       state.coaches = uniqBy(state.coaches.concat(payload), "id");
     },
+    updateStoredCoach: (state, { payload }: PayloadAction<Partial<IUser>>) => {
+      state.coaches = state.coaches.map((coach) => {
+        if (coach.id === payload.id) return { ...coach, ...payload };
+        return coach;
+      });
+    },
     setClients: (state, { payload }: PayloadAction<IUser[]>) => {
       state.clients = payload;
     },
   },
 });
 
-export const { addCoaches, setCoaches, setClients } = slice.actions;
+export const { addCoaches, setCoaches, setClients, updateStoredCoach } = slice.actions;
 
 export default slice.reducer;
 

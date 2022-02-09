@@ -9,6 +9,8 @@ import SelectInput from "../../components/form/SelectInput";
 import { UserPermissions, UserType } from "./userEnums";
 import { noop, startCase, upperFirst } from "lodash";
 import { useUpdateUserMutation } from "../../api/users";
+import { useAppDispatch } from "../../hooks/store";
+import { updateStoredCoach } from "../coaches/coachesSlice";
 
 interface IEditUserFormProps {
   user: IUser;
@@ -17,6 +19,7 @@ interface IEditUserFormProps {
 }
 
 function EditUserForm({ user, onSuccess, onCancel = noop }: IEditUserFormProps) {
+  const dispatch = useAppDispatch();
   const [updateUser] = useUpdateUserMutation();
   const {
     control,
@@ -34,11 +37,13 @@ function EditUserForm({ user, onSuccess, onCancel = noop }: IEditUserFormProps) 
   });
 
   const onSubmit = async (data: FieldValues) => {
-    await updateUser({
+    const newData = {
       ...data,
       // dateOfBirth: format(new Date(data.dateOfBirth), "yyyy-MM-dd"),
       id: user.id,
-    }).unwrap();
+    };
+    await updateUser(newData).unwrap();
+    if (user.type === UserType.COACH) dispatch(updateStoredCoach(newData));
     onSuccess();
   };
 
