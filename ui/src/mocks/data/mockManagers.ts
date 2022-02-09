@@ -1,4 +1,5 @@
-import { IUser, UserPermissions, UserType } from "../../models/user";
+import { IUser } from "../../features/user/user";
+import { UserPermissions, UserType } from "../../features/user/userEnums";
 
 export const MOCK_MANAGERS: IUser[] = [
   {
@@ -8,6 +9,7 @@ export const MOCK_MANAGERS: IUser[] = [
     managerUserID: "",
     coachUserID: "",
     clientUserID: "",
+    associateUserId: "",
     planId: "",
     permissions: [UserPermissions.MANAGER],
     email: "manager1@email.com",

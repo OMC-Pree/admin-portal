@@ -4,7 +4,7 @@ import {
   GetUsersResponse,
   IdpStandardResponse,
 } from "../models/httpCalls";
-import { UserMyAccountResponse } from "../models/user";
+import { UserMyAccountResponse } from "../features/user/user";
 import { idpApi } from "./idpApi";
 
 export const clientsApi = idpApi.injectEndpoints({
@@ -57,5 +57,6 @@ export const {
   useChangePasswordMutation,
   useGetClientsByCoachIdQuery,
   useGetUserByIdQuery,
+  useLazyGetUserByIdQuery,
   useMyAccountQuery,
 } = clientsApi;

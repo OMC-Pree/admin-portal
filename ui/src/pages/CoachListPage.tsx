@@ -3,18 +3,26 @@ import { Button, Stack, Typography } from "@mui/material";
 import RequireAuth from "../features/auth/RequireAuth";
 import useCoaches from "../features/coaches/useCoaches";
 import CoachList from "../features/coaches/coachList/CoachList";
-import TableListFilter from "../components/Table/TableListFilter";
+import TableListFilter from "../components/table/TableListFilter";
+import { useNavigate } from "react-router-dom";
 
 function CoachListPage() {
+  const navigate = useNavigate();
   const { coaches } = useCoaches();
   const [filter, setFilter] = useState<string>("");
 
   const filteredCoaches = filter
     ? coaches.filter((coach) => {
-        const grouping = [coach.firstName || "", coach.lastName || "", coach.email || ""];
+        const grouping = [coach.firstName || "", coach.lastName || "", coach.email || "", coach.id];
         return !!grouping.find((str) => str.toLowerCase().includes(filter.toLowerCase()));
       })
     : coaches;
+
+  const onFilterKeyUp = (key: string) => {
+    if (key === "Enter") {
+      if (filteredCoaches.length === 1) navigate(`/coaches/${filteredCoaches[0].id}`);
+    }
+  };
 
   return (
     <RequireAuth>
@@ -32,7 +40,7 @@ function CoachListPage() {
           spacing={{ xs: 1, md: 4 }}
           sx={{ flexGrow: 1 }}
         >
-          <TableListFilter filter={filter} setFilter={setFilter} />
+          <TableListFilter filter={filter} setFilter={setFilter} onKeyUp={onFilterKeyUp} />
           <Stack direction="row" spacing={1}>
             <Button variant="contained" sx={{ width: 150 }}>
               New user

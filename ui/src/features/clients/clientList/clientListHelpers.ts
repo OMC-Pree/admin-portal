@@ -1,6 +1,6 @@
 import { pick } from "lodash";
-import { IHeadCell, SortOrder } from "../../../components/Table/table";
-import { IUser } from "../../../models/user";
+import { IHeadCell, SortOrder } from "../../../components/table/table";
+import { IUser } from "../../user/user";
 import { IClientTableData } from "../client";
 
 export const formatTableData = (clients: IUser[]): IClientTableData[] =>

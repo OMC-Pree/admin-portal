@@ -1,4 +1,5 @@
-import { IUser, UserPermissions, UserType } from "../../models/user";
+import { IUser } from "../../features/user/user";
+import { UserPermissions, UserType } from "../../features/user/userEnums";
 
 export const MOCK_COACHES: IUser[] = [
   {
@@ -8,6 +9,7 @@ export const MOCK_COACHES: IUser[] = [
     managerUserID: "",
     coachUserID: "",
     clientUserID: "",
+    associateUserId: "",
     planId: "",
     permissions: [UserPermissions.COACH],
     email: "coach1@email.com",
@@ -33,6 +35,7 @@ export const MOCK_COACHES: IUser[] = [
     managerUserID: "",
     coachUserID: "",
     clientUserID: "",
+    associateUserId: "",
     planId: "",
     permissions: [UserPermissions.COACH],
     email: "coach2@email.com",
@@ -55,9 +58,10 @@ export const MOCK_COACHES: IUser[] = [
     id: "ae835bb2-b73f-4ac5-a9c8-84f148bc992b",
     airTableId: "c3-old-airtable-id",
     type: UserType.COACH,
-    managerUserID: "",
+    managerUserID: "15353648-549c-4ab9-89d3-75de25d5743d",
     coachUserID: "",
     clientUserID: "",
+    associateUserId: "",
     planId: "",
     permissions: [UserPermissions.COACH],
     email: "coach3@email.com",

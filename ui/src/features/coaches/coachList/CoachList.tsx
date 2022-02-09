@@ -8,9 +8,9 @@ import {
   TablePagination,
   TableRow,
 } from "@mui/material";
-import { IUser } from "../../../models/user";
-import { SortOrder } from "../../../components/Table/table";
-import EnhancedTableHead from "../../../components/Table/EnhancedTableHead";
+import { IUser } from "../../user/user";
+import { SortOrder } from "../../../components/table/table";
+import EnhancedTableHead from "../../../components/table/EnhancedTableHead";
 import { ICoachTableData } from "../coach";
 import { formatDate, formatTableData, getComparator, headCells } from "./coachListHelpers";
 import { useNavigate } from "react-router-dom";
@@ -64,7 +64,7 @@ function CoachList({ coaches }: ICoachListProps) {
             .map((coach) => (
               <TableRow
                 key={coach.id}
-                onClick={() => navigate(`/coach/${coach.id}`)}
+                onClick={() => navigate(`/coaches/${coach.id}`)}
                 sx={{ cursor: "pointer", "&:hover": { bgcolor: COLOURS.PURPLE[100] } }}
                 title={`open details page for ${coach.firstName} ${coach.lastName}`}
               >

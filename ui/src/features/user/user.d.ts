@@ -1,32 +1,3 @@
-export enum UserType {
-  CLIENT = "client",
-  COACH = "coach",
-  MANAGER = "manager",
-  APP_SERVICE = "appService",
-}
-
-export enum UserRole {
-  APP_SERVICE = "APP_SERVICE",
-  ADMIN = "ADMIN",
-  MANAGER = "MANAGER",
-  CLIENT = "CLIENT",
-  COACH = "COACH",
-}
-
-export enum UserPermissions {
-  UNSECURE_ROOT = "UNSECURE_ROOT",
-  ADMIN = "ADMIN",
-  MANAGER = "MANAGER",
-  CLIENT = "CLIENT",
-  COACH = "COACH",
-}
-
-export const USER_ROLES = {
-  CLIENT: UserRole.CLIENT,
-  COACH: UserRole.COACH,
-  MANAGER: UserRole.MANAGER,
-};
-
 export type UserPhoneNumber = {
   type: string;
   prefix: string;
@@ -55,7 +26,7 @@ export interface INewUser {
   managerUserID: string;
   coachUserID: string;
   clientUserID: string;
-  permissions: string[];
+  permissions: UserPermissions[];
   email: string;
   title: string;
   pronoun: string;
@@ -68,6 +39,7 @@ export interface INewUser {
 
 export interface IUser extends INewUser {
   id: string;
+  associateUserId: string;
   airTableId: string;
   emailVerified: boolean;
   password: string;

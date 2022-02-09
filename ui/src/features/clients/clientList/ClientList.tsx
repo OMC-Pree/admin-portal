@@ -8,9 +8,9 @@ import {
   TablePagination,
   TableRow,
 } from "@mui/material";
-import { IUser } from "../../../models/user";
-import { SortOrder } from "../../../components/Table/table";
-import EnhancedTableHead from "../../../components/Table/EnhancedTableHead";
+import { IUser } from "../../user/user";
+import { SortOrder } from "../../../components/table/table";
+import EnhancedTableHead from "../../../components/table/EnhancedTableHead";
 import { formatTableData, getComparator, headCells } from "./clientListHelpers";
 import { useNavigate } from "react-router-dom";
 import { COLOURS } from "../../../theme/colours";
@@ -64,7 +64,7 @@ function ClientList({ clients }: IClientListProps) {
             .map((client) => (
               <TableRow
                 key={client.id}
-                onClick={() => navigate(`/client/${client.id}`)}
+                onClick={() => navigate(`/clients/${client.id}`)}
                 sx={{ cursor: "pointer", "&:hover": { bgcolor: COLOURS.PURPLE[100] } }}
                 title={`open details page for ${client.firstName} ${client.lastName}`}
               >

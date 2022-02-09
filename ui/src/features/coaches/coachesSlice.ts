@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { uniqBy } from "lodash";
 import { RootState } from "../../app/store";
-import { IUser } from "../../models/user";
+import { IUser } from "../user/user";
 
 type CoachesState = {
   coaches: IUser[];

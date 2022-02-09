@@ -1,4 +1,4 @@
-import { IUser } from "../../../models/user";
+import { IUser } from "../../../features/user/user";
 import { MOCK_USERS } from "../../data/mockUsers";
 import { MockRestHandler } from "../../types";
 import { isAuthorised } from "../isAuthorised";

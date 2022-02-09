@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { LoginResponse } from "../../models/httpCalls";
-import { IUser } from "../../models/user";
+import { IUser } from "../user/user";
 
 type AuthState = {
   user: IUser | null;

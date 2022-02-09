@@ -1,4 +1,5 @@
-import { IUser, UserPermissions, UserType } from "../../models/user";
+import { IUser } from "../../features/user/user";
+import { UserPermissions, UserType } from "../../features/user/userEnums";
 
 export const MOCK_CLIENTS: IUser[] = [
   {
@@ -11,6 +12,7 @@ export const MOCK_CLIENTS: IUser[] = [
     coachUserID: "7a59ebab-c39e-4f07-846d-a00212ec68b8",
     clientUserID: "",
     managerUserID: "",
+    associateUserId: "5e465c0d-6dc9-47c6-af98-29126a332164",
     planId: "25069684-5387-11ec-b4fc-e7b75b8859d7",
     permissions: [UserPermissions.CLIENT],
     emailVerified: true,
@@ -42,6 +44,39 @@ export const MOCK_CLIENTS: IUser[] = [
     coachUserID: "7a59ebab-c39e-4f07-846d-a00212ec68b8",
     clientUserID: "",
     managerUserID: "",
+    associateUserId: "",
+    planId: "",
+    permissions: [UserPermissions.CLIENT],
+    emailVerified: true,
+    password: "",
+    resetToken: "",
+    resetTokenExpiry: "",
+    title: "",
+    pronoun: "",
+    dateOfBirth: "1988-09-12",
+    phones: [
+      {
+        type: "Home",
+        prefix: "+44",
+        number: "01234567890",
+      },
+    ],
+    addresses: [],
+    metadata: {},
+    createdAt: "2021-07-02T10:12:42.138Z",
+    updatedAt: "2022-02-08T11:39:35.210Z",
+  },
+  {
+    id: "5e465c0d-6dc9-47c6-af98-29126a332164",
+    airTableId: "assoc1-old-airtable-id",
+    firstName: "Jonny",
+    lastName: "Associate",
+    email: "jassoc@email.com",
+    type: UserType.CLIENT,
+    coachUserID: "7a59ebab-c39e-4f07-846d-a00212ec68b8",
+    clientUserID: "",
+    managerUserID: "",
+    associateUserId: "dfd48ccb-ccfa-4fb2-a2e8-f80ee3c643a6",
     planId: "",
     permissions: [UserPermissions.CLIENT],
     emailVerified: true,
