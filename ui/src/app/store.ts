@@ -1,6 +1,7 @@
 import { configureStore, combineReducers, AnyAction, Reducer } from "@reduxjs/toolkit";
 import authReducer from "../features/auth/authSlice";
 import coachesReducer from "../features/coaches/coachesSlice";
+import userDetailReducer from "../features/user/userDetailSlice";
 import { idpApi } from "../api/idpApi";
 
 // Combine the reducers so that they can be wrapped in a root reducer.
@@ -9,6 +10,7 @@ const combinedReducer = combineReducers({
   [idpApi.reducerPath]: idpApi.reducer,
   auth: authReducer,
   coaches: coachesReducer,
+  userDetail: userDetailReducer,
 });
 
 export const rootReducer: Reducer = (state: RootState, action: AnyAction) => {

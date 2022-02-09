@@ -1,20 +1,32 @@
 import { useEffect, useMemo, useState } from "react";
-import { useGetUserByIdQuery } from "../../api/users";
+import { useLazyGetUserByIdQuery } from "../../api/users";
+import { IdpErrorResponse } from "../../models/httpCalls";
 import { IUser } from "../user/user";
 
-function useClient(id?: string) {
+function useClient(id: string | undefined) {
   const [client, setClient] = useState<IUser | undefined>();
-  const { data: clientResponse, isFetching, isSuccess } = useGetUserByIdQuery(id, { skip: !id });
+  const [isFetching, setIsFetching] = useState(false);
+  const [error, setError] = useState<IdpErrorResponse | void>();
+  const [getClient] = useLazyGetUserByIdQuery();
+
+  async function loadClient(_id: string) {
+    setIsFetching(true);
+    setError();
+    try {
+      const result = await getClient(_id);
+      if (result.data && result.data.data.length) setClient(result.data.data[0]);
+      setIsFetching(false);
+    } catch (error) {
+      setError(error as IdpErrorResponse);
+    }
+    setIsFetching(false);
+  }
 
   useEffect(() => {
-    if (!id) setClient(undefined);
+    if (id) loadClient(id);
   }, [id]);
 
-  useEffect(() => {
-    if (isSuccess && clientResponse) setClient(clientResponse.data[0]);
-  }, [clientResponse, isSuccess]);
-
-  return useMemo(() => ({ client, isFetching }), [client]);
+  return useMemo(() => ({ client, isFetching, error }), [client, isFetching, error]);
 }
 
 export default useClient;

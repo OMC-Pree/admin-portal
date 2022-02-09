@@ -1,8 +1,8 @@
 import React from "react";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid, Stack, Typography } from "@mui/material";
 import { IUser } from "../user/user";
 import { UserPermissions } from "../user/userEnums";
-import { lowerCase, upperFirst } from "lodash";
+import { lowerCase, startCase, upperFirst } from "lodash";
 import { format, parseISO } from "date-fns";
 import { NavLink } from "react-router-dom";
 import { COLOURS } from "../../theme/colours";
@@ -42,27 +42,24 @@ const UserDetailItems = ({ user }: IUserDetailItemsProps) => {
   const { client: associate } = useClient(user.associateUserId);
   const { coach } = useCoach(user.coachUserID);
 
-  const ret = [
-    "firstName",
-    "lastName",
-    "email",
-    "dateOfBirth",
-    "id",
-    "type",
-    "permissions",
-    "createdAt",
-  ].map((key) => {
-    const prop = key as keyof IUser;
-    let value = user[prop];
-    if (["dateOfBirth", "createdAt"].includes(prop)) {
-      value = format(parseISO(value as string), "dd-MM-yyyy");
-    } else if (prop === "permissions") {
-      value = (value as UserPermissions[]).join(",");
-    } else {
-      value = value ? value?.toString() : "-";
-    }
-    return <UserDetailItem key={`user-detail-${prop}`} prop={prop} value={value} />;
-  });
+  const ret = ["firstName", "lastName", "email", "id", "type", "permissions", "createdAt"].map(
+    (key) => {
+      const prop = key as keyof IUser;
+      let value = user[prop];
+      if (value && ["dateOfBirth", "createdAt"].includes(prop)) {
+        value = format(parseISO(value as string), "dd-MM-yyyy");
+      } else if (prop === "permissions") {
+        value = (value as UserPermissions[])
+          .map((perm) => upperFirst(startCase(perm).toLowerCase()))
+          .join(", ");
+      } else if (prop === "type") {
+        value = upperFirst(value);
+      } else {
+        value = value ? value?.toString() : "-";
+      }
+      return <UserDetailItem key={`user-detail-${prop}`} prop={prop} value={value} />;
+    },
+  );
 
   if (coach)
     ret.push(
@@ -82,7 +79,7 @@ const UserDetailItems = ({ user }: IUserDetailItemsProps) => {
         to={`/clients/${associate.id}`}
       />,
     );
-  return <>{ret}</>;
+  return <Stack spacing={1}>{ret}</Stack>;
 };
 
 export default UserDetailItems;

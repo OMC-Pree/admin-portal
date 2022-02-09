@@ -1,19 +1,19 @@
-import { Box, Breadcrumbs, Button, Divider, Grid, Stack, Typography } from "@mui/material";
 import React, { useState } from "react";
+import { Box, Breadcrumbs, Button, Divider, Grid, Stack, Typography } from "@mui/material";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import TableListFilter from "../components/table/TableListFilter";
 import RequireAuth from "../features/auth/RequireAuth";
 import ClientList from "../features/clients/clientList/ClientList";
 import NoClients from "../features/clients/clientList/NoClients";
 import useCoachClients from "../features/clients/useCoachClients";
-import useCoach from "../features/coaches/useCoach";
+import useDetailUser from "../features/user/useDetailUser";
 import UserDetailPanel from "../features/user/UserDetailPanel";
 import { COLOURS } from "../theme/colours";
 
 function CoachDetailPage() {
   const { coachId } = useParams();
   const navigate = useNavigate();
-  const { coach, isFetching } = useCoach(coachId);
+  const { detailUser: coach, isFetching, refetch } = useDetailUser(coachId);
   const { clients } = useCoachClients({ coachId: coach?.id });
   const [filter, setFilter] = useState<string>("");
 
@@ -61,7 +61,7 @@ function CoachDetailPage() {
               md={4}
               sx={{ pr: { md: 2 }, borderRight: { md: `1px dashed ${COLOURS.GREY[300]}` } }}
             >
-              <UserDetailPanel user={coach} />
+              <UserDetailPanel user={coach} onUserUpdated={refetch} />
             </Grid>
             <Grid item xs={12} md={8}>
               <Stack spacing={2}>

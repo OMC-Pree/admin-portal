@@ -2,14 +2,14 @@ import React from "react";
 import { Breadcrumbs, Button, Grid, Stack, Typography } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import RequireAuth from "../features/auth/RequireAuth";
-import useClient from "../features/clients/useClient";
 import UserDetailPanel from "../features/user/UserDetailPanel";
 import { COLOURS } from "../theme/colours";
 import ArrowLeft from "@mui/icons-material/ArrowLeft";
+import useDetailUser from "../features/user/useDetailUser";
 
 function ClientDetailPage() {
   const { clientId } = useParams();
-  const { client, isFetching } = useClient(clientId);
+  const { detailUser: client, isFetching, refetch } = useDetailUser(clientId);
   const navigate = useNavigate();
 
   return (
@@ -45,7 +45,7 @@ function ClientDetailPage() {
               lg={4}
               sx={{ pr: { md: 2 }, borderRight: { md: `1px dashed ${COLOURS.GREY[300]}` } }}
             >
-              <UserDetailPanel user={client} />
+              <UserDetailPanel user={client} onUserUpdated={refetch} />
             </Grid>
             <Grid item xs={12} md={6} lg={8}>
               {/* <Stack spacing={2}>

@@ -14,9 +14,9 @@ function useCoach(id?: string) {
     if (!id) setCoach(undefined);
   }, [id]);
 
-  async function loadCoach() {
+  async function loadCoach(_id: string) {
     setIsFetching(true);
-    const userResponse = await getCoach(id).unwrap();
+    const userResponse = await getCoach(_id).unwrap();
     if (userResponse.data.length) setCoach(userResponse.data[0]);
     setIsFetching(false);
   }
@@ -25,8 +25,8 @@ function useCoach(id?: string) {
     const storedCoach = storedCoaches.find((user) => user.id === id);
     if (storedCoach) {
       setCoach(storedCoach);
-    } else {
-      loadCoach();
+    } else if (id) {
+      loadCoach(id);
     }
   }, [id, storedCoaches]);
 

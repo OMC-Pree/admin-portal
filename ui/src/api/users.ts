@@ -1,10 +1,5 @@
-import {
-  ChangePasswordRequest,
-  GetUsersRequest,
-  GetUsersResponse,
-  IdpStandardResponse,
-} from "../models/httpCalls";
-import { UserMyAccountResponse } from "../features/user/user";
+import { GetUsersRequest, GetUsersResponse, StandardUsersResponse } from "../models/httpCalls";
+import { IUser } from "../features/user/user";
 import { idpApi } from "./idpApi";
 
 export const clientsApi = idpApi.injectEndpoints({
@@ -30,20 +25,20 @@ export const clientsApi = idpApi.injectEndpoints({
     getClientsByCoachId: builder.query<GetUsersResponse, string | undefined>({
       query: (id: string) => `users?coachUserID=${id}`,
     }),
-    getUserById: builder.query<GetUsersResponse, string | undefined>({
+    getUserById: builder.query<GetUsersResponse, string | void>({
       query: (id: string) => `users?id=${id}`,
     }),
-    myAccount: builder.query<UserMyAccountResponse, void>({
+    myAccount: builder.query<StandardUsersResponse, void>({
       query: () => ({
         url: `user/myaccount`,
         method: "GET",
       }),
     }),
-    changePassword: builder.mutation<IdpStandardResponse, ChangePasswordRequest>({
-      query: (body) => ({
-        url: `user/myaccount/password`,
-        method: "POST",
-        body,
+    updateUser: builder.mutation<GetUsersResponse, Partial<IUser>>({
+      query: (user) => ({
+        url: `user/${user.id}`,
+        method: "PATCH",
+        body: user,
       }),
     }),
   }),
@@ -54,9 +49,9 @@ export const {
   useLazyGetCoachesQuery,
   useLazyGetClientsQuery,
   useGetCoachesQuery,
-  useChangePasswordMutation,
   useGetClientsByCoachIdQuery,
   useGetUserByIdQuery,
   useLazyGetUserByIdQuery,
+  useUpdateUserMutation,
   useMyAccountQuery,
 } = clientsApi;

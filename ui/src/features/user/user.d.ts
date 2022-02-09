@@ -17,10 +17,6 @@ export type UserAddress = {
   countryAlpha2: string;
 };
 
-export type UserMyAccountResponse = {
-  data: IUser[];
-};
-
 export interface INewUser {
   type: UserType;
   managerUserID: string;

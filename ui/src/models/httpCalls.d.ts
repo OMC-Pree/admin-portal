@@ -16,6 +16,10 @@ export type IdpRequestErrorListProps = {
   apiResponse: IdpErrorResponse;
 };
 
+export interface StandardUsersResponse extends IdpStandardResponse {
+  data: IUser[];
+}
+
 export interface GetUsersRequest {
   id?: string;
   email?: string;
@@ -30,8 +34,7 @@ export interface GetUsersRequest {
   max?: number;
 }
 
-export interface GetUsersResponse extends IdpStandardResponse {
-  data: IUser[];
+export interface GetUsersResponse extends StandardUsersResponse {
   meta: {
     count: number;
     lastEvaluatedKey?: string;
