@@ -4,7 +4,7 @@ export interface ICoachTableData {
   firstName: string;
   lastName: string;
   email: string;
-  dateOfBirth: string;
+  // dateOfBirth: string;
   type: UserType;
   permissions: string;
   createdAt: string;
