@@ -32,7 +32,7 @@ function EditUserForm({ user, onSuccess, onCancel = noop }: IEditUserFormProps) 
       lastName: user.lastName,
       // dateOfBirth: user.dateOfBirth,
       type: user.type,
-      permissions: user.permissions,
+      permissions: user.permissions || [],
     },
   });
 
@@ -67,10 +67,12 @@ function EditUserForm({ user, onSuccess, onCancel = noop }: IEditUserFormProps) 
           name="permissions"
           label="Permissions"
           multiple
-          options={Object.keys(UserPermissions).map((perm) => ({
-            label: upperFirst(startCase(perm).toLowerCase()),
-            value: perm,
-          }))}
+          options={Object.keys(UserPermissions)
+            .filter((perm) => perm !== UserPermissions.UNSECURE_ROOT)
+            .map((perm) => ({
+              label: upperFirst(startCase(perm).toLowerCase()),
+              value: perm,
+            }))}
         />
         <Stack direction="row" alignItems="center" justifyContent="space-between">
           <Button variant="outlined" onClick={onCancel}>
