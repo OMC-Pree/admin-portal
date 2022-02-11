@@ -73,9 +73,6 @@ function CoachList({ coaches }: ICoachListProps) {
                 <TableCell sx={{ minWidth: 96 }}>{coach.firstName}</TableCell>
                 <TableCell sx={{ minWidth: 96 }}>{coach.lastName}</TableCell>
                 <TableCell>{coach.email}</TableCell>
-                {/* <TableCell sx={{ minWidth: 72 }}>
-                  {coach.dateOfBirth ? formatDate(coach.dateOfBirth) : "-"}
-                </TableCell> */}
                 <TableCell sx={{ minWidth: 72 }}>{coach.type}</TableCell>
                 <TableCell sx={{ minWidth: 72 }}>{coach.permissions}</TableCell>
                 <TableCell sx={{ minWidth: 72 }}>{formatDate(coach.createdAt)}</TableCell>

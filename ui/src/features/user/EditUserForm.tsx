@@ -3,8 +3,6 @@ import { Box, Button, Stack } from "@mui/material";
 import { FieldValues, useForm } from "react-hook-form";
 import TextInput from "../../components/form/TextInput";
 import { IUser } from "./user";
-// import DateInput from "../../components/form/DateInput";
-// import { format } from "date-fns";
 import SelectInput from "../../components/form/SelectInput";
 import { UserPermissions, UserType } from "./userEnums";
 import { noop, startCase, upperFirst } from "lodash";
@@ -28,10 +26,9 @@ function EditUserForm({ user, onSuccess, onCancel = noop }: IEditUserFormProps) 
   } = useForm<FieldValues>({
     mode: "onChange",
     defaultValues: {
-      firstName: user.firstName,
-      lastName: user.lastName,
-      // dateOfBirth: user.dateOfBirth,
-      type: user.type,
+      firstName: user.firstName || "",
+      lastName: user.lastName || "",
+      type: user.type || "",
       permissions: user.permissions || [],
     },
   });
@@ -39,7 +36,8 @@ function EditUserForm({ user, onSuccess, onCancel = noop }: IEditUserFormProps) 
   const onSubmit = async (data: FieldValues) => {
     const newData = {
       ...data,
-      // dateOfBirth: format(new Date(data.dateOfBirth), "yyyy-MM-dd"),
+      firstName: data.firstName.trim(),
+      lastName: data.lastName.trim(),
       id: user.id,
     };
     await updateUser(newData).unwrap();
@@ -50,9 +48,13 @@ function EditUserForm({ user, onSuccess, onCancel = noop }: IEditUserFormProps) 
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={2}>
-        <TextInput control={control} name="firstName" label="First name" required />
-        <TextInput control={control} name="lastName" label="Last name" required />
-        {/* <DateInput control={control} name="dateOfBirth" label="Date of birth" required /> */}
+        <TextInput
+          control={control}
+          name="firstName"
+          label="First name"
+          rules={{ required: true }}
+        />
+        <TextInput control={control} name="lastName" label="Last name" rules={{ required: true }} />
         <SelectInput
           control={control}
           name="type"

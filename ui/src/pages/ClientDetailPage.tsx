@@ -1,37 +1,36 @@
 import React from "react";
-import { Breadcrumbs, Button, Grid, Stack, Typography } from "@mui/material";
-import { useNavigate, useParams } from "react-router-dom";
+import { Box, Breadcrumbs, Grid, Stack, Typography } from "@mui/material";
+import { Link, useParams } from "react-router-dom";
 import RequireAuth from "../features/auth/RequireAuth";
-import UserDetailPanel from "../features/user/UserDetailPanel";
+import UserDetailPanel from "../features/user/userDetail/UserDetailPanel";
 import { COLOURS } from "../theme/colours";
-import ArrowLeft from "@mui/icons-material/ArrowLeft";
-import useDetailUser from "../features/user/useDetailUser";
+import useDetailUser from "../features/user/userDetail/useDetailUser";
 
 function ClientDetailPage() {
   const { clientId } = useParams();
   const { detailUser: client, isFetching, refetch } = useDetailUser(clientId);
-  const navigate = useNavigate();
+
+  if (!client || !clientId) return null;
 
   return (
     <RequireAuth>
       <Stack direction="row" alignItems="flex-start" justifyContent="space-between">
         <Breadcrumbs sx={{ pb: 4 }}>
-          <Stack
-            direction="row"
-            alignItems="center"
-            sx={{ color: COLOURS.PINK[500], cursor: "pointer" }}
-            onClick={() => navigate(-1)}
+          <Box
+            component={Link}
+            to={`/coaches/${client.coachUserId}`}
+            sx={{ textDecoration: "none" }}
           >
-            <ArrowLeft />
-            <Typography sx={{ color: COLOURS.PINK[500] }}>Go back</Typography>
-          </Stack>
+            <Typography variant="body1" sx={{ color: COLOURS.PINK[500] }}>
+              Go to coach
+            </Typography>
+          </Box>
           {client && (
-            <Typography color="text.primary">
+            <Typography variant="body1" color="text.primary">
               {client.firstName} {client.lastName}
             </Typography>
           )}
         </Breadcrumbs>
-        <Button variant="contained">Deactivate</Button>
       </Stack>
       <>
         {isFetching ? (
@@ -45,7 +44,7 @@ function ClientDetailPage() {
               lg={4}
               sx={{ pr: { md: 2 }, borderRight: { md: `1px dashed ${COLOURS.GREY[300]}` } }}
             >
-              <UserDetailPanel user={client} onUserUpdated={refetch} />
+              <UserDetailPanel userId={clientId} onUserUpdated={refetch} />
             </Grid>
             <Grid item xs={12} md={6} lg={8}>
               {/* <Stack spacing={2}>

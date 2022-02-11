@@ -3,7 +3,7 @@ import { COLOURS } from "./colours";
 
 const typography: TypographyOptions = {
   button: {
-    // textTransform: "none",
+    textTransform: "uppercase",
     fontWeight: 700,
   },
   h2: {

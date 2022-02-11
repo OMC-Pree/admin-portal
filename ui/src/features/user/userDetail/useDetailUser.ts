@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
-import { useLazyGetUserByIdQuery } from "../../api/users";
-import { useAppDispatch, useAppSelector } from "../../hooks/store";
-import { IdpErrorResponse } from "../../models/httpCalls";
+import { useLazyGetUserByIdQuery } from "../../../api/users";
+import { useAppDispatch, useAppSelector } from "../../../hooks/store";
+import { IdpErrorResponse } from "../../../models/httpCalls";
 import { selectDetailUser, setDetailUser } from "./userDetailSlice";
 
 function useDetailUser(id?: string) {

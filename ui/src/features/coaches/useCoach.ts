@@ -11,10 +11,11 @@ function useCoach(id?: string) {
   const [isFetching, setIsFetching] = useState(false);
 
   useEffect(() => {
-    if (!id) setCoach(undefined);
-  }, [id]);
+    if (!id && coach) setCoach(undefined);
+  }, [id, coach]);
 
-  async function loadCoach(_id: string) {
+  async function loadCoach(_id: string | undefined) {
+    if (!_id) return;
     setIsFetching(true);
     const userResponse = await getCoach(_id).unwrap();
     if (userResponse.data.length) setCoach(userResponse.data[0]);
@@ -23,11 +24,8 @@ function useCoach(id?: string) {
 
   useEffect(() => {
     const storedCoach = storedCoaches.find((user) => user.id === id);
-    if (storedCoach) {
-      setCoach(storedCoach);
-    } else if (id) {
-      loadCoach(id);
-    }
+    if (storedCoach) setCoach(storedCoach);
+    else loadCoach(id);
   }, [id, storedCoaches]);
 
   return useMemo(() => ({ coach, isFetching }), [coach, isFetching]);

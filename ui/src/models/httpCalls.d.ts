@@ -1,3 +1,4 @@
+import { INewUser } from "../features/user/user";
 import { IUser, UserRole } from "./user";
 
 export type IdpErrors = string[];
@@ -70,6 +71,12 @@ export type RegisterUserResponse = {
   meta: Record<string, unknown>;
   errors: string[];
 };
+
+export interface IDPNewUser extends INewUser {
+  onCreateSendValidationEmail: boolean;
+  onCreateSendResetPassword: boolean;
+  onCreateSendWelcomeEmail: boolean;
+}
 
 export interface TokenDecryptResponse {
   exp: number;

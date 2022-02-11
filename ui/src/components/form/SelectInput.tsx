@@ -1,42 +1,63 @@
 import React from "react";
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import { Control, Controller } from "react-hook-form";
+import {
+  Box,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectProps,
+  SxProps,
+  Theme,
+} from "@mui/material";
+import { Control, Controller, RegisterOptions } from "react-hook-form";
 
 interface ISelectOption {
   label: string;
   value: string | number;
 }
 
-interface ISelectInputProps {
+interface ISelectInputProps extends SelectProps {
   control: Control;
   name: string;
   label: string;
   options: ISelectOption[];
-  multiple?: boolean;
+  rules?: RegisterOptions;
+  sx?: SxProps<Theme>;
 }
 const SelectInput = ({
-  control,
   label,
-  name,
   options = [],
   multiple = false,
+  disabled,
+  size,
+  sx,
+  ...rest
 }: ISelectInputProps) => (
-  <Controller
-    name={name}
-    control={control}
-    render={({ field }) => (
-      <FormControl fullWidth>
-        <InputLabel>{label}</InputLabel>
-        <Select label={label} {...field} multiple={multiple}>
-          {options.map(({ label, value }) => (
-            <MenuItem key={label} value={value}>
-              {label}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-    )}
-  />
+  <Box sx={sx}>
+    <Controller
+      {...rest}
+      render={({ field, fieldState: { error } }) => (
+        <FormControl fullWidth>
+          <InputLabel>{label}</InputLabel>
+          <Select
+            variant="outlined"
+            label={label}
+            {...field}
+            multiple={multiple}
+            disabled={disabled}
+            size={size}
+            error={!!error}
+          >
+            {options.map(({ label: optLabel, value }) => (
+              <MenuItem key={`select-option${value}`} value={value}>
+                {optLabel}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      )}
+    />
+  </Box>
 );
 
 export default SelectInput;

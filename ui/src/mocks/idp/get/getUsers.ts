@@ -17,7 +17,7 @@ export const getUsers: MockRestHandler = (req, res, ctx) => {
     if (found) finalResults = [found];
   } else {
     if (type) finalResults = MOCK_USERS.filter((u) => u.type === type);
-    if (coachId) finalResults = finalResults.filter((u) => u.coachUserID === coachId);
+    if (coachId) finalResults = finalResults.filter((u) => u.coachUserId === coachId);
   }
 
   return res(ctx.status(200), ctx.json({ data: finalResults, errors: [], meta: {} }));

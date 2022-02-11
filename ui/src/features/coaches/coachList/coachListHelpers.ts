@@ -6,16 +6,7 @@ import { ICoachTableData } from "../coach";
 
 export const formatTableData = (coaches: IUser[]): ICoachTableData[] =>
   coaches.map((coach) => ({
-    ...pick(coach, [
-      "id",
-      "airTableId",
-      "firstName",
-      "lastName",
-      "email",
-      "type",
-      // "dateOfBirth",
-      "createdAt",
-    ]),
+    ...pick(coach, ["id", "airTableId", "firstName", "lastName", "email", "type", "createdAt"]),
     permissions: coach.permissions.join(","),
   }));
 
@@ -25,7 +16,6 @@ export const headCells: IHeadCell[] = [
   { id: "firstName", label: "First name", numeric: false, disablePadding: false },
   { id: "lastName", label: "Last name", numeric: false, disablePadding: false },
   { id: "email", label: "Email", numeric: false, disablePadding: false },
-  // { id: "dateOfBirth", label: "DOB", numeric: false, disablePadding: false },
   { id: "type", label: "Type", numeric: false, disablePadding: false },
   { id: "permissions", label: "Permissions", numeric: false, disablePadding: false },
   { id: "createdAt", label: "Created", numeric: false, disablePadding: false },

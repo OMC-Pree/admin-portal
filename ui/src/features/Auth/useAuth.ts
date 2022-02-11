@@ -5,7 +5,7 @@ import { useMyAccountQuery } from "../../api/users";
 import { useAppDispatch, useAppSelector } from "../../hooks/store";
 import { IdpErrorResponse } from "../../models/httpCalls";
 import { IUser } from "../user/user";
-import { UserPermissions, UserType } from "../user/userEnums";
+import { UserPermissions } from "../user/userEnums";
 import { logout, selectCurrentUser, selectToken, setToken, setUser } from "./authSlice";
 
 interface IUseAuthReturnValues {
@@ -16,6 +16,8 @@ interface IUseAuthReturnValues {
   userLoaded: boolean;
   accessMessage: string;
   isCoach: boolean;
+  isManager: boolean;
+  isAdmin: boolean;
   signin: (data: { email: string; password: string }) => Promise<void>;
   logout: () => void;
 }
@@ -80,7 +82,12 @@ function useAuth(): IUseAuthReturnValues {
       getUserError: isError,
       userLoaded: isSuccess,
       accessMessage,
-      isCoach: storedUser?.type === UserType.COACH,
+      isCoach: storedUser ? storedUser.permissions.includes(UserPermissions.COACH) : false,
+      isManager: storedUser ? storedUser.permissions.includes(UserPermissions.MANAGER) : false,
+      isAdmin: storedUser
+        ? storedUser.permissions.includes(UserPermissions.ADMIN) ||
+          storedUser.permissions.includes(UserPermissions.UNSECURE_ROOT)
+        : false,
       signin: onSignIn,
       logout: onLogout,
     }),

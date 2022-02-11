@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { Box, Breadcrumbs, Button, Divider, Grid, Stack, Typography } from "@mui/material";
+import { Box, Breadcrumbs, Divider, Grid, Stack, Typography } from "@mui/material";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import TableListFilter from "../components/table/TableListFilter";
 import RequireAuth from "../features/auth/RequireAuth";
 import ClientList from "../features/clients/clientList/ClientList";
 import NoClients from "../features/clients/clientList/NoClients";
 import useCoachClients from "../features/clients/useCoachClients";
-import useDetailUser from "../features/user/useDetailUser";
-import UserDetailPanel from "../features/user/UserDetailPanel";
+import useDetailUser from "../features/user/userDetail/useDetailUser";
+import UserDetailPanel from "../features/user/userDetail/UserDetailPanel";
 import { COLOURS } from "../theme/colours";
 
 function CoachDetailPage() {
@@ -16,6 +16,8 @@ function CoachDetailPage() {
   const { detailUser: coach, isFetching, refetch } = useDetailUser(coachId);
   const { clients } = useCoachClients({ coachId: coach?.id });
   const [filter, setFilter] = useState<string>("");
+
+  if (!coachId) return null;
 
   const filteredClients = filter
     ? clients.filter((client) => {
@@ -48,7 +50,6 @@ function CoachDetailPage() {
             </Typography>
           )}
         </Breadcrumbs>
-        <Button variant="contained">Deactivate</Button>
       </Stack>
       <>
         {isFetching ? (
@@ -61,7 +62,7 @@ function CoachDetailPage() {
               md={4}
               sx={{ pr: { md: 2 }, borderRight: { md: `1px dashed ${COLOURS.GREY[300]}` } }}
             >
-              <UserDetailPanel user={coach} onUserUpdated={refetch} />
+              <UserDetailPanel userId={coachId} onUserUpdated={refetch} />
             </Grid>
             <Grid item xs={12} md={8}>
               <Stack spacing={2}>

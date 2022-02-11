@@ -29,6 +29,8 @@
   },
   "scripts": {
     "start": "GENERATE_SOURCEMAP=false REACT_APP_ENV=dev react-scripts start",
+    "start:staging": "GENERATE_SOURCEMAP=false REACT_APP_ENV=staging react-scripts start",
+    "start:prod": "GENERATE_SOURCEMAP=false REACT_APP_ENV=prod react-scripts start",
     "build:dev": "REACT_APP_ENV=dev react-scripts build",
     "build:staging": "REACT_APP_ENV=staging react-scripts build",
     "build": "REACT_APP_ENV=prod react-scripts build",

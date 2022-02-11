@@ -2,21 +2,20 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { uniqBy } from "lodash";
 import { RootState } from "../../app/store";
 import { IUser } from "../user/user";
+import { sortUsersByKey } from "../user/userSorters";
+import { CoachesState } from "./coach";
 
-type CoachesState = {
-  coaches: IUser[];
-  clients: IUser[];
-};
+const sorter = sortUsersByKey("lastName");
 
 const slice = createSlice({
   name: "coaches",
   initialState: { coaches: [], clients: [] } as CoachesState,
   reducers: {
     setCoaches: (state, { payload }: PayloadAction<IUser[]>) => {
-      state.coaches = payload;
+      state.coaches = payload.sort(sorter);
     },
     addCoaches: (state, { payload }: PayloadAction<IUser[]>) => {
-      state.coaches = uniqBy(state.coaches.concat(payload), "id");
+      state.coaches = uniqBy(state.coaches.concat(payload), "id").sort(sorter);
     },
     updateStoredCoach: (state, { payload }: PayloadAction<Partial<IUser>>) => {
       state.coaches = state.coaches.map((coach) => {
@@ -25,7 +24,7 @@ const slice = createSlice({
       });
     },
     setClients: (state, { payload }: PayloadAction<IUser[]>) => {
-      state.clients = payload;
+      state.clients = [...payload].sort(sorter);
     },
   },
 });

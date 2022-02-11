@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import { Button, Stack, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import RequireAuth from "../features/auth/RequireAuth";
 import useCoaches from "../features/coaches/useCoaches";
 import CoachList from "../features/coaches/coachList/CoachList";
 import TableListFilter from "../components/table/TableListFilter";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 function CoachListPage() {
   const navigate = useNavigate();
   const { coaches } = useCoaches();
-  const [filter, setFilter] = useState<string>("");
+  const [filter, setFilter] = useState("");
 
   const filteredCoaches = filter
     ? coaches.filter((coach) => {
@@ -42,12 +42,11 @@ function CoachListPage() {
         >
           <TableListFilter filter={filter} setFilter={setFilter} onKeyUp={onFilterKeyUp} />
           <Stack direction="row" spacing={1}>
-            <Button variant="contained" sx={{ width: 150 }}>
-              New user
-            </Button>
-            <Button variant="contained" sx={{ width: 150 }}>
-              Bulk create
-            </Button>
+            <Box component={NavLink} to="/user/create" sx={{ textDecoration: "none" }}>
+              <Button sx={{ width: 150 }} variant="contained">
+                new user
+              </Button>
+            </Box>
           </Stack>
         </Stack>
       </Stack>

@@ -19,26 +19,26 @@ export type UserAddress = {
 
 export interface INewUser {
   type: UserType;
-  managerUserID: string;
-  coachUserID: string;
-  clientUserID: string;
-  permissions: UserPermissions[];
   email: string;
-  title: string;
-  pronoun: string;
   firstName: string;
   lastName: string;
-  dateOfBirth: string;
-  phones: UserPhoneNumber[];
-  addresses: UserAddress[];
+  dateOfBirth?: string;
+  airTableId: string;
+  managerUserId?: string;
+  coachUserId?: string;
+  clientUserId?: string;
+  associateUserId?: string;
+  title?: string;
+  pronoun?: string;
+  phones?: UserPhoneNumber[];
+  addresses?: UserAddress[];
 }
 
 export interface IUser extends INewUser {
   id: string;
-  associateUserId: string;
-  airTableId: string;
   emailVerified: boolean;
   password: string;
+  permissions: UserPermissions[];
   resetToken: string | null;
   resetTokenExpiry: string | null;
   planId: string;

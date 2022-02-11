@@ -1,4 +1,9 @@
-import { GetUsersRequest, GetUsersResponse, StandardUsersResponse } from "../models/httpCalls";
+import {
+  GetUsersRequest,
+  GetUsersResponse,
+  IDPNewUser,
+  StandardUsersResponse,
+} from "../models/httpCalls";
 import { IUser } from "../features/user/user";
 import { idpApi } from "./idpApi";
 
@@ -8,6 +13,12 @@ export const clientsApi = idpApi.injectEndpoints({
       query: (params) => ({
         url: "users",
         params,
+      }),
+    }),
+    getManagers: builder.query<GetUsersResponse, GetUsersRequest>({
+      query: (params) => ({
+        url: "users",
+        params: { ...params, type: "manager" },
       }),
     }),
     getCoaches: builder.query<GetUsersResponse, GetUsersRequest>({
@@ -41,11 +52,20 @@ export const clientsApi = idpApi.injectEndpoints({
         body: user,
       }),
     }),
+    bulkCreateUser: builder.mutation<GetUsersResponse, IDPNewUser[]>({
+      query: (body) => ({
+        url: "user/bulk-create",
+        method: "POST",
+        body,
+      }),
+    }),
   }),
 });
 
 export const {
+  useBulkCreateUserMutation,
   useGetUsersQuery,
+  useLazyGetManagersQuery,
   useLazyGetCoachesQuery,
   useLazyGetClientsQuery,
   useGetCoachesQuery,

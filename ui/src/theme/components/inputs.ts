@@ -55,7 +55,7 @@ export const MuiFormHelperText = {
 export const MuiOutlinedInput = {
   styleOverrides: {
     root: {
-      borderRadius: "3px",
+      borderRadius: 6,
       "&:hover": {
         [`& .${outlinedInputClasses["notchedOutline"]}`]: {
           borderColor: COLOURS.PURPLE[500],
@@ -72,11 +72,10 @@ export const MuiOutlinedInput = {
           borderColor: COLOURS.PURPLE[500],
         },
       },
-      "& .MuiOutlinedInput-input": {
-        padding: "10px 8px",
-      },
       "& .MuiSelect-select": {
-        padding: "10px 8px",
+        "&.MuiInputBase-inputSizeSmall": {
+          color: "blue",
+        },
       },
     },
   },
@@ -115,7 +114,7 @@ export const MuiInput = {
   styleOverrides: {
     root: {
       border: "1px solid rgba(0, 0, 0, 0.23)",
-      borderRadius: "3px",
+      borderRadius: 6,
       padding: "4px 12px",
       "&:hover": {
         backgroundColor: COLOURS.WHITE,
