@@ -2,18 +2,31 @@ all: run
 # https://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
 help: ## This help
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-z0-9A-Z_-]+:.*?## / {printf "\033[36m%-45s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
+
+
+#### Build dev
+build-dev: 
+	cd ui && yarn build:dev
+
+#### Build staging
+build-staging:
+	cd ui && yarn build:staging
+
+#### Build production
+build-prod:
+	cd ui && yarn build:production
 	
 #### Upload to dev
 dev-sync:
-	aws s3 sync dist s3://admin-portal-dev-uk.techomc.com
+	cd ui && aws s3 sync build s3://admin-portal-dev-uk.techomc.com
 
 #### Upload to staging
 stg-sync:
-	aws s3 sync dist s3://admin-portal-staging-uk.techomc.com
+	cd ui && aws s3 sync build s3://admin-portal-staging-uk.techomc.com
 
 #### Upload to prod
-prod-sync:
-	aws s3 sync dist s3://admin-portal-production-uk.techomc.com
+# prod-sync:
+# 	cd ui && aws s3 sync build s3://admin-portal-production-uk.techomc.com
 
 #### Terraform deploy development
 init-dev: ## terraform init
