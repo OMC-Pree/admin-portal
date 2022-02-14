@@ -1,6 +1,6 @@
 import { format, parseISO } from "date-fns";
 import { pick } from "lodash";
-import { IHeadCell, SortOrder } from "../../../components/table/table";
+import { IHeadCell, SortOrder } from "../../../components/table_fix/table";
 import { IUser } from "../../user/user";
 import { ICoachTableData } from "../coach";
 

@@ -3,7 +3,7 @@ import { Box, Button, Stack, Typography } from "@mui/material";
 import RequireAuth from "../features/auth/RequireAuth";
 import useCoaches from "../features/coaches/useCoaches";
 import CoachList from "../features/coaches/coachList/CoachList";
-import TableListFilter from "../components/table/TableListFilter";
+import TableListFilter from "../components/table_fix/TableListFilter";
 import { NavLink, useNavigate } from "react-router-dom";
 
 function CoachListPage() {

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Box, Breadcrumbs, Divider, Grid, Stack, Typography } from "@mui/material";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import TableListFilter from "../components/table/TableListFilter";
+import TableListFilter from "../components/table_fix/TableListFilter";
 import RequireAuth from "../features/auth/RequireAuth";
 import ClientList from "../features/clients/clientList/ClientList";
 import NoClients from "../features/clients/clientList/NoClients";

@@ -9,8 +9,8 @@ import {
   TableRow,
 } from "@mui/material";
 import { IUser } from "../../user/user";
-import { SortOrder } from "../../../components/table/table";
-import EnhancedTableHead from "../../../components/table/EnhancedTableHead";
+import { SortOrder } from "../../../components/table_fix/table";
+import EnhancedTableHead from "../../../components/table_fix/EnhancedTableHead";
 import { ICoachTableData } from "../coach";
 import { formatDate, formatTableData, getComparator, headCells } from "./coachListHelpers";
 import { useNavigate } from "react-router-dom";
