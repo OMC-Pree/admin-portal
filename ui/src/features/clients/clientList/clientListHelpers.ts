@@ -1,5 +1,5 @@
 import { pick } from "lodash";
-import { IHeadCell, SortOrder } from "../../../components/table_fix/table";
+import { IHeadCell, SortOrder } from "../../../components/table/table";
 import { IUser } from "../../user/user";
 import { IClientTableData } from "../client";
 
