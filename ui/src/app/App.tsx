@@ -1,6 +1,5 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import LoginPage from "../features/auth/LoginPage";
 import AppHeader from "../components/AppHeader";
 import { Box } from "@mui/material";
 import Home from "../pages/Home";
@@ -8,6 +7,7 @@ import CoachListPage from "../pages/CoachListPage";
 import CoachDetailPage from "../pages/CoachDetailPage";
 import ClientDetailPage from "../pages/ClientDetailPage";
 import CreateUserPage from "../pages/CreateUserPage";
+import LoginPage from "../pages/LoginPage";
 
 const App = () => (
   <div className="App">

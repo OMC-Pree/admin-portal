@@ -11,7 +11,7 @@ interface ILocation {
   };
 }
 
-function LoginPage() {
+function LoginForm() {
   const navigate = useNavigate();
   const location = useLocation() as ILocation;
   const { user, isFetchingUser, accessMessage, signin } = useAuth();
@@ -37,27 +37,25 @@ function LoginPage() {
   if (isFetchingUser) return null;
 
   return (
-    <Stack alignItems="center" mt={10}>
-      <Stack
-        component="form"
-        onSubmit={handleSubmit}
-        sx={{ width: "fit-content" }}
-        alignItems="center"
-        spacing={3}
-      >
-        <TextField label="email" name="email" type="text" sx={{ width: 400 }} />
-        <TextField label="password" name="password" type="password" sx={{ width: "100%" }} />
-        <Button type="submit" variant="contained" sx={{ width: "fit-content" }}>
-          Login
-        </Button>
-        {accessMessage && (
-          <Typography variant="body1" color="error" mt={3}>
-            Access denied
-          </Typography>
-        )}
-      </Stack>
+    <Stack
+      component="form"
+      onSubmit={handleSubmit}
+      sx={{ width: "fit-content" }}
+      alignItems="center"
+      spacing={3}
+    >
+      <TextField label="email" name="email" type="text" sx={{ width: 400 }} />
+      <TextField label="password" name="password" type="password" sx={{ width: "100%" }} />
+      <Button type="submit" variant="contained" sx={{ width: "fit-content" }}>
+        Login
+      </Button>
+      {accessMessage && (
+        <Typography variant="body1" color="error" mt={3}>
+          Access denied
+        </Typography>
+      )}
     </Stack>
   );
 }
 
-export default LoginPage;
+export default LoginForm;

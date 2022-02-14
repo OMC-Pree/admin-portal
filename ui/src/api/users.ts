@@ -34,7 +34,7 @@ export const clientsApi = idpApi.injectEndpoints({
       }),
     }),
     getClientsByCoachId: builder.query<GetUsersResponse, string | undefined>({
-      query: (id: string) => `users?coachUserID=${id}`,
+      query: (id: string) => `users?coachUserId=${id}`,
     }),
     getUserById: builder.query<GetUsersResponse, string | void>({
       query: (id: string) => `users?id=${id}`,

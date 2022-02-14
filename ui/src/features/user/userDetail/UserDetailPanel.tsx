@@ -43,7 +43,7 @@ function UserDetailPanel({ userId, onUserUpdated }: IUserDetailPanelProps) {
   if (!user) return null;
 
   return (
-    <Stack spacing={2}>
+    <Stack spacing={2} data-testid="user-detail-panel">
       <Stack direction="row" alignItems="flex-start" justifyContent="space-between">
         <Typography variant="h3" mb={1}>
           Personal information

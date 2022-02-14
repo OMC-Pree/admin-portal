@@ -25,9 +25,9 @@ export interface GetUsersRequest {
   id?: string;
   email?: string;
   type?: string;
-  coachUserID?: string;
-  managerUserID?: string;
-  clientUserID?: string;
+  coachUserId?: string;
+  managerUserId?: string;
+  clientUserId?: string;
   planId?: string;
   airTableId?: string;
   associateUserId?: string;

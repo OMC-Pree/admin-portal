@@ -120,7 +120,10 @@ function formatUserToCreate(data: FieldValues) {
   if (data.associateUserId) newUser.associateUserId = data.associateUserId.trim();
   if (data.coachUserID) newUser.coachUserId = data.coachUserID.trim();
   if (data.managerUserID) newUser.managerUserId = data.managerUserID.trim();
-  if (data.sendVerificationEmail) newUser.onCreateSendValidationEmail = true;
+  if (data.sendVerificationEmail) {
+    newUser.onCreateSendValidationEmail = true;
+    newUser.onCreateSendResetPassword = true;
+  }
   return [newUser] as IDPNewUser[];
 }
 

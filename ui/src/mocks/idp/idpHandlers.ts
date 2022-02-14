@@ -4,11 +4,7 @@ import { postUserSignin } from "./post/postUserSignin";
 import { getTokenDecrypt } from "./get/getTokenDecrypt";
 import { getUsers } from "./get/getUsers";
 import { patchUser } from "./patch/patchUser";
-
-export const idpBaseUrl =
-  process.env.NODE_ENV === "test"
-    ? process.env.REACT_APP_TEST_IDP_BASE_URL
-    : process.env.REACT_APP_DEV_IDP_BASE_URL;
+import { idpBaseUrl } from "../../api/idpApi";
 
 let handlers: RestHandler[] = [];
 

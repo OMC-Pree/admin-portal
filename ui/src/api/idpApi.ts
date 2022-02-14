@@ -8,7 +8,7 @@ export const idpBaseUrl =
     ? process.env.REACT_APP_STG_IDP_BASE_URL
     : process.env.REACT_APP_ENV === "dev"
     ? process.env.REACT_APP_DEV_IDP_BASE_URL
-    : process.env.REACT_APP_IDP_BASE_URL;
+    : process.env.REACT_APP_TEST_IDP_BASE_URL;
 
 export const idpApi = createApi({
   reducerPath: "idpApi",

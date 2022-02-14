@@ -34,7 +34,11 @@ function AppHeader() {
           {user && (
             <Stack direction="row" alignItems="center" spacing={1}>
               <NavLink to="/coaches" title="all coaches" end />
-              <Button id={NAV_MENU_TOGGLE_BTN_ID} onClick={() => setMenuOpen(!menuOpen)}>
+              <Button
+                id={NAV_MENU_TOGGLE_BTN_ID}
+                data-testid={NAV_MENU_TOGGLE_BTN_ID}
+                onClick={() => setMenuOpen(!menuOpen)}
+              >
                 {user.firstName} {user.lastName} {menuOpen ? <ArrowDropDown /> : <ArrowLeft />}
               </Button>
             </Stack>

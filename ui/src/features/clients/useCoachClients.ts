@@ -17,7 +17,7 @@ function useCoachClients({ coachId }: IUseCoachClientsProps) {
   useEffect(() => {
     if (!coachId) return;
     dispatch(setClients([]));
-    getClients({ max: numResultsPerCall, coachUserID: coachId });
+    getClients({ max: numResultsPerCall, coachUserId: coachId });
   }, [coachId]);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ function useCoachClients({ coachId }: IUseCoachClientsProps) {
       } = result.data;
       dispatch(setClients(data));
       if (count === numResultsPerCall) {
-        getClients({ max: numResultsPerCall, lastEvaluatedKey, coachUserID: coachId });
+        getClients({ max: numResultsPerCall, lastEvaluatedKey, coachUserId: coachId });
       }
     }
   }, [result]);

@@ -9,15 +9,15 @@ export const getUsers: MockRestHandler = (req, res, ctx) => {
   }
   const type = req.url.searchParams.get("type");
   const id = req.url.searchParams.get("id");
-  const coachId = req.url.searchParams.get("coachUserID");
+  const coachId = req.url.searchParams.get("coachUserId");
 
-  let finalResults: IUser[] = [];
+  let finalResults: IUser[] = [...MOCK_USERS];
   if (id) {
     const found = MOCK_USERS.find((u) => u.id === id);
     if (found) finalResults = [found];
   } else {
-    if (type) finalResults = MOCK_USERS.filter((u) => u.type === type);
     if (coachId) finalResults = finalResults.filter((u) => u.coachUserId === coachId);
+    if (type) finalResults = finalResults.filter((u) => u.type === type);
   }
 
   return res(ctx.status(200), ctx.json({ data: finalResults, errors: [], meta: {} }));
