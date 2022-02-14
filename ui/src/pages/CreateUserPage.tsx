@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import React from "react";
 import GoBack from "../components/GoBack";
-import RequireAuth from "../features/auth/RequireAuth";
+import RequireAuth from "../features/auth_fix/RequireAuth";
 import CreateUserForm from "../features/user/createUsers/CreateUserForm";
 
 function CreateUserPage() {

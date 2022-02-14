@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Box, Button, Stack, Typography } from "@mui/material";
-import RequireAuth from "../features/auth/RequireAuth";
+import RequireAuth from "../features/auth_fix/RequireAuth";
 import useCoaches from "../features/coaches/useCoaches";
 import CoachList from "../features/coaches/coachList/CoachList";
 import TableListFilter from "../components/table/TableListFilter";

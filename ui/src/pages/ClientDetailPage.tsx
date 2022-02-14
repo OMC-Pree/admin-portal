@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Breadcrumbs, Grid, Stack, Typography } from "@mui/material";
 import { Link, useParams } from "react-router-dom";
-import RequireAuth from "../features/auth/RequireAuth";
+import RequireAuth from "../features/auth_fix/RequireAuth";
 import UserDetailPanel from "../features/user/userDetail/UserDetailPanel";
 import { COLOURS } from "../theme/colours";
 import useDetailUser from "../features/user/userDetail/useDetailUser";

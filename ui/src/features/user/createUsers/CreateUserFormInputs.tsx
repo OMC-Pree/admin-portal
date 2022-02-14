@@ -8,7 +8,7 @@ import { upperFirst } from "lodash";
 import { UserType } from "../userEnums";
 import useCoaches from "../../coaches/useCoaches";
 import useManagers from "../../managers/useManagers";
-import useAuth from "../../auth/useAuth";
+import useAuth from "../../auth_fix/useAuth";
 
 interface ICreateUserFormInputsProps {
   control: Control;

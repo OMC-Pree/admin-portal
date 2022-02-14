@@ -1,7 +1,7 @@
 import React from "react";
 import { Stack, Typography } from "@mui/material";
 import { Navigate } from "react-router-dom";
-import useAuth from "../features/auth/useAuth";
+import useAuth from "../features/auth_fix/useAuth";
 
 const Home = () => {
   const { user } = useAuth();
