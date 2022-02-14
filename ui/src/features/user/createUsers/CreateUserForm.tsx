@@ -16,8 +16,8 @@ const defaultValues: FieldValues = {
   email: "",
   firstName: "",
   lastName: "",
-  managerUserID: "",
-  coachUserID: "",
+  managerUserId: "",
+  coachUserId: "",
   type: UserType.CLIENT,
   associateUserId: "",
   airTableId: "",
@@ -44,15 +44,15 @@ function CreateUserForm() {
   });
 
   const typeValue = watch("type");
-  const coachIdValue = watch("coachUserID");
-  const managerIdValue = watch("managerUserID");
+  const coachIdValue = watch("coachUserId");
+  const managerIdValue = watch("managerUserId");
 
   useEffect(() => {
     if (typeValue === UserType.CLIENT && managerIdValue) {
       setValue("managerIdValue", "");
     }
     if (typeValue === UserType.COACH && coachIdValue) {
-      setValue("coachUserID", "");
+      setValue("coachUserId", "");
     }
   }, [typeValue, coachIdValue]);
 
@@ -118,8 +118,8 @@ function formatUserToCreate(data: FieldValues) {
   };
   if (data.airTableId) newUser.airTableId = data.airTableId.trim();
   if (data.associateUserId) newUser.associateUserId = data.associateUserId.trim();
-  if (data.coachUserID) newUser.coachUserId = data.coachUserID.trim();
-  if (data.managerUserID) newUser.managerUserId = data.managerUserID.trim();
+  if (data.coachUserId) newUser.coachUserId = data.coachUserId.trim();
+  if (data.managerUserId) newUser.managerUserId = data.managerUserId.trim();
   if (data.sendVerificationEmail) {
     newUser.onCreateSendValidationEmail = true;
     newUser.onCreateSendResetPassword = true;

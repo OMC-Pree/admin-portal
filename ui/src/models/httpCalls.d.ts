@@ -61,8 +61,8 @@ export type RegisterUserRequest = {
   title?: string;
   pronoun?: string;
   dateOfBirth?: string;
-  managerUserID?: string;
-  coachUserID?: string;
+  managerUserId?: string;
+  coachUserId?: string;
   clientUserID?: string;
 };
 

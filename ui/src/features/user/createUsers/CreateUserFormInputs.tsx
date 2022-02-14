@@ -24,6 +24,7 @@ function CreateUserFormInputs({
   const { isAdmin } = useAuth();
   const { coaches } = useCoaches();
   const { managers } = useManagers();
+  if (!coaches) return null;
   return (
     <>
       <TextInput
@@ -46,7 +47,7 @@ function CreateUserFormInputs({
       <SelectInput
         sx={{ pt: 1 }}
         control={control}
-        name="coachUserID"
+        name="coachUserId"
         label="Coach"
         rules={{ required: toBeClient }}
         disabled={toBeCoach}
@@ -60,7 +61,7 @@ function CreateUserFormInputs({
       <SelectInput
         sx={{ pt: 1 }}
         control={control}
-        name="managerUserID"
+        name="managerUserId"
         label="Manager"
         // rules={{ required: toBeCoach }}
         disabled={toBeClient}
