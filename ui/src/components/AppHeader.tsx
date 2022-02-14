@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
-import useAuth from "../features/auth_fix/useAuth";
+import useAuth from "../features/auth/useAuth";
 import NavLink from "./NavLink";
 import ArrowLeft from "@mui/icons-material/ArrowLeft";
 import ArrowDropDown from "@mui/icons-material/ArrowDropDown";

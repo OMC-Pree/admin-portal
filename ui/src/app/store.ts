@@ -1,5 +1,5 @@
 import { configureStore, combineReducers, AnyAction, Reducer } from "@reduxjs/toolkit";
-import authReducer from "../features/auth_fix/authSlice";
+import authReducer from "../features/auth/authSlice";
 import coachesReducer from "../features/coaches/coachesSlice";
 import managersReducer from "../features/managers/managersSlice";
 import userDetailReducer from "../features/user/userDetail/userDetailSlice";

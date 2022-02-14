@@ -1,6 +1,6 @@
 import React from "react";
 import { Stack } from "@mui/material";
-import LoginForm from "../features/auth_fix/LoginForm";
+import LoginForm from "../features/auth/LoginForm";
 
 function LoginPage() {
   return (
