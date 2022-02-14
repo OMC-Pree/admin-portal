@@ -14,19 +14,19 @@ build-staging:
 
 #### Build production
 build-prod:
-	cd ui && yarn build:production
+	cd ui && yarn build
 	
 #### Upload to dev
-dev-sync:
+sync-dev:
 	cd ui && aws s3 sync build s3://admin-portal-dev-uk.techomc.com
 
 #### Upload to staging
-stg-sync:
+sync-stg:
 	cd ui && aws s3 sync build s3://admin-portal-staging-uk.techomc.com
 
 #### Upload to prod
-# prod-sync:
-# 	cd ui && aws s3 sync build s3://admin-portal-production-uk.techomc.com
+sync-prod:
+	cd ui && aws s3 sync build s3://admin-portal.uk.techomc.com
 
 #### Terraform deploy development
 init-dev: ## terraform init
