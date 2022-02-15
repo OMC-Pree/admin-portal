@@ -62,6 +62,7 @@ function EditUserForm({ user, onSuccess, onCancel = noop }: IEditUserFormProps) 
           options={[
             { label: upperFirst(UserType.COACH), value: UserType.COACH },
             { label: upperFirst(UserType.CLIENT), value: UserType.CLIENT },
+            { label: upperFirst(UserType.MANAGER), value: UserType.MANAGER },
           ]}
         />
         <SelectInput
