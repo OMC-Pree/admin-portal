@@ -22,8 +22,8 @@ export interface INewUser {
   email: string;
   firstName: string;
   lastName: string;
-  dateOfBirth?: string;
   airTableId: string;
+  dateOfBirth?: string;
   managerUserId?: string;
   coachUserId?: string;
   clientUserId?: string;

@@ -24,6 +24,7 @@ function CreateUserFormInputs({
   const { isAdmin } = useAuth();
   const { coaches } = useCoaches();
   const { managers } = useManagers();
+
   if (!coaches) return null;
   return (
     <>
@@ -63,7 +64,7 @@ function CreateUserFormInputs({
         control={control}
         name="managerUserId"
         label="Manager"
-        // rules={{ required: toBeCoach }}
+        rules={{ required: toBeCoach }}
         disabled={toBeClient}
         options={[{ value: "", label: "Choose a manager" }].concat(
           [...managers].sort(sortUsersByKey("firstName")).map((manager) => ({

@@ -12,7 +12,6 @@ const CreateUserConfirmModal = ({ isOpen, close, onSave }: ICreateUserConfirmMod
   const modalDescriptionId = "create-user-modal-description";
   return (
     <Modal
-      data-testid="create-user-modal"
       open={isOpen}
       onClose={close}
       aria-labelledby={modalTitleId}

@@ -25,6 +25,7 @@ interface ISelectInputProps extends SelectProps {
   sx?: SxProps<Theme>;
 }
 const SelectInput = ({
+  name,
   label,
   options = [],
   multiple = false,
@@ -36,12 +37,15 @@ const SelectInput = ({
   <Box sx={sx}>
     <Controller
       {...rest}
+      name={name}
       render={({ field, fieldState: { error } }) => (
         <FormControl fullWidth>
-          <InputLabel>{label}</InputLabel>
+          <InputLabel id={`${label}-select-label`}>{label}</InputLabel>
           <Select
+            id={`${name}-select`}
             variant="outlined"
-            label={label}
+            label={`${label}-select`}
+            aria-labelledby={`${label}-select-label`}
             {...field}
             multiple={multiple}
             disabled={disabled}

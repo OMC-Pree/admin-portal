@@ -1,10 +1,10 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { Stack, TextField, Tooltip } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
 
 interface ITableListFilterProps {
   filter: string;
-  setFilter: (value: string) => void;
+  setFilter: Dispatch<SetStateAction<string>>;
   onKeyUp?: (key: string) => void;
 }
 

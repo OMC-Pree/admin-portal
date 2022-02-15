@@ -63,7 +63,7 @@ export type RegisterUserRequest = {
   dateOfBirth?: string;
   managerUserId?: string;
   coachUserId?: string;
-  clientUserID?: string;
+  clientUserId?: string;
 };
 
 export type RegisterUserResponse = {
