@@ -11,50 +11,50 @@ export const clientsApi = idpApi.injectEndpoints({
   endpoints: (builder) => ({
     getUsers: builder.query<GetUsersResponse, GetUsersRequest>({
       query: (params) => ({
-        url: "users",
+        url: "v1/users",
         params,
       }),
     }),
     getManagers: builder.query<GetUsersResponse, GetUsersRequest>({
       query: (params) => ({
-        url: "users",
+        url: "v1/users",
         params: { ...params, type: "manager" },
       }),
     }),
     getCoaches: builder.query<GetUsersResponse, GetUsersRequest>({
       query: (params) => ({
-        url: "users",
+        url: "v1/users",
         params: { ...params, type: "coach" },
       }),
     }),
     getClients: builder.query<GetUsersResponse, GetUsersRequest>({
       query: (params) => ({
-        url: "users",
+        url: "v1/users",
         params: { ...params, type: "client" },
       }),
     }),
     getClientsByCoachId: builder.query<GetUsersResponse, string | undefined>({
-      query: (id: string) => `users?coachUserId=${id}`,
+      query: (id: string) => `v1/users?coachUserId=${id}`,
     }),
     getUserById: builder.query<GetUsersResponse, string | void>({
-      query: (id: string) => `users?id=${id}`,
+      query: (id: string) => `v1/users?id=${id}`,
     }),
     myAccount: builder.query<StandardUsersResponse, void>({
       query: () => ({
-        url: `user/myaccount`,
+        url: `v1/user/myaccount`,
         method: "GET",
       }),
     }),
     updateUser: builder.mutation<GetUsersResponse, Partial<IUser>>({
       query: (user) => ({
-        url: `user/${user.id}`,
+        url: `v1/user/${user.id}`,
         method: "PATCH",
         body: user,
       }),
     }),
     bulkCreateUser: builder.mutation<GetUsersResponse, IDPNewUser[]>({
       query: (body) => ({
-        url: "user/bulk-create",
+        url: "v1/user/bulk-create",
         method: "POST",
         body,
       }),

@@ -4,7 +4,6 @@ import { MOCK_MANAGERS } from "../../mocks/data/mockManagers";
 import userEvent from "@testing-library/user-event";
 import { UserType } from "../../features/user/userEnums";
 import { MOCK_COACHES } from "../../mocks/data/mockCoaches";
-import { FieldValues } from "react-hook-form";
 import { upperFirst } from "lodash";
 
 const manager = MOCK_MANAGERS[0];

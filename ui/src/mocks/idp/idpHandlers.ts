@@ -11,12 +11,12 @@ let handlers: RestHandler[] = [];
 
 if (process.env.NODE_ENV === "test" || process.env.REACT_APP_MSW_IDP === "true") {
   handlers = [
-    rest.post(`${idpBaseUrl}user/signin`, postUserSignin),
-    rest.post(`${idpBaseUrl}user/bulk-create`, postUserBulkCreate),
-    rest.get(`${idpBaseUrl}token/decrypt`, getTokenDecrypt),
-    rest.get(`${idpBaseUrl}users`, getUsers),
-    rest.get(`${idpBaseUrl}user/myaccount`, getUserMyAccount),
-    rest.patch(`${idpBaseUrl}user/:userId`, patchUser),
+    rest.post(`${idpBaseUrl}v1/user/signin`, postUserSignin),
+    rest.post(`${idpBaseUrl}v1/user/bulk-create`, postUserBulkCreate),
+    rest.get(`${idpBaseUrl}v1/token/decrypt`, getTokenDecrypt),
+    rest.get(`${idpBaseUrl}v1/users`, getUsers),
+    rest.get(`${idpBaseUrl}v1/user/myaccount`, getUserMyAccount),
+    rest.patch(`${idpBaseUrl}v1/user/:userId`, patchUser),
   ];
 }
 

@@ -14,35 +14,35 @@ export const authApi = idpApi.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation<LoginResponse, LoginRequest>({
       query: (credentials) => ({
-        url: "user/signin",
+        url: "v1/user/signin",
         method: "POST",
         body: credentials,
       }),
     }),
     registerUser: builder.mutation<RegisterUserResponse, RegisterUserRequest>({
       query: (data) => ({
-        url: "user/register",
+        url: "v1/user/register",
         method: "POST",
         body: data,
       }),
     }),
     forgotPassword: builder.mutation<undefined, ForgotPasswordRequest>({
       query: (objWithEmail) => ({
-        url: "user/forgot-password",
+        url: "v1/user/forgot-password",
         method: "POST",
         body: objWithEmail,
       }),
     }),
     recoverPassword: builder.mutation<undefined, RecoverPasswordRequest>({
       query: (body) => ({
-        url: "user/recover-password",
+        url: "v1/user/recover-password",
         method: "POST",
         body,
       }),
     }),
     decryptToken: builder.query<TokenDecryptResponse, string | null>({
       query: (encryptedToken: string | null) => ({
-        url: `token/decrypt`,
+        url: `v1/token/decrypt`,
         method: "GET",
         headers: {
           authorization: `Bearer ${encryptedToken}`,
@@ -51,13 +51,13 @@ export const authApi = idpApi.injectEndpoints({
     }),
     emailVerified: builder.query<undefined, VerifyEmailRequest>({
       query: ({ token }) => ({
-        url: `user/email-verified?emailVerifiedToken=${token}`,
+        url: `v1/user/email-verified?emailVerifiedToken=${token}`,
         method: "GET",
       }),
     }),
     verifyEmail: builder.mutation<undefined, VerifyEmailRequest>({
       query: (body) => ({
-        url: "user/email-verified",
+        url: "v1/user/email-verified",
         method: "POST",
         body,
       }),
