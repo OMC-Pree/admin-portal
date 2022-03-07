@@ -4,6 +4,7 @@ import coachesReducer from "../features/coaches/coachesSlice";
 import managersReducer from "../features/managers/managersSlice";
 import userDetailReducer from "../features/user/userDetail/userDetailSlice";
 import { idpApi } from "../api/idpApi";
+import { getCookie } from "../utils/cookie";
 
 // Combine the reducers so that they can be wrapped in a root reducer.
 // Having a root reducer allows us to clear the store when a user logs out.
@@ -22,10 +23,10 @@ export const rootReducer: Reducer = (state: RootState, action: AnyAction) => {
   return combinedReducer(state, action);
 };
 
-// preload store with localStorage data
+// preload store
 const preloadedState = {
   auth: {
-    token: localStorage.getItem("token"),
+    token: getCookie("token"),
   },
 };
 

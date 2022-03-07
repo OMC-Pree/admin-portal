@@ -47,9 +47,9 @@ export interface LoginRequest {
 }
 
 export interface LoginResponse {
-  type: string;
-  expiryIn: number;
-  expiry: string;
+  tokenType: string;
+  tokenExpiryIn: number;
+  tokenExpiry: string;
   encryptedJWTToken: string;
 }
 

@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { LoginResponse } from "../../models/httpCalls";
+import { deleteCookie, setCookie } from "../../utils/cookie";
 import { IUser } from "../user/user";
 
 type AuthState = {
@@ -12,9 +13,12 @@ const slice = createSlice({
   name: "auth",
   initialState: { user: null, token: null } as AuthState,
   reducers: {
-    setToken: (state, { payload: { encryptedJWTToken } }: PayloadAction<LoginResponse>) => {
+    setToken: (
+      state,
+      { payload: { encryptedJWTToken, tokenExpiry } }: PayloadAction<LoginResponse>,
+    ) => {
       state.token = encryptedJWTToken;
-      localStorage.setItem("token", encryptedJWTToken);
+      setCookie({ name: "token", value: encryptedJWTToken, expires: tokenExpiry });
     },
     setUser: (state, { payload }: PayloadAction<IUser>) => {
       state.user = payload;
@@ -22,7 +26,7 @@ const slice = createSlice({
     logout: (state) => {
       state.user = null;
       state.token = null;
-      localStorage.clear();
+      deleteCookie({ name: "token" });
     },
   },
 });
