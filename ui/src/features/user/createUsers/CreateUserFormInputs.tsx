@@ -12,12 +12,16 @@ import useAuth from "../../auth/useAuth";
 
 interface ICreateUserFormInputsProps {
   control: Control;
+  setValue: (key: string, value: string) => void;
+  trigger: () => void;
   toBeClient: boolean;
   toBeCoach: boolean;
 }
 
 function CreateUserFormInputs({
   control,
+  setValue,
+  trigger,
   toBeClient = true,
   toBeCoach = false,
 }: ICreateUserFormInputsProps) {
@@ -28,51 +32,67 @@ function CreateUserFormInputs({
   if (!coaches) return null;
   return (
     <>
-      <TextInput
-        control={control}
-        type="email"
-        name="email"
-        label="Email"
-        rules={{ required: true }}
-      />
-      <TextInput control={control} name="firstName" label="First name" rules={{ required: true }} />
-      <TextInput control={control} name="lastName" label="Last name" rules={{ required: true }} />
-      <TextInput control={control} name="airTableId" label="AirTable ID" />
       <SelectInput
         sx={{ pt: 1 }}
         control={control}
         name="type"
         label="Type"
+        onChange={(event) => {
+          if (event.target.value === UserType.COACH) {
+            setValue("coachUserId", "");
+          } else if (event.target.value === UserType.CLIENT) {
+            setValue("managerUserId", "");
+          }
+          trigger();
+        }}
         options={generateTypeOptions(isAdmin)}
       />
-      <SelectInput
-        sx={{ pt: 1 }}
+      <TextInput
         control={control}
-        name="coachUserId"
-        label="Coach"
-        rules={{ required: toBeClient }}
-        disabled={toBeCoach}
-        options={[{ value: "", label: "Choose a coach" }].concat(
-          [...coaches].sort(sortUsersByKey("firstName")).map((coach) => ({
-            label: `${coach.firstName} ${coach.lastName}`,
-            value: coach.id,
-          })),
-        )}
+        type="email"
+        name="email"
+        label="Email"
+        rules={{
+          required: true,
+          pattern: {
+            value: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
+            message: "Entered value does not match email format",
+          },
+        }}
       />
-      <SelectInput
-        sx={{ pt: 1 }}
-        control={control}
-        name="managerUserId"
-        label="Manager"
-        rules={{ required: toBeCoach }}
-        disabled={toBeClient}
-        options={[{ value: "", label: "Choose a manager" }].concat(
-          [...managers].sort(sortUsersByKey("firstName")).map((manager) => ({
-            label: `${manager.firstName} ${manager.lastName}`,
-            value: manager.id,
-          })),
-        )}
-      />
+      <TextInput control={control} name="firstName" label="First name" rules={{ required: true }} />
+      <TextInput control={control} name="lastName" label="Last name" rules={{ required: true }} />
+      <TextInput control={control} name="airTableId" label="AirTable ID" />
+      {toBeClient ? (
+        <SelectInput
+          sx={{ pt: 1 }}
+          control={control}
+          name="coachUserId"
+          label="Coach"
+          rules={{ required: true }}
+          disabled={toBeCoach}
+          options={[{ value: "", label: "Choose a coach" }].concat(
+            [...coaches].sort(sortUsersByKey("firstName")).map((coach) => ({
+              label: `${coach.firstName} ${coach.lastName}`,
+              value: coach.id,
+            })),
+          )}
+        />
+      ) : (
+        <SelectInput
+          sx={{ pt: 1 }}
+          control={control}
+          name="managerUserId"
+          label="Manager"
+          disabled={toBeClient}
+          options={[{ value: "", label: "Choose a manager" }].concat(
+            [...managers].sort(sortUsersByKey("firstName")).map((manager) => ({
+              label: `${manager.firstName} ${manager.lastName}`,
+              value: manager.id,
+            })),
+          )}
+        />
+      )}
       <CheckboxInput
         control={control}
         label="Send Verification Email to user"

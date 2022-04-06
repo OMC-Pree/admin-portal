@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Box, Button, Stack } from "@mui/material";
 import { FieldValues, useForm } from "react-hook-form";
 import { UserPermissions, UserType } from "../userEnums";
@@ -30,31 +30,18 @@ function CreateUserForm() {
   const [createUsers] = useBulkCreateUserMutation();
   const [updateUser] = useUpdateUserMutation();
   const [saveModalOpen, setSaveModalOpen] = useState(false);
-  const [userToCreate, setUserToCreate] = useState<IDPNewUser[]>();
+  const [userToCreate, setUserToCreate] = useState<IDPNewUser>();
   const {
     control,
     handleSubmit,
     getValues,
     setValue,
-    watch,
-    formState: { isDirty, isValid },
+    trigger,
+    formState: { isDirty, isValid, errors },
   } = useForm<FieldValues>({
-    mode: "onChange",
+    mode: "all",
     defaultValues,
   });
-
-  const typeValue = watch("type");
-  const coachIdValue = watch("coachUserId");
-  const managerIdValue = watch("managerUserId");
-
-  useEffect(() => {
-    if (typeValue === UserType.CLIENT && managerIdValue) {
-      setValue("managerIdValue", "");
-    }
-    if (typeValue === UserType.COACH && coachIdValue) {
-      setValue("coachUserId", "");
-    }
-  }, [typeValue, coachIdValue]);
 
   const onSubmit = async (data: FieldValues) => {
     setSaveModalOpen(true);
@@ -62,9 +49,11 @@ function CreateUserForm() {
   };
 
   const doSave = async () => {
+    console.log(userToCreate);
+
     if (!userToCreate) return;
-    const userType = userToCreate[0].type;
-    const { data: createdUserData } = await createUsers(userToCreate).unwrap();
+    const userType = userToCreate.type;
+    const { data: createdUserData } = await createUsers([userToCreate]).unwrap();
     let newUser = createdUserData[0];
     if (newUser && userType !== UserType.CLIENT) {
       const { data: updatedUserResult } = await updateUser(
@@ -83,10 +72,16 @@ function CreateUserForm() {
         <Stack spacing={1}>
           <CreateUserFormInputs
             control={control}
+            trigger={trigger}
+            setValue={setValue}
             toBeClient={getValues("type") === UserType.CLIENT}
             toBeCoach={getValues("type") === UserType.COACH}
           />
-          <Button type="submit" variant="contained" disabled={!isDirty || !isValid}>
+          <Button
+            type="submit"
+            variant="contained"
+            disabled={!isDirty || !isValid || Object.keys(errors).length > 0}
+          >
             save
           </Button>
         </Stack>
@@ -124,7 +119,7 @@ function formatUserToCreate(data: FieldValues) {
     newUser.onCreateSendValidationEmail = true;
     newUser.onCreateSendResetPassword = true;
   }
-  return [newUser] as IDPNewUser[];
+  return newUser as IDPNewUser;
 }
 
 function generateUserUpdateData(createdUser: IUser, type: UserType) {

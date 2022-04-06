@@ -11,11 +11,11 @@ export const MuiTextField = {
     root: {
       paddingBottom: "4px",
       "&.Mui-error": {
-        borderWidth: 2,
+        borderWidth: 1,
         borderColor: COLOURS.RED,
       },
       "&.Mui-focused": {
-        borderWidth: 2,
+        borderWidth: 1,
         color: COLOURS.PURPLE[500],
         "&.Mui-error": {
           borderColor: COLOURS.RED,
@@ -95,11 +95,11 @@ export const MuiFilledInput = {
         borderColor: COLOURS.PURPLE[500],
       },
       "&.Mui-error": {
-        borderWidth: 2,
+        borderWidth: 1,
         borderColor: COLOURS.RED,
       },
       "&.Mui-focused": {
-        borderWidth: 2,
+        borderWidth: 1,
         backgroundColor: COLOURS.WHITE,
         borderColor: COLOURS.PURPLE[500],
         "&.Mui-error": {

@@ -32,6 +32,7 @@ const SelectInput = ({
   disabled,
   size,
   sx,
+  onChange,
   ...rest
 }: ISelectInputProps) => (
   <Box sx={sx}>
@@ -51,6 +52,10 @@ const SelectInput = ({
             disabled={disabled}
             size={size}
             error={!!error}
+            onChange={(event, child) => {
+              onChange?.(event, child);
+              field.onChange(event, child);
+            }}
           >
             {options.map(({ label: optLabel, value }) => (
               <MenuItem key={`select-option${value}`} value={value}>
