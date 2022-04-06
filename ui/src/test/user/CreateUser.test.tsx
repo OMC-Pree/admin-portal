@@ -29,37 +29,29 @@ const completeForm = async (userData: FieldValues) => {
   const firstNameInput = screen.getByRole("textbox", { name: /first name/i });
   const lastNameInput = screen.getByRole("textbox", { name: /last name/i });
   const typeSelect = getSelect("#type-select");
-  const coachSelect = getSelect("#coachUserId-select");
-  const managerSelect = getSelect("#managerUserId-select");
   const saveBtn = screen.getByRole("button", { name: /save/i });
 
+  expect(saveBtn).toBeDisabled();
+  await selectOption(typeSelect, upperFirst(type));
   await userEvent.type(emailInput, email, { delay: 1 });
   await userEvent.type(firstNameInput, firstName, { delay: 1 });
   await userEvent.type(lastNameInput, lastName, { delay: 1 });
-  await selectOption(typeSelect, upperFirst(type));
 
-  expect(saveBtn).toBeDisabled();
-
-  if (type === UserType.CLIENT) {
-    expect(coachSelect).not.toHaveAttribute("aria-disabled");
-    expect(managerSelect).toHaveAttribute("aria-disabled", "true");
-  } else if (type === UserType.COACH) {
-    expect(coachSelect).toHaveAttribute("aria-disabled", "true");
-    expect(managerSelect).not.toHaveAttribute("aria-disabled");
-  }
-
-  if (coachUserId) {
+  if (type === UserType.CLIENT && coachUserId) {
     const coach = MOCK_COACHES.find((c) => c.id === coachUserId);
+    const coachSelect = getSelect("#coachUserId-select");
     await selectOption(coachSelect, `${coach?.firstName} ${coach?.lastName}`);
     expect(coachSelect.textContent).toEqual(`${coach?.firstName} ${coach?.lastName}`);
   }
 
-  if (managerUserId) {
+  if (type === UserType.COACH && managerUserId) {
     const manager = MOCK_MANAGERS.find((m) => m.id === managerUserId);
+    const managerSelect = getSelect("#managerUserId-select");
     await selectOption(managerSelect, `${manager?.firstName} ${manager?.lastName}`);
     expect(managerSelect.textContent).toEqual(`${manager?.firstName} ${manager?.lastName}`);
   }
 
+  expect(saveBtn).not.toBeDisabled();
   userEvent.click(saveBtn);
   const modalTitle = await screen.findByText("Are you sure you want to create the user?");
   userEvent.click(screen.getByRole("button", { name: /yes/i }));

@@ -49,8 +49,6 @@ function CreateUserForm() {
   };
 
   const doSave = async () => {
-    console.log(userToCreate);
-
     if (!userToCreate) return;
     const userType = userToCreate.type;
     const { data: createdUserData } = await createUsers([userToCreate]).unwrap();
