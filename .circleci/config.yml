@@ -103,7 +103,7 @@ jobs:
           at: .
       - aws-s3/sync:
           from: ui/build
-          to: "s3://admin-portal-stg-uk.techomc.com" ## NEEDS2BE  s3://admin-portal-stg-uk.techomc.com
+          to: "s3://admin-portal-staging-uk.techomc.com" ## NEEDS2BE  s3://admin-portal-stg-uk.techomc.com
           arguments: |
             --delete \
             --acl public-read \
