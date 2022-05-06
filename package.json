@@ -1,0 +1,56 @@
+{
+  "name": "admin-portal-ui",
+  "version": "1.1.1",
+  "main": "index.js",
+  "repository": "https://github.com/Octopus-Moneycoach/admin-portal.git",
+  "author": "Mahendra Hirani <mahendra.hirani@octopusmoneycoach.com>",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "ui"
+  ],
+  "scripts": {
+    "start": " yarn start:ui",
+    "start:ui": "yarn workspace ui start",
+    "lint": "yarn ui:lint ",
+    "build-dev": "yarn ui:build-dev",
+    "build-staging": "yarn ui:build-staging",
+    "build-prod": "yarn ui:build-prod",
+    "test": "yarn ui:test",
+    "test-watch": "yarn ui:test-watch",
+    "ui:build-dev": "yarn workspace ui build-dev",
+    "ui:build-staging": "yarn workspace ui build-staging",
+    "ui:build-prod": "yarn workspace ui build-prod",
+    "ui:lint": "eslint --fix --ext .jsx,.js,.tsx,.ts ./ui/src",
+    "ui:test": "yarn workspace ui test",
+    "ui:test-watch": "yarn workspace ui test --watch",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.29.2",
+    "@typescript-eslint/parser": "^4.29.2",
+    "commitizen": "^4.2.4",
+    "cz-conventional-changelog": "3.3.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-flowtype": "^5.9.0",
+    "eslint-plugin-import": "^2.24.0",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-react": "^7.24.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "husky": "^7.0.0",
+    "prettier": "^2.3.2"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint",
+      "pre-push": "yarn ui:build && yarn test"
+    }
+  }
+}

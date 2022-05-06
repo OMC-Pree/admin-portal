@@ -1,5 +1,5 @@
 {
-  "name": "admin-portal-ui",
+  "name": "ui",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -29,11 +29,11 @@
   },
   "scripts": {
     "start": "GENERATE_SOURCEMAP=false REACT_APP_ENV=dev react-scripts start",
-    "start:staging": "GENERATE_SOURCEMAP=false REACT_APP_ENV=staging react-scripts start",
-    "start:prod": "GENERATE_SOURCEMAP=false REACT_APP_ENV=prod react-scripts start",
-    "build:dev": "REACT_APP_ENV=dev react-scripts build",
-    "build:staging": "REACT_APP_ENV=staging react-scripts build",
-    "build": "REACT_APP_ENV=prod react-scripts build",
+    "start-staging": "GENERATE_SOURCEMAP=false REACT_APP_ENV=staging react-scripts start",
+    "start-prod": "GENERATE_SOURCEMAP=false REACT_APP_ENV=prod react-scripts start",
+    "build-dev": "REACT_APP_ENV=dev react-scripts build",
+    "build-staging": "REACT_APP_ENV=staging react-scripts build",
+    "build-prod": "REACT_APP_ENV=prod react-scripts build",
     "test": "react-scripts test --verbose --watchAll=false",
     "test:watch": "react-scripts test --verbose",
     "eject": "react-scripts eject",
