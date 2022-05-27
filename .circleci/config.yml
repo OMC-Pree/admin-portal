@@ -147,7 +147,7 @@ jobs:
           at: .
       - aws-s3/sync:
           from: ui/build
-          to: "s3://admin-portal-uk.techomc.com" ## NEEDS2BE  s3://admin-portal-uk.techomc.com
+          to: "s3://admin-portal.uk.techomc.com" ## NEEDS2BE  s3://admin-portal.uk.techomc.com  MAYBE BETTER AS s3://admin-portal-uk.techomc.com UPDATE LATER
           arguments: |
             --delete \
             --acl public-read \
