@@ -42,8 +42,8 @@ resource "aws_cloudfront_distribution" "admin_portal_techomc_com" {
     // This needs to match the `origin_id` above.
     target_origin_id = var.s3_bucket_origin
     min_ttl          = 0
-    default_ttl      = 300 #5 min
-    max_ttl          = 604800 # 7 days
+    default_ttl      = 5 # invalidate cache after 5 sec   ##PREV## 300 # 5 min
+    max_ttl          = 5 # invalidate cache after 5 sec   ##PREV## 604800 # 7 days
 
     forwarded_values {
       query_string = false
