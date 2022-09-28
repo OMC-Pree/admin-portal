@@ -10,6 +10,7 @@
     "ui"
   ],
   "scripts": {
+    "postinstall": "yarn workspace ui install",
     "start": " yarn start:ui",
     "start:ui": "yarn workspace ui start",
     "lint": "yarn ui:lint ",
@@ -52,5 +53,6 @@
       "pre-commit": "yarn lint",
       "pre-push": "yarn ui:build && yarn test"
     }
-  }
+  },
+  "packageManager": "yarn@3.2.3"
 }
