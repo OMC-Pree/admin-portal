@@ -15,8 +15,12 @@ if (process.env.NODE_ENV === "development") {
   worker.start({ onUnhandledRequest: "bypass" });
 }
 
+// Ignore Provider error. App still works, its just a type warning.
+// https://github.com/facebook/react/issues/24304
 ReactDOM.render(
   <React.StrictMode>
+    {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+    {/* @ts-ignore */}
     <Provider store={store}>
       <BrowserRouter>
         <ThemeProvider theme={defaultTheme}>
