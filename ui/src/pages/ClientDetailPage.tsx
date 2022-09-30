@@ -1,14 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Breadcrumbs, Grid, Stack, Typography } from "@mui/material";
 import { Link, useParams } from "react-router-dom";
 import RequireAuth from "../features/auth/RequireAuth";
 import UserDetailPanel from "../features/user/userDetail/UserDetailPanel";
 import { COLOURS } from "../theme/colours";
 import useDetailUser from "../features/user/userDetail/useDetailUser";
+import UserNav from "../features/user/UserNav";
+import { NavOptions } from "../features/user/UserNavEnums";
+import UserAddress from "../features/user/userDetail/UserAddress";
+import UserBankDetails from "../features/user/userDetail/UserBankDetails";
+import UserTaxDetails from "../features/user/userDetail/UserTaxDetails";
 
 function ClientDetailPage() {
   const { clientId } = useParams();
   const { detailUser: client, isFetching, refetch } = useDetailUser(clientId);
+  const [currentPage, setCurrentPage] = useState<NavOptions>(NavOptions.PERSONAL_INFO);
 
   if (!client || !clientId) return null;
 
@@ -44,15 +50,15 @@ function ClientDetailPage() {
               lg={4}
               sx={{ pr: { md: 2 }, borderRight: { md: `1px dashed ${COLOURS.GREY[300]}` } }}
             >
-              <UserDetailPanel userId={clientId} onUserUpdated={refetch} />
+              <UserNav currentPage={currentPage} setCurrentPage={setCurrentPage} />
             </Grid>
             <Grid item xs={12} md={6} lg={8}>
-              {/* <Stack spacing={2}>
-                <Typography variant="h3" mb={1}>
-                  Client portal data
-                </Typography>
-                <Divider />
-              </Stack> */}
+              {currentPage === NavOptions.PERSONAL_INFO && (
+                <UserDetailPanel userId={clientId} onUserUpdated={refetch} />
+              )}
+              {currentPage === NavOptions.ADDRESS && <UserAddress client={client} />}
+              {currentPage === NavOptions.BANK_DETAILS && <UserBankDetails client={client} />}
+              {currentPage === NavOptions.TAX_INFO && <UserTaxDetails client={client} />}
             </Grid>
           </Grid>
         ) : null}

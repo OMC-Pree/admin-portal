@@ -5,16 +5,28 @@ export type UserPhoneNumber = {
 };
 
 export type UserAddress = {
-  type: string;
-  entityName: string;
-  organisation: string;
-  street1: string;
-  street2: string;
-  street3: string;
-  street4: string;
-  city: string;
-  zipCode: string;
-  countryAlpha2: string;
+  type?: string;
+  entityName?: string;
+  organisation?: string;
+  street1?: string;
+  street2?: string;
+  street3?: string;
+  street4?: string;
+  subDivision1?: ECountries;
+  city?: string;
+  zipCode?: string;
+  countryAlpha2?: string;
+};
+
+export type UserBankDetails = {
+  type: "BBAN" | "IBAN" | "SWIFT";
+  countryOfResidenceAlpha2: Country["alpha2"];
+  bankName: string;
+  accountHolderName: string;
+  accountNumber: string;
+  sortcode: string;
+  iban?: string;
+  swift?: string;
 };
 
 export interface INewUser {
@@ -45,4 +57,11 @@ export interface IUser extends INewUser {
   metadata: Record<string, unknown>;
   createdAt: string;
   updatedAt: string;
+  gender?: string;
+  biologicalSex?: "Female" | "Male" | "";
+  nationalityAlpha2?: Country["alpha2"] | null;
+  countryOfBirthAlpha2?: Country["alpha2"] | null;
+  nationalitiesIds?: UserNationalityId[] | null;
+  usCitizen?: boolean;
+  bankDetails?: UserBankDetails[];
 }
