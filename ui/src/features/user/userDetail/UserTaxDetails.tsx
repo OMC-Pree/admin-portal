@@ -8,17 +8,14 @@ interface UserTaxDetailsProps {
 }
 
 const UserTaxDetails = ({ client }: UserTaxDetailsProps) => {
-  const nin = useMemo(
+  const { nin, otherIds } = useMemo(
     () =>
-      client.nationalitiesIds?.find((nation) => nation.position === 1)?.identifiers[0].value ||
-      undefined,
-    [client.nationalitiesIds],
-  );
-
-  const otherNationalityIdentifier = useMemo(
-    () =>
-      client.nationalitiesIds?.find((nation) => nation.position !== 1)?.identifiers[0].value ||
-      undefined,
+      client.nationalitiesIds?.length
+        ? {
+            nin: client.nationalitiesIds[0].identifiers[0].value,
+            otherIds: client.nationalitiesIds.slice(1),
+          }
+        : { nin: undefined, otherIds: undefined },
     [client.nationalitiesIds],
   );
 
@@ -28,14 +25,18 @@ const UserTaxDetails = ({ client }: UserTaxDetailsProps) => {
       <Divider />
       <Stack gap={3} sx={{ pl: 1 }}>
         <InfoField label="Country of Birth" answer={client.countryOfBirthAlpha2} />
-        <InfoField label="National Insurance Number" answer={nin} />
-        <InfoField label="Nationality" answer={client.nationalityAlpha2} />
-        {otherNationalityIdentifier && (
-          <>
-            <InfoField label="Identifier Document Name" answer={otherNationalityIdentifier.name} />
-            <InfoField label="Identifier Value" answer={otherNationalityIdentifier.value} />
-          </>
+        {client.nationalitiesIds?.length ? (
+          <InfoField label="National Insurance Number" answer={nin} />
+        ) : (
+          <></>
         )}
+        <InfoField label="Nationality" answer={client.nationalityAlpha2} />
+        {otherIds?.map((id, idx) => (
+          <Stack gap={3} key={`nationality-id-${idx}`}>
+            <InfoField label="Identifier Document Name" answer={id.identifiers[0].name} />
+            <InfoField label="Identifier Value" answer={id.identifiers[0].value} />
+          </Stack>
+        ))}
       </Stack>
     </Stack>
   );

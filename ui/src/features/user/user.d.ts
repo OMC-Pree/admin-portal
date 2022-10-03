@@ -29,6 +29,14 @@ export type UserBankDetails = {
   swift?: string;
 };
 
+export type NationalityIdentifier = { name: string; value: string };
+
+export type UserNationalityId = {
+  position: number;
+  countryOfResidenceAlpha2: Country["alpha2"];
+  identifiers: NationalityIdentifier[];
+};
+
 export interface INewUser {
   type: UserType;
   email: string;
