@@ -42,25 +42,13 @@ jobs:
           root: .
           paths:
             - .
-  build_dev:
+
+  build_deploy_dev:
     executor: my-executor
     steps:
       - attach_workspace:
           at: .
       - run: yarn build-dev
-      - persist_to_workspace:
-          root: .
-          paths:
-            - .
-      - persist_to_workspace:
-          root: .
-          paths:
-            - .
-  s3_deploy_dev:
-    executor: my-executor
-    steps:
-      - attach_workspace:
-          at: .
       - aws-s3/sync:
           from: ui/build
           to: "s3://admin-portal-dev-uk.techomc.com" ## NEEDS2BE  s3://admin-portal-dev-uk.techomc.com
@@ -69,29 +57,12 @@ jobs:
             --acl public-read \
             --cache-control "max-age=86400"
 
-  build_stg:
-    executor: my-executor
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            - v1-dependencies-
-      - run: yarn install
-      - save_cache:
-          paths:
-            - ui/node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-      - run: yarn build-staging
-      - persist_to_workspace:
-          root: .
-          paths:
-            - .
-  s3_deploy_stg:
+  build_deploy_stg:
     executor: my-executor
     steps:
       - attach_workspace:
           at: .
+      - run: yarn build-staging
       - aws-s3/sync:
           from: ui/build
           to: "s3://admin-portal-staging-uk.techomc.com" ## NEEDS2BE  s3://admin-portal-stg-uk.techomc.com
@@ -100,29 +71,12 @@ jobs:
             --acl public-read \
             --cache-control "max-age=86400"
 
-  build_prod:
-    executor: my-executor
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            - v1-dependencies-
-      - run: yarn install
-      - save_cache:
-          paths:
-            - ui/node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-      - run: yarn build-prod
-      - persist_to_workspace:
-          root: .
-          paths:
-            - .
-  s3_deploy_prod:
+  build_deploy_prod:
     executor: my-executor
     steps:
       - attach_workspace:
           at: .
+      - run: yarn build-prod
       - aws-s3/sync:
           from: ui/build
           to: "s3://admin-portal.uk.techomc.com" ## NEEDS2BE  s3://admin-portal.uk.techomc.com  MAYBE BETTER AS s3://admin-portal-uk.techomc.com UPDATE LATER
@@ -136,44 +90,23 @@ workflows:
   build_test_deploy:
     jobs:
       - test
-      - build_dev:
+      - build_deploy_dev:
+          requires:
+            - test
+          filters:
+            branches:
+              only:
+                - develop
+      - build_deploy_stg:
           requires:
             - test
           filters:
             branches:
               only:
                 - main
-      - s3_deploy_dev:
+      - build_deploy_prod:
           requires:
-            - build_dev
-          filters:
-            branches:
-              only:
-                - main
-      - build_stg:
-          requires:
-            - test
-          filters:
-            branches:
-              only:
-                - main
-      - s3_deploy_stg:
-          requires:
-            - build_stg
-          filters:
-            branches:
-              only:
-                - main
-      - build_prod:
-          requires:
-            - test
-          filters:
-            branches:
-              only:
-                - main
-      - s3_deploy_prod:
-          requires:
-            - build_prod
+            - build_deploy_stg
           filters:
             branches:
               only:
