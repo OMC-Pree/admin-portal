@@ -82,7 +82,6 @@ jobs:
           paths:
             - ui/node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-      - run: yarn lint
       - run: yarn build-staging
       - persist_to_workspace:
           root: .
@@ -114,7 +113,6 @@ jobs:
           paths:
             - ui/node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-      - run: yarn lint
       - run: yarn build-prod
       - persist_to_workspace:
           root: .
@@ -154,7 +152,7 @@ workflows:
                 - main
       - build_stg:
           requires:
-            - s3_deploy_dev
+            - test
           filters:
             branches:
               only:
@@ -168,7 +166,7 @@ workflows:
                 - main
       - build_prod:
           requires:
-            - s3_deploy_stg
+            - test
           filters:
             branches:
               only:
