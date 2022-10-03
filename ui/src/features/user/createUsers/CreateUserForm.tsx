@@ -53,7 +53,7 @@ function CreateUserForm() {
     const userType = userToCreate.type;
     const { data: createdUserData } = await createUsers([userToCreate]).unwrap();
     let newUser = createdUserData[0];
-    if (newUser && userType !== UserType.CLIENT) {
+    if (newUser) {
       const { data: updatedUserResult } = await updateUser(
         generateUserUpdateData(newUser, userType),
       ).unwrap();
@@ -105,17 +105,22 @@ function formatUserToCreate(data: FieldValues) {
     email: data.email.trim(),
     firstName: data.firstName.trim(),
     lastName: data.lastName.trim(),
-    onCreateSendValidationEmail: false,
-    onCreateSendResetPassword: false,
-    onCreateSendWelcomeEmail: false,
+    onCreateSendEmailHQToCoach: false,
+    onCreateSendEmailHQToClient: false,
+    onCreateSendEmailCoachToClient: false,
   };
   if (data.airTableId) newUser.airTableId = data.airTableId.trim();
   if (data.associateUserId) newUser.associateUserId = data.associateUserId.trim();
   if (data.coachUserId) newUser.coachUserId = data.coachUserId.trim();
   if (data.managerUserId) newUser.managerUserId = data.managerUserId.trim();
-  if (data.sendVerificationEmail) {
-    newUser.onCreateSendValidationEmail = true;
-    newUser.onCreateSendResetPassword = true;
+  if (data.sendPasswordCreationEmail && data.type === UserType.CLIENT) {
+    newUser.onCreateSendEmailHQToClient = true;
+  }
+  if (
+    data.sendPasswordCreationEmail &&
+    (data.type === UserType.COACH || data.type === UserType.MANAGER)
+  ) {
+    newUser.onCreateSendEmailHQToCoach = true;
   }
   return newUser as IDPNewUser;
 }
@@ -124,6 +129,7 @@ function generateUserUpdateData(createdUser: IUser, type: UserType) {
   const permissions: UserPermissions[] = [];
   if (type === UserType.COACH) permissions.push(UserPermissions.COACH);
   if (type === UserType.MANAGER) permissions.push(UserPermissions.MANAGER);
+  if (type === UserType.CLIENT) permissions.push(UserPermissions.CLIENT);
   return {
     id: createdUser.id,
     type,

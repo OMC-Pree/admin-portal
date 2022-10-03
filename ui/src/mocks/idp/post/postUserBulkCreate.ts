@@ -1,19 +1,18 @@
 import { GetUsersResponse, IDPNewUser } from "../../../models/httpCalls";
 import { MockRestHandler } from "../../types";
 import { IUser } from "../../../features/user/user";
-import { UserPermissions, UserType } from "../../../features/user/userEnums";
 
 export const postUserBulkCreate: MockRestHandler = (req, res, ctx) => {
   const newUsers: IUser[] = (req.body as IDPNewUser[]).map((user, idx) => ({
     id: `new-user-${idx}`,
-    type: UserType.CLIENT,
+    type: "",
     email: user.email,
     firstName: user.firstName,
     lastName: user.lastName,
     airTableId: user.airTableId,
     emailVerified: false,
     password: `${idx}-password`,
-    permissions: [UserPermissions.CLIENT],
+    permissions: [],
     resetToken: "",
     resetTokenExpiry: "",
     planId: "",

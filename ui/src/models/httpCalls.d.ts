@@ -73,9 +73,9 @@ export type RegisterUserResponse = {
 };
 
 export interface IDPNewUser extends INewUser {
-  onCreateSendValidationEmail: boolean;
-  onCreateSendResetPassword: boolean;
-  onCreateSendWelcomeEmail: boolean;
+  onCreateSendEmailHQToCoach: boolean;
+  onCreateSendEmailHQToClient: boolean;
+  onCreateSendEmailCoachToClient: boolean;
 }
 
 export interface TokenDecryptResponse {

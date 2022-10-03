@@ -95,8 +95,8 @@ function CreateUserFormInputs({
       )}
       <CheckboxInput
         control={control}
-        label="Send Verification Email to user"
-        name="sendVerificationEmail"
+        label="Send password creation email to new user"
+        name="sendPasswordCreationEmail"
       />
     </>
   );

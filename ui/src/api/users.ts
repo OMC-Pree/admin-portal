@@ -54,7 +54,7 @@ export const clientsApi = idpApi.injectEndpoints({
     }),
     bulkCreateUser: builder.mutation<GetUsersResponse, IDPNewUser[]>({
       query: (body) => ({
-        url: "v1/user/bulk-create",
+        url: "v2/user/bulk-create",
         method: "POST",
         body,
       }),

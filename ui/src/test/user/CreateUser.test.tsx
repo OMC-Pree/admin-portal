@@ -19,12 +19,11 @@ const newUser: FieldValues = {
   type: UserType.CLIENT,
   associateUserId: "",
   airTableId: "",
-  sendVerificationEmail: true,
+  sendPasswordCreationEmail: true,
 };
 
 const completeForm = async (userData: FieldValues) => {
   const { email, firstName, lastName, type, coachUserId, managerUserId } = userData;
-
   const emailInput = screen.getByRole("textbox", { name: /email/i });
   const firstNameInput = screen.getByRole("textbox", { name: /first name/i });
   const lastNameInput = screen.getByRole("textbox", { name: /last name/i });
@@ -32,6 +31,7 @@ const completeForm = async (userData: FieldValues) => {
   const saveBtn = screen.getByRole("button", { name: /save/i });
 
   expect(saveBtn).toBeDisabled();
+
   await selectOption(typeSelect, upperFirst(type));
   await userEvent.type(emailInput, email, { delay: 1 });
   await userEvent.type(firstNameInput, firstName, { delay: 1 });
