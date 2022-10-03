@@ -21,8 +21,8 @@ executors:
     resource_class: large
 
 jobs:
-  build_dev:
-    executor: my-executor
+  test:
+    executor: my-test-executor
     steps:
       - checkout
       - restore_cache:
@@ -34,24 +34,20 @@ jobs:
           paths:
             - ui/node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
+      - run:
+          command:  yarn test
+          no_output_timeout: 15m
+  build_dev:
+    executor: my-executor
+    steps:
+      - attach_workspace:
+          at: .
       - run: yarn lint
       - run: yarn build-dev
-#     - run:
-#         command: yarn test
-#         no_output_timeout: 15m
       - persist_to_workspace:
           root: .
           paths:
             - .
-#           - ui/build
-  test_dev:
-    executor: my-test-executor
-    steps:
-      - attach_workspace:
-          at: .
-      - run:
-          command:  yarn test
-          no_output_timeout: 15m
   s3_deploy_dev:
     executor: my-executor
     steps:
@@ -80,22 +76,10 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: yarn lint
       - run: yarn build-staging
-#     - run:
-#         command: yarn test
-#         no_output_timeout: 15m
       - persist_to_workspace:
           root: .
           paths:
             - .
-#           - ui/build
-  test_stg:
-    executor: my-test-executor
-    steps:
-      - attach_workspace:
-          at: .
-      - run:
-          command:  yarn test
-          no_output_timeout: 15m
   s3_deploy_stg:
     executor: my-executor
     steps:
@@ -124,22 +108,10 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: yarn lint
       - run: yarn build-prod
-#     - run:
-#         command: yarn test
-#         no_output_timeout: 15m
       - persist_to_workspace:
           root: .
           paths:
             - .
-#           - ui/build
-  test_prod:
-    executor: my-test-executor
-    steps:
-      - attach_workspace:
-          at: .
-      - run:
-          command:  yarn test
-          no_output_timeout: 15m
   s3_deploy_prod:
     executor: my-executor
     steps:
@@ -157,43 +129,29 @@ workflows:
   version: 2
   build_test_deploy:
     jobs:
+      - test
       - build_dev:
+          requires:
+            - test
           filters:
             branches:
-              ignore:
+              only:
                 - main
-                - prod
-      - test_dev:
+      - s3_deploy_dev:
           requires:
             - build_dev
           filters:
             branches:
-              ignore:
-                - main
-                - prod
-      - s3_deploy_dev:
-          requires:
-            - test_dev
-          filters:
-            branches:
               only:
-                - develop
-                - feat/dev_circleci_config
+                - main
       - build_stg:
-          filters:
-            branches:
-              only:
-                - main
-      - test_stg:
-          requires:
-            - build_stg
           filters:
             branches:
               only:
                 - main
       - s3_deploy_stg:
           requires:
-            - test_stg
+            - build_stg
           filters:
             branches:
               only:
@@ -202,20 +160,13 @@ workflows:
           filters:
             branches:
               only:
-                - prod
-      - test_prod:
+                - main
+      - s3_deploy_prod:
           requires:
             - build_prod
           filters:
             branches:
               only:
-                - prod
-      - s3_deploy_prod:
-          requires:
-            - test_prod
-          filters:
-            branches:
-              only:
-                - prod
+                - main
 
 
