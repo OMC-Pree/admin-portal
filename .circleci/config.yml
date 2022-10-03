@@ -34,16 +34,24 @@ jobs:
           paths:
             - ui/node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
+      - run: yarn lint
       - run:
           command:  yarn test
           no_output_timeout: 15m
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
   build_dev:
     executor: my-executor
     steps:
       - attach_workspace:
           at: .
-      - run: yarn lint
       - run: yarn build-dev
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
       - persist_to_workspace:
           root: .
           paths:
@@ -145,6 +153,8 @@ workflows:
               only:
                 - main
       - build_stg:
+          requires:
+            - s3_deploy_dev
           filters:
             branches:
               only:
@@ -157,6 +167,8 @@ workflows:
               only:
                 - main
       - build_prod:
+          requires:
+            - s3_deploy_stg
           filters:
             branches:
               only:
