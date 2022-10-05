@@ -3,7 +3,7 @@ import { useLazyGetCoachesQuery } from "../../api/users";
 import { useAppDispatch, useAppSelector } from "../../hooks/store";
 import { addCoaches, selectCoaches } from "./coachesSlice";
 
-const numResultsPerCall = 50;
+const numResultsPerCall = 100;
 
 function useCoaches() {
   const dispatch = useAppDispatch();
@@ -31,6 +31,10 @@ function useCoaches() {
   return useMemo(
     () => ({
       coaches: storedCoaches,
+      coachOptions: storedCoaches.map((coach) => ({
+        label: `${coach.firstName} ${coach.lastName}`,
+        id: coach.id,
+      })),
     }),
     [storedCoaches],
   );
