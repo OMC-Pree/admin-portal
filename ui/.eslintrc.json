@@ -18,7 +18,8 @@
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "react/jsx-uses-vars": "warn",
-    "react/jsx-uses-react": "warn"
+    "react/jsx-uses-react": "warn",
+    "no-restricted-imports": ["warn", "@hookform/devtools"]
   },
   "settings": {
     "react": {

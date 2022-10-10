@@ -1,11 +1,20 @@
 import { useEffect, useMemo } from "react";
 import { useLazyGetCoachesQuery } from "../../api/users";
 import { useAppDispatch, useAppSelector } from "../../hooks/store";
+import { IUser } from "../user/user";
 import { addCoaches, selectCoaches } from "./coachesSlice";
+
+export type CoachAutoCompleteOpts = {
+  label: string;
+  id: IUser["id"];
+};
 
 const numResultsPerCall = 100;
 
-function useCoaches() {
+function useCoaches(): {
+  coaches: IUser[];
+  coachOptions: CoachAutoCompleteOpts[];
+} {
   const dispatch = useAppDispatch();
   const storedCoaches = useAppSelector(selectCoaches);
   const [getCoaches, result] = useLazyGetCoachesQuery();
