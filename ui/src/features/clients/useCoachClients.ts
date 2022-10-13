@@ -1,9 +1,10 @@
 import { useEffect, useMemo } from "react";
-import { useLazyGetClientsQuery } from "../../api/users";
+import { useGetClientsQuery, useLazyGetClientsQuery } from "../../api/users";
 import { useAppDispatch, useAppSelector } from "../../hooks/store";
 import { selectClients, setClients } from "../coaches/coachesSlice";
+import { IUser } from "../user/user";
 
-const numResultsPerCall = 50;
+const MAX_CLIENTS_PER_CALL = 100;
 
 interface IUseCoachClientsProps {
   coachId: string | undefined;
@@ -12,32 +13,44 @@ interface IUseCoachClientsProps {
 function useCoachClients({ coachId }: IUseCoachClientsProps) {
   const dispatch = useAppDispatch();
   const storedClients = useAppSelector(selectClients);
-  const [getClients, result] = useLazyGetClientsQuery();
+  const { data } = useGetClientsQuery({ max: MAX_CLIENTS_PER_CALL, coachUserId: coachId });
+  const [getClients, { isLoading }] = useLazyGetClientsQuery();
 
-  useEffect(() => {
-    if (!coachId) return;
-    dispatch(setClients([]));
-    getClients({ max: numResultsPerCall, coachUserId: coachId });
-  }, [coachId]);
+  const doLoad = async (firstBatch: IUser[] = []) => {
+    let _clients = [...firstBatch];
+    let keepLoading = _clients.length === MAX_CLIENTS_PER_CALL;
+    let lastClientId: string | undefined = data?.meta.lastEvaluatedKey;
 
-  useEffect(() => {
-    if (result.data) {
-      const {
-        data,
-        meta: { count, lastEvaluatedKey },
-      } = result.data;
-      dispatch(setClients(data));
-      if (count === numResultsPerCall) {
-        getClients({ max: numResultsPerCall, lastEvaluatedKey, coachUserId: coachId });
+    while (keepLoading) {
+      const result = await getClients({
+        max: MAX_CLIENTS_PER_CALL,
+        coachUserId: coachId,
+        lastEvaluatedKey: lastClientId,
+      }).unwrap();
+
+      if (result.data.length) {
+        lastClientId = result.meta.lastEvaluatedKey;
+        _clients = _clients.concat(result.data);
+      } else {
+        lastClientId = undefined;
       }
+      keepLoading = result.data.length === MAX_CLIENTS_PER_CALL;
     }
-  }, [result]);
+    dispatch(setClients(_clients));
+  };
+  useEffect(() => {
+    if (data?.data) doLoad(data.data);
+    return () => {
+      dispatch(setClients([]));
+    };
+  }, [data]);
 
   return useMemo(
     () => ({
       clients: storedClients,
+      isLoading,
     }),
-    [storedClients],
+    [storedClients, isLoading],
   );
 }
 

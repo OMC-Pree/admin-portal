@@ -67,6 +67,7 @@ export const {
   useGetUsersQuery,
   useLazyGetManagersQuery,
   useLazyGetCoachesQuery,
+  useGetClientsQuery,
   useLazyGetClientsQuery,
   useGetCoachesQuery,
   useGetClientsByCoachIdQuery,
