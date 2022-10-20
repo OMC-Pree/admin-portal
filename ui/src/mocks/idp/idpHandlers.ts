@@ -6,6 +6,7 @@ import { getUsers } from "./get/getUsers";
 import { patchUser } from "./patch/patchUser";
 import { idpBaseUrl } from "../../api/idpApi";
 import { postUserBulkCreate } from "./post/postUserBulkCreate";
+import { patchUserAccess } from "./patch/patchUserAccess";
 
 let handlers: RestHandler[] = [];
 
@@ -17,6 +18,7 @@ if (process.env.NODE_ENV === "test" || process.env.REACT_APP_MSW_IDP === "true")
     rest.get(`${idpBaseUrl}v1/users`, getUsers),
     rest.get(`${idpBaseUrl}v1/user/myaccount`, getUserMyAccount),
     rest.patch(`${idpBaseUrl}v1/user/:userId`, patchUser),
+    rest.patch(`${idpBaseUrl}v1/support/user-access/:userId`, patchUserAccess),
   ];
 }
 

@@ -3,6 +3,7 @@ import {
   GetUsersResponse,
   IDPNewUser,
   StandardUsersResponse,
+  UpdateUserAccessRequest,
 } from "../models/httpCalls";
 import { IUser } from "../features/user/user";
 import { idpApi } from "./idpApi";
@@ -52,6 +53,13 @@ export const clientsApi = idpApi.injectEndpoints({
         body: user,
       }),
     }),
+    updateUserAccess: builder.mutation<GetUsersResponse, UpdateUserAccessRequest>({
+      query: ({ id, ...rest }) => ({
+        url: `v1/support/user-access/${id}`,
+        method: "PATCH",
+        body: { ...rest },
+      }),
+    }),
     bulkCreateUser: builder.mutation<GetUsersResponse, IDPNewUser[]>({
       query: (body) => ({
         url: "v2/user/bulk-create",
@@ -74,5 +82,6 @@ export const {
   useGetUserByIdQuery,
   useLazyGetUserByIdQuery,
   useUpdateUserMutation,
+  useUpdateUserAccessMutation,
   useMyAccountQuery,
 } = clientsApi;

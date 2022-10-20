@@ -4,7 +4,7 @@ import { FieldValues, useForm } from "react-hook-form";
 import { UserPermissions, UserType } from "../userEnums";
 import { IUser } from "../user";
 import { IDPNewUser } from "../../../models/httpCalls";
-import { useBulkCreateUserMutation, useUpdateUserMutation } from "../../../api/users";
+import { useBulkCreateUserMutation, useUpdateUserAccessMutation } from "../../../api/users";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../../hooks/store";
 import { addCoaches } from "../../coaches/coachesSlice";
@@ -28,7 +28,7 @@ function CreateUserForm() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [createUsers] = useBulkCreateUserMutation();
-  const [updateUser] = useUpdateUserMutation();
+  const [updateUserAccess] = useUpdateUserAccessMutation();
   const [saveModalOpen, setSaveModalOpen] = useState(false);
   const [userToCreate, setUserToCreate] = useState<IDPNewUser>();
   const {
@@ -54,9 +54,11 @@ function CreateUserForm() {
     const { data: createdUserData } = await createUsers([userToCreate]).unwrap();
     let newUser = createdUserData[0];
     if (newUser) {
-      const { data: updatedUserResult } = await updateUser(
-        generateUserUpdateData(newUser, userType),
-      ).unwrap();
+      const { data: updatedUserResult } = await updateUserAccess({
+        id: newUser.id,
+        type: userType,
+        permissions: generateUserPermissions(userType),
+      }).unwrap();
       newUser = updatedUserResult[0];
       if (newUser.type === UserType.COACH) dispatch(addCoaches([newUser]));
       if (newUser.type === UserType.MANAGER) dispatch(addManagers([newUser]));
@@ -125,16 +127,12 @@ function formatUserToCreate(data: FieldValues) {
   return newUser as IDPNewUser;
 }
 
-function generateUserUpdateData(createdUser: IUser, type: UserType) {
+function generateUserPermissions(type: UserType): IUser["permissions"] {
   const permissions: UserPermissions[] = [];
   if (type === UserType.COACH) permissions.push(UserPermissions.COACH);
   if (type === UserType.MANAGER) permissions.push(UserPermissions.MANAGER);
   if (type === UserType.CLIENT) permissions.push(UserPermissions.CLIENT);
-  return {
-    id: createdUser.id,
-    type,
-    permissions,
-  };
+  return permissions;
 }
 
 function getUrlToNav(userId: string, type: UserType) {

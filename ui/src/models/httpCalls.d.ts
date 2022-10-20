@@ -103,3 +103,17 @@ export interface ChangePasswordRequest {
   oldPassword: string;
   newPassword: string;
 }
+
+export type UpdateUserAccessRequest = Partial<
+  Pick<
+    IUser,
+    | "id"
+    | "type"
+    | "permissions"
+    | "managerUserId"
+    | "coachUserId"
+    | "clientUserId"
+    | "associateUserId"
+    | "organisationIdentityId"
+  >
+>;

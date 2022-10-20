@@ -65,6 +65,7 @@ export interface IUser extends INewUser {
   metadata: Record<string, unknown>;
   createdAt: string;
   updatedAt: string;
+  organisationIdentityId?: string | null;
   gender?: string;
   biologicalSex?: "Female" | "Male" | "";
   nationalityAlpha2?: Country["alpha2"] | null;

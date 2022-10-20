@@ -6,7 +6,7 @@ import { IUser } from "../user";
 import SelectInput from "../../../components/form/SelectInput";
 import { UserPermissions, UserType } from "../userEnums";
 import { noop, startCase, upperFirst } from "lodash";
-import { useUpdateUserMutation } from "../../../api/users";
+import { useUpdateUserAccessMutation } from "../../../api/users";
 import { useAppDispatch } from "../../../hooks/store";
 import { updateStoredCoach } from "../../coaches/coachesSlice";
 import useCoaches from "../../coaches/useCoaches";
@@ -28,7 +28,7 @@ interface FormData {
 
 function EditUserForm({ user, onSuccess, onCancel = noop }: IEditUserFormProps) {
   const dispatch = useAppDispatch();
-  const [updateUser] = useUpdateUserMutation();
+  const [updateUser] = useUpdateUserAccessMutation();
   const methods = useForm<FieldValues>({ mode: "onChange" });
 
   const {

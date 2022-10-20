@@ -9,6 +9,7 @@ import { UserType } from "../userEnums";
 import useCoaches from "../../coaches/useCoaches";
 import useManagers from "../../managers/useManagers";
 import useAuth from "../../auth/useAuth";
+import { EMAIL_VALIDATION_REGEX } from "../../../utils/inputValidationRegex";
 
 interface ICreateUserFormInputsProps {
   control: Control;
@@ -55,7 +56,7 @@ function CreateUserFormInputs({
         rules={{
           required: true,
           pattern: {
-            value: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
+            value: EMAIL_VALIDATION_REGEX,
             message: "Entered value does not match email format",
           },
         }}
