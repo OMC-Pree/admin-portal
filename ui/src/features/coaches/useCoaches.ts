@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from "react";
 import { useLazyGetCoachesQuery } from "../../api/users";
 import { useAppDispatch, useAppSelector } from "../../hooks/store";
-import { IUser } from "../user/user";
+import { IUser } from "../user/userModels";
 import { addCoaches, selectCoaches } from "./coachesSlice";
 
 export type CoachAutoCompleteOpts = {

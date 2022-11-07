@@ -3,7 +3,7 @@ import { Stack } from "@mui/material";
 import { UserPermissions } from "../userEnums";
 import { startCase, upperFirst } from "lodash";
 import { format, parseISO } from "date-fns";
-import { IUser } from "../user";
+import { IUser } from "../userModels";
 import UserDetailItem from "./UserDetailItem";
 
 interface IUserDetailItemsProps {
@@ -66,7 +66,7 @@ function formatValue(user: IUser, prop: keyof IUser) {
     value = (value as UserPermissions[])
       .map((perm) => upperFirst(startCase(perm).toLowerCase()))
       .join(", ");
-  } else if (prop === "type") {
+  } else if (prop === "type" && typeof value === "string") {
     value = upperFirst(value);
   } else {
     value = value ? value?.toString() : "-";

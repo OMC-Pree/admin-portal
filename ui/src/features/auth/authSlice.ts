@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { LoginResponse } from "../../models/httpCalls";
 import { deleteCookie, setCookie } from "../../utils/cookie";
-import { IUser } from "../user/user";
+import { IUser } from "../user/userModels";
 
 type AuthState = {
   user: IUser | null;

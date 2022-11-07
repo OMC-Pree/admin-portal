@@ -2,7 +2,7 @@ import React from "react";
 import userEvent from "@testing-library/user-event";
 import App from "../../app/App";
 import { NAV_MENU_TOGGLE_BTN_ID } from "../../components/AppHeader";
-import { IUser } from "../../features/user/user";
+import { IUser } from "../../features/user/userModels";
 import { TEST_PASSWORD } from "../../mocks/constants";
 import { MOCK_MANAGERS } from "../../mocks/data/mockManagers";
 import { screen, render } from "../test-utils";

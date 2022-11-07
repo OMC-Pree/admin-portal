@@ -1,7 +1,7 @@
 import React from "react";
 import { RenderResult } from "@testing-library/react";
 import { fireEvent, render, screen, waitForElementToBeRemoved } from "./test-utils";
-import { IUser } from "../features/user/user";
+import { IUser } from "../features/user/userModels";
 import App from "../app/App";
 import userEvent from "@testing-library/user-event";
 

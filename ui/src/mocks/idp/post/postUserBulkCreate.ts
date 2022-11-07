@@ -1,11 +1,12 @@
 import { GetUsersResponse, IDPNewUser } from "../../../models/httpCalls";
 import { MockRestHandler } from "../../types";
-import { IUser } from "../../../features/user/user";
+import { IUser } from "../../../features/user/userModels";
+import { UserType } from "../../../features/user/userEnums";
 
 export const postUserBulkCreate: MockRestHandler = (req, res, ctx) => {
   const newUsers: IUser[] = (req.body as IDPNewUser[]).map((user, idx) => ({
     id: `new-user-${idx}`,
-    type: "",
+    type: user.type || UserType.CLIENT,
     email: user.email,
     firstName: user.firstName,
     lastName: user.lastName,

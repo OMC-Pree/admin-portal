@@ -4,7 +4,7 @@ import { useLazyDecryptTokenQuery, useLoginMutation } from "../../api/auth";
 import { useMyAccountQuery } from "../../api/users";
 import { useAppDispatch, useAppSelector } from "../../hooks/store";
 import { IdpErrorResponse } from "../../models/httpCalls";
-import { IUser } from "../user/user";
+import { IUser } from "../user/userModels";
 import { UserPermissions } from "../user/userEnums";
 import { logout, selectCurrentUser, selectToken, setToken, setUser } from "./authSlice";
 

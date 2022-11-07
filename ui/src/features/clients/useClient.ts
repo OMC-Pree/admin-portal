@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useLazyGetUserByIdQuery } from "../../api/users";
 import { IdpErrorResponse } from "../../models/httpCalls";
-import { IUser } from "../user/user";
+import { IUser } from "../user/userModels";
 
 function useClient(id: string | undefined) {
   const [client, setClient] = useState<IUser | undefined>();

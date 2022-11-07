@@ -1,7 +1,7 @@
 import { format, parseISO } from "date-fns";
 import { pick } from "lodash";
 import { IHeadCell, SortOrder } from "../../../components/table/table";
-import { IUser } from "../../user/user";
+import { IUser } from "../../user/userModels";
 import { ICoachTableData } from "../coach";
 
 export const formatTableData = (coaches: IUser[]): ICoachTableData[] =>

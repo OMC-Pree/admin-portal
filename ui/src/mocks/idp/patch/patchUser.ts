@@ -1,4 +1,4 @@
-import { IUser } from "../../../features/user/user";
+import { IUser } from "../../../features/user/userModels";
 import { UserType } from "../../../features/user/userEnums";
 import { MOCK_CLIENTS } from "../../data/mockClients";
 import { MOCK_COACHES } from "../../data/mockCoaches";

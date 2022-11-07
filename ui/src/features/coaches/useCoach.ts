@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useLazyGetUserByIdQuery } from "../../api/users";
 import { useAppSelector } from "../../hooks/store";
-import { IUser } from "../user/user";
+import { IUser } from "../user/userModels";
 import { selectCoaches } from "./coachesSlice";
 
 function useCoach(id?: string) {

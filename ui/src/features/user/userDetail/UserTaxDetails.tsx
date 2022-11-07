@@ -1,4 +1,4 @@
-import { IUser } from "../user";
+import { IUser } from "../userModels";
 import React, { useMemo } from "react";
 import { Stack, Typography, Divider } from "@mui/material";
 import InfoField from "../../../components/InfoField";

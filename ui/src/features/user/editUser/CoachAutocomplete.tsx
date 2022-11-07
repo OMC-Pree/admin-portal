@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { Autocomplete, TextField } from "@mui/material";
 import { useFormContext, useController, useForm } from "react-hook-form";
-import { IUser } from "../user";
+import { IUser } from "../userModels";
 import useCoaches from "../../coaches/useCoaches";
 
 const getCoach = (

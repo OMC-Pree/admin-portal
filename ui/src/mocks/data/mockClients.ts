@@ -1,4 +1,4 @@
-import { IUser } from "../../features/user/user";
+import { IUser } from "../../features/user/userModels";
 import { UserPermissions, UserType } from "../../features/user/userEnums";
 
 export const MOCK_CLIENTS: IUser[] = [

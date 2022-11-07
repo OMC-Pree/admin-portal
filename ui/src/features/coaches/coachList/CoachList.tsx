@@ -8,7 +8,7 @@ import {
   TablePagination,
   TableRow,
 } from "@mui/material";
-import { IUser } from "../../user/user";
+import { IUser } from "../../user/userModels";
 import { SortOrder } from "../../../components/table/table";
 import EnhancedTableHead from "../../../components/table/EnhancedTableHead";
 import { ICoachTableData } from "../coach";

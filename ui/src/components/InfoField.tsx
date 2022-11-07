@@ -6,7 +6,7 @@ const InfoField = ({
   answer,
 }: {
   label: string;
-  answer: string | undefined;
+  answer: string | undefined | null;
 }): JSX.Element => {
   return (
     <Grid container spacing={2}>

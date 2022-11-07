@@ -2,15 +2,16 @@ import React, { useCallback, useMemo } from "react";
 import { Box, Button, Stack } from "@mui/material";
 import { FormProvider, useForm, FieldValues } from "react-hook-form";
 import TextInput from "../../../components/form/TextInput";
-import { IUser } from "../user";
+import { IUser } from "../userModels";
 import SelectInput from "../../../components/form/SelectInput";
 import { UserPermissions, UserType } from "../userEnums";
 import { noop, startCase, upperFirst } from "lodash";
-import { useUpdateUserAccessMutation } from "../../../api/users";
+import { useUpdateUserAccessMutation, useUpdateUserMutation } from "../../../api/users";
 import { useAppDispatch } from "../../../hooks/store";
 import { updateStoredCoach } from "../../coaches/coachesSlice";
 import useCoaches from "../../coaches/useCoaches";
 import CoachAutocomplete from "./CoachAutocomplete";
+import { UpdateUserAccessRequest, UpdateUserRequest } from "../../../models/httpCalls";
 
 interface IEditUserFormProps {
   user: IUser;
@@ -28,7 +29,8 @@ interface FormData {
 
 function EditUserForm({ user, onSuccess, onCancel = noop }: IEditUserFormProps) {
   const dispatch = useAppDispatch();
-  const [updateUser] = useUpdateUserAccessMutation();
+  const [updateUser] = useUpdateUserMutation();
+  const [updateUserAccess] = useUpdateUserAccessMutation();
   const methods = useForm<FieldValues>({ mode: "onChange" });
 
   const {
@@ -44,26 +46,49 @@ function EditUserForm({ user, onSuccess, onCancel = noop }: IEditUserFormProps) 
   const isClient = useMemo(() => type === UserType.CLIENT, [type]);
 
   const onSubmit = useCallback(
-    async (data: FieldValues) => {
-      const newData: FormData = {
-        firstName: data.firstName.trim(),
-        lastName: data.lastName.trim(),
+    async (data_: FieldValues) => {
+      const data = data_ as FormData;
+      const firstName = data.firstName.trim();
+      const lastName = data.lastName.trim();
+      const hasNewFirstName = firstName !== user.firstName;
+      const hasNewLastName = lastName !== user.lastName;
+      const defaultUserData: Pick<IUser, "id"> = { id: user.id };
+
+      if (hasNewFirstName || hasNewLastName) {
+        const newUserData: UpdateUserRequest = { ...defaultUserData };
+        if (hasNewFirstName) newUserData.firstName = firstName;
+        if (hasNewLastName) newUserData.lastName = lastName;
+        await updateUser(newUserData);
+      }
+
+      const newAccessData: UpdateUserAccessRequest = {
+        ...defaultUserData,
         type: data.type,
         permissions: data.permissions,
       };
+      const hasNewType = newAccessData.type !== user.type;
+      const hasNewPermissions =
+        (newAccessData.permissions || []).length !== user.permissions.length ||
+        user.permissions.reduce(
+          (acc, next) => !(newAccessData.permissions || []).includes(next),
+          false,
+        );
 
-      if (
-        data.type === UserType.CLIENT &&
-        newData.permissions.includes(UserPermissions.CLIENT) &&
-        data.coachUserId
-      )
-        newData.coachUserId = data.coachUserId;
+      if (hasNewType || hasNewPermissions) {
+        if (
+          data.type === UserType.CLIENT &&
+          newAccessData.permissions?.includes(UserPermissions.CLIENT) &&
+          data.coachUserId
+        )
+          newAccessData.coachUserId = data.coachUserId;
 
-      await updateUser({ id: user.id, ...newData });
-      if (user.type === UserType.COACH) dispatch(updateStoredCoach(newData));
+        await updateUserAccess(newAccessData);
+        if (user.type === UserType.COACH) dispatch(updateStoredCoach(newAccessData));
+      }
+
       onSuccess();
     },
-    [user.id],
+    [user],
   );
 
   return (

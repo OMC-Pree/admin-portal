@@ -2,7 +2,7 @@ import { useEffect, useMemo } from "react";
 import { useGetClientsQuery, useLazyGetClientsQuery } from "../../api/users";
 import { useAppDispatch, useAppSelector } from "../../hooks/store";
 import { selectClients, setClients } from "../coaches/coachesSlice";
-import { IUser } from "../user/user";
+import { IUser } from "../user/userModels";
 
 const MAX_CLIENTS_PER_CALL = 100;
 

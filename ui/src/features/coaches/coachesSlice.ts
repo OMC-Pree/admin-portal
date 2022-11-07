@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { uniqBy } from "lodash";
 import { RootState } from "../../app/store";
-import { IUser } from "../user/user";
+import { IUser } from "../user/userModels";
 import { sortUsersByKey } from "../user/userSorters";
 import { CoachesState } from "./coach";
 

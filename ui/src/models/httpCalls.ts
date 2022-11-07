@@ -1,5 +1,5 @@
-import { INewUser } from "../features/user/user";
-import { IUser, UserRole } from "./user";
+import { UserRole } from "../features/user/userEnums";
+import { INewUser, IUser } from "../features/user/userModels";
 
 export type IdpErrors = string[];
 export interface IdpStandardResponse {
@@ -104,16 +104,30 @@ export interface ChangePasswordRequest {
   newPassword: string;
 }
 
-export type UpdateUserAccessRequest = Partial<
-  Pick<
-    IUser,
-    | "id"
-    | "type"
-    | "permissions"
-    | "managerUserId"
-    | "coachUserId"
-    | "clientUserId"
-    | "associateUserId"
-    | "organisationIdentityId"
-  >
->;
+export type UpdateUserRequest = Pick<IUser, "id"> &
+  Partial<
+    Omit<
+      IUser,
+      | "type"
+      | "permissions"
+      | "managerUserId"
+      | "coachUserId"
+      | "clientUserId"
+      | "associateUserId"
+      | "organisationIdentityId"
+    >
+  >;
+
+export type UpdateUserAccessRequest = Pick<IUser, "id"> &
+  Partial<
+    Pick<
+      IUser,
+      | "type"
+      | "permissions"
+      | "managerUserId"
+      | "coachUserId"
+      | "clientUserId"
+      | "associateUserId"
+      | "organisationIdentityId"
+    >
+  >;

@@ -4,8 +4,8 @@ import {
   IDPNewUser,
   StandardUsersResponse,
   UpdateUserAccessRequest,
+  UpdateUserRequest,
 } from "../models/httpCalls";
-import { IUser } from "../features/user/user";
 import { idpApi } from "./idpApi";
 
 export const clientsApi = idpApi.injectEndpoints({
@@ -46,7 +46,7 @@ export const clientsApi = idpApi.injectEndpoints({
         method: "GET",
       }),
     }),
-    updateUser: builder.mutation<GetUsersResponse, Partial<IUser>>({
+    updateUser: builder.mutation<GetUsersResponse, UpdateUserRequest>({
       query: (user) => ({
         url: `v1/user/${user.id}`,
         method: "PATCH",

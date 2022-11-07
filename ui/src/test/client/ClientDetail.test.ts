@@ -3,7 +3,7 @@ import { screen, within } from "../test-utils";
 import { MOCK_MANAGERS } from "../../mocks/data/mockManagers";
 import { loginAsUser } from "../helpers";
 import { MOCK_COACHES } from "../../mocks/data/mockCoaches";
-import { IUser } from "../../features/user/user";
+import { IUser } from "../../features/user/userModels";
 import { MOCK_CLIENTS } from "../../mocks/data/mockClients";
 import { format, parseISO } from "date-fns";
 

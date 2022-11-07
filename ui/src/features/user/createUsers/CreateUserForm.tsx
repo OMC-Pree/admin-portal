@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Box, Button, Stack } from "@mui/material";
 import { FieldValues, useForm } from "react-hook-form";
 import { UserPermissions, UserType } from "../userEnums";
-import { IUser } from "../user";
+import { IUser } from "../userModels";
 import { IDPNewUser } from "../../../models/httpCalls";
 import { useBulkCreateUserMutation, useUpdateUserAccessMutation } from "../../../api/users";
 import { useNavigate } from "react-router-dom";
