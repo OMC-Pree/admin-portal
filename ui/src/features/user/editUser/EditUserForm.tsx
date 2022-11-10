@@ -52,6 +52,7 @@ function EditUserForm({ user, onSuccess, onCancel = noop }: IEditUserFormProps) 
       const lastName = data.lastName.trim();
       const hasNewFirstName = firstName !== user.firstName;
       const hasNewLastName = lastName !== user.lastName;
+      const hasNewCoach = data.coachUserId !== user.coachUserId;
       const defaultUserData: Pick<IUser, "id"> = { id: user.id };
 
       if (hasNewFirstName || hasNewLastName) {
@@ -74,7 +75,7 @@ function EditUserForm({ user, onSuccess, onCancel = noop }: IEditUserFormProps) 
           false,
         );
 
-      if (hasNewType || hasNewPermissions) {
+      if (hasNewType || hasNewPermissions || hasNewCoach) {
         if (
           data.type === UserType.CLIENT &&
           newAccessData.permissions?.includes(UserPermissions.CLIENT) &&
