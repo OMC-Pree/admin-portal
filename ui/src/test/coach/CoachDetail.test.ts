@@ -51,7 +51,7 @@ describe("Coach detail page", () => {
   test("no assigned clients text shown", async () => {
     const coach = MOCK_COACHES[2];
     await navToCoachDetailPage(coach);
-    expect(screen.getByText(/There are no clients to display/i)).toBeInTheDocument();
+    expect(screen.getByText(/There are no customers to display/i)).toBeInTheDocument();
   });
 
   test("filter list of clients", async () => {

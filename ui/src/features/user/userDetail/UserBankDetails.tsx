@@ -16,7 +16,7 @@ const UserBankDetails = ({ client }: UserBankDetailsProps) => {
       {bankDetails && (
         <Stack gap={3} sx={{ pl: 1 }}>
           <InfoField label="Bank Name" answer={bankDetails.bankName} />
-          <InfoField label="Sort Code" answer={bankDetails.sortcode} />
+          <InfoField label="Sort Code" answer={bankDetails.sortCode} />
           <InfoField label="Account Number" answer={bankDetails.accountNumber} />
           <InfoField label="Account Holder Name" answer={bankDetails.accountHolderName} />
         </Stack>

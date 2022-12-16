@@ -28,7 +28,7 @@ export type UserBankDetails = {
   bankName: string;
   accountHolderName: string;
   accountNumber: string;
-  sortcode: string;
+  sortCode: string;
   iban?: string;
   swift?: string;
 };

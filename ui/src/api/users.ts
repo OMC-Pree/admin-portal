@@ -34,7 +34,7 @@ export const clientsApi = idpApi.injectEndpoints({
         params: { ...params, type: "client" },
       }),
     }),
-    getClientsByCoachId: builder.query<GetUsersResponse, string | undefined>({
+    getUsersByCoachId: builder.query<GetUsersResponse, string | undefined>({
       query: (id: string) => `v1/users?coachUserId=${id}`,
     }),
     getUserById: builder.query<GetUsersResponse, string | void>({
@@ -78,7 +78,7 @@ export const {
   useGetClientsQuery,
   useLazyGetClientsQuery,
   useGetCoachesQuery,
-  useGetClientsByCoachIdQuery,
+  useGetUsersByCoachIdQuery,
   useGetUserByIdQuery,
   useLazyGetUserByIdQuery,
   useUpdateUserMutation,

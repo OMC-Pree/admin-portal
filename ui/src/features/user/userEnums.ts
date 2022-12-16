@@ -3,6 +3,7 @@ export enum UserType {
   COACH = "coach",
   MANAGER = "manager",
   APP_SERVICE = "appService",
+  ENQUIRER = "enquirer",
 }
 
 export enum UserRole {

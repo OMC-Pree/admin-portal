@@ -16,17 +16,17 @@ import { useNavigate } from "react-router-dom";
 import { COLOURS } from "../../../theme/colours";
 import { IClientTableData } from "../client";
 
-interface IClientListProps {
-  clients: IUser[];
+interface CustomerListProps {
+  users: IUser[];
 }
 
-function ClientList({ clients }: IClientListProps) {
+function CustomerList({ users }: CustomerListProps) {
   const navigate = useNavigate();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [order, setOrder] = React.useState<SortOrder>("asc");
   const [orderBy, setOrderBy] = React.useState<keyof IClientTableData>("lastName");
-  const rows = formatTableData(clients);
+  const rows = formatTableData(users);
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   const onSort = (event: React.MouseEvent<unknown>, property: string) => {
@@ -105,4 +105,4 @@ function ClientList({ clients }: IClientListProps) {
   );
 }
 
-export default ClientList;
+export default CustomerList;

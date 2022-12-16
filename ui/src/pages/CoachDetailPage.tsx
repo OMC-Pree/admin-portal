@@ -1,40 +1,58 @@
-import React, { useState } from "react";
-import { Box, Breadcrumbs, Divider, Grid, Stack, Typography } from "@mui/material";
+import React, { SyntheticEvent, useState } from "react";
+import { Box, Breadcrumbs, Divider, Grid, Stack, Tab, Tabs, Typography } from "@mui/material";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import TableListFilter from "../components/table/TableListFilter";
 import RequireAuth from "../features/auth/RequireAuth";
-import ClientList from "../features/clients/clientList/ClientList";
-import NoClients from "../features/clients/clientList/NoClients";
-import useCoachClients from "../features/clients/useCoachClients";
+import CustomerList from "../features/clients/clientList/CustomerList";
+import NoCustomers from "../features/clients/clientList/NoCustomers";
+import useCoachCustomers from "../features/clients/useCoachCustomers";
 import useDetailUser from "../features/user/userDetail/useDetailUser";
 import UserDetailPanel from "../features/user/userDetail/UserDetailPanel";
 import { COLOURS } from "../theme/colours";
+import { UserType } from "../features/user/userEnums";
+
+enum TabValues {
+  ALL = "all",
+  CLIENTS = "clients",
+  ENQUIRERS = "enquirers",
+}
 
 function CoachDetailPage() {
   const { coachId } = useParams();
   const navigate = useNavigate();
   const { detailUser: coach, isFetching, refetch } = useDetailUser(coachId);
-  const { clients } = useCoachClients({ coachId: coach?.id });
+  const { customers } = useCoachCustomers({ coachId: coach?.id });
   const [filter, setFilter] = useState<string>("");
+  const [tabValue, setTabValue] = useState(TabValues.ALL);
 
   if (!coachId) return null;
 
-  const filteredClients = filter
-    ? clients.filter((client) => {
+  const customersToDisplay = customers.filter((customer) => {
+    if (tabValue === TabValues.ALL) return customer;
+    if (tabValue === TabValues.CLIENTS) return customer.type === UserType.CLIENT;
+    if (tabValue === TabValues.ENQUIRERS) return customer.type === UserType.ENQUIRER;
+  });
+
+  const filteredCustomers = filter
+    ? customersToDisplay.filter((customer) => {
         const grouping = [
-          client.firstName || "",
-          client.lastName || "",
-          client.email || "",
-          client.id,
+          customer.firstName || "",
+          customer.lastName || "",
+          customer.email || "",
+          customer.id,
         ];
         return !!grouping.find((str) => str.toLowerCase().includes(filter.toLowerCase()));
       })
-    : clients;
+    : customersToDisplay;
 
   const onFilterKeyUp = (key: string) => {
     if (key === "Enter") {
-      if (filteredClients.length === 1) navigate(`/clients/${filteredClients[0].id}`);
+      if (filteredCustomers.length === 1) navigate(`/clients/${filteredCustomers[0].id}`);
     }
+  };
+
+  const handleTabChange = (event: SyntheticEvent, value: TabValues) => {
+    setTabValue(value);
   };
 
   return (
@@ -67,20 +85,25 @@ function CoachDetailPage() {
             <Grid item xs={12} md={8}>
               <Stack spacing={2}>
                 <Typography variant="h3" mb={1}>
-                  Assigned Clients
+                  Assigned Customers
                 </Typography>
                 <Divider />
-                {clients.length ? (
+                {customers.length ? (
                   <>
+                    <Tabs value={tabValue} onChange={handleTabChange}>
+                      <Tab label="All" value={TabValues.ALL} />
+                      <Tab label="Clients" value={TabValues.CLIENTS} />
+                      <Tab label="Enquirers" value={TabValues.ENQUIRERS} />
+                    </Tabs>
                     <TableListFilter
                       filter={filter}
                       setFilter={setFilter}
                       onKeyUp={onFilterKeyUp}
                     />
-                    <ClientList clients={filteredClients} />
+                    <CustomerList users={filteredCustomers} />
                   </>
                 ) : (
-                  <NoClients />
+                  <NoCustomers />
                 )}
               </Stack>
             </Grid>

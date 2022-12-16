@@ -1,19 +1,20 @@
 import { useEffect, useMemo } from "react";
-import { useGetClientsQuery, useLazyGetClientsQuery } from "../../api/users";
+import { useGetUsersByCoachIdQuery, useLazyGetClientsQuery } from "../../api/users";
 import { useAppDispatch, useAppSelector } from "../../hooks/store";
 import { selectClients, setClients } from "../coaches/coachesSlice";
 import { IUser } from "../user/userModels";
 
 const MAX_CLIENTS_PER_CALL = 100;
 
-interface IUseCoachClientsProps {
+interface UseCoachCustomersProps {
   coachId: string | undefined;
 }
 
-function useCoachClients({ coachId }: IUseCoachClientsProps) {
+function useCoachCustomers({ coachId }: UseCoachCustomersProps) {
   const dispatch = useAppDispatch();
-  const storedClients = useAppSelector(selectClients);
-  const { data } = useGetClientsQuery({ max: MAX_CLIENTS_PER_CALL, coachUserId: coachId });
+  const storedCustomers = useAppSelector(selectClients);
+
+  const { data } = useGetUsersByCoachIdQuery(coachId);
   const [getClients, { isLoading }] = useLazyGetClientsQuery();
 
   const doLoad = async (firstBatch: IUser[] = []) => {
@@ -47,11 +48,11 @@ function useCoachClients({ coachId }: IUseCoachClientsProps) {
 
   return useMemo(
     () => ({
-      clients: storedClients,
+      customers: storedCustomers,
       isLoading,
     }),
-    [storedClients, isLoading],
+    [storedCustomers, isLoading],
   );
 }
 
-export default useCoachClients;
+export default useCoachCustomers;
