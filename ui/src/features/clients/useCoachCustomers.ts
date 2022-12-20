@@ -1,58 +1,51 @@
-import { useEffect, useMemo } from "react";
-import { useGetUsersByCoachIdQuery, useLazyGetClientsQuery } from "../../api/users";
-import { useAppDispatch, useAppSelector } from "../../hooks/store";
-import { selectClients, setClients } from "../coaches/coachesSlice";
+import { useEffect, useMemo, useState } from "react";
+import { useGetUsersByCoachIdQuery, useLazyGetUsersByCoachIdQuery } from "../../api/users";
+import { GetUsersResponse } from "../../models/httpCalls";
 import { IUser } from "../user/userModels";
 
-const MAX_CLIENTS_PER_CALL = 100;
+// Max number of users we can get with a single request
+const MAX_USERS_PER_REQUEST = 100;
 
-interface UseCoachCustomersProps {
-  coachId: string | undefined;
-}
+type UseCoachClientsReturnValue = { customers: IUser[]; refetchCustomers: () => void };
 
-function useCoachCustomers({ coachId }: UseCoachCustomersProps) {
-  const dispatch = useAppDispatch();
-  const storedCustomers = useAppSelector(selectClients);
-
-  const { data } = useGetUsersByCoachIdQuery(coachId);
-  const [getClients, { isLoading }] = useLazyGetClientsQuery();
+const useCoachCustomers = (coachId = ""): UseCoachClientsReturnValue => {
+  const [customers, setCustomers] = useState<IUser[]>([]);
+  const { data, refetch } = useGetUsersByCoachIdQuery(
+    { coachId: coachId, max: MAX_USERS_PER_REQUEST },
+    { skip: !coachId },
+  );
+  const [getUsers] = useLazyGetUsersByCoachIdQuery();
 
   const doLoad = async (firstBatch: IUser[] = []) => {
-    let _clients = [...firstBatch];
-    let keepLoading = _clients.length === MAX_CLIENTS_PER_CALL;
-    let lastClientId: string | undefined = data?.meta.lastEvaluatedKey;
-
+    let _customers: IUser[] = [...firstBatch];
+    let keepLoading = _customers.length === MAX_USERS_PER_REQUEST;
+    let lastCustomerId: string | undefined = _customers[_customers.length - 1]?.id;
     while (keepLoading) {
-      const result = await getClients({
-        max: MAX_CLIENTS_PER_CALL,
-        coachUserId: coachId,
-        lastEvaluatedKey: lastClientId,
-      }).unwrap();
-
-      if (result.data.length) {
-        lastClientId = result.meta.lastEvaluatedKey;
-        _clients = _clients.concat(result.data);
+      const { data, meta } = (await getUsers({
+        coachId: coachId,
+        max: MAX_USERS_PER_REQUEST,
+        lastEvaluatedKey: lastCustomerId,
+      }).unwrap()) as GetUsersResponse;
+      if (data.length) {
+        lastCustomerId = meta.lastEvaluatedKey;
+        _customers = _customers.concat(data);
       } else {
-        lastClientId = undefined;
+        lastCustomerId = undefined;
       }
-      keepLoading = result.data.length === MAX_CLIENTS_PER_CALL;
+      keepLoading = data.length === MAX_USERS_PER_REQUEST;
     }
-    dispatch(setClients(_clients));
+
+    setCustomers(_customers || []);
   };
+
   useEffect(() => {
     if (data?.data) doLoad(data.data);
     return () => {
-      dispatch(setClients([]));
+      setCustomers([]);
     };
   }, [data]);
 
-  return useMemo(
-    () => ({
-      customers: storedCustomers,
-      isLoading,
-    }),
-    [storedCustomers, isLoading],
-  );
-}
+  return useMemo(() => ({ customers, refetchCustomers: refetch }), [customers]);
+};
 
 export default useCoachCustomers;

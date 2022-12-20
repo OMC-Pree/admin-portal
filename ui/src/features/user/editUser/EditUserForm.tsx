@@ -13,7 +13,7 @@ import useCoaches from "../../coaches/useCoaches";
 import CoachAutocomplete from "./CoachAutocomplete";
 import { UpdateUserAccessRequest, UpdateUserRequest } from "../../../models/httpCalls";
 
-interface IEditUserFormProps {
+interface EditUserFormProps {
   user: IUser;
   onSuccess: () => void;
   onCancel?: () => void;
@@ -27,7 +27,7 @@ interface FormData {
   coachUserId?: string;
 }
 
-function EditUserForm({ user, onSuccess, onCancel = noop }: IEditUserFormProps) {
+function EditUserForm({ user, onSuccess, onCancel = noop }: EditUserFormProps) {
   const dispatch = useAppDispatch();
   const [updateUser] = useUpdateUserMutation();
   const [updateUserAccess] = useUpdateUserAccessMutation();
@@ -116,8 +116,9 @@ function EditUserForm({ user, onSuccess, onCancel = noop }: IEditUserFormProps) 
             label="Type"
             defaultValue={user.type}
             options={[
-              { label: upperFirst(UserType.COACH), value: UserType.COACH },
+              { label: upperFirst(UserType.ENQUIRER), value: UserType.ENQUIRER },
               { label: upperFirst(UserType.CLIENT), value: UserType.CLIENT },
+              { label: upperFirst(UserType.COACH), value: UserType.COACH },
               { label: upperFirst(UserType.MANAGER), value: UserType.MANAGER },
             ]}
           />

@@ -3,7 +3,7 @@ import { Button, Divider, Stack, Typography } from "@mui/material";
 import { IUser } from "../userModels";
 import UserDetailItems from "./UserDetailItems";
 import EditUserForm from "../editUser/EditUserForm";
-import { useLazyGetUserByIdQuery } from "../../../api/users";
+import { useLazyGetUserByIdQuery, useLazyGetUsersByCoachIdQuery } from "../../../api/users";
 
 interface IUserDetailPanelProps {
   userId: string;
@@ -16,6 +16,8 @@ function UserDetailPanel({ userId, onUserUpdated }: IUserDetailPanelProps) {
   const [coach, setCoach] = useState<IUser | undefined>();
   const [getUser] = useLazyGetUserByIdQuery();
   const [editing, setEditing] = useState(false);
+
+  const [getUsersByCoachId] = useLazyGetUsersByCoachIdQuery();
 
   async function loadUsers(_userId: string) {
     const { data: userResponse } = await getUser(_userId).unwrap();
@@ -60,6 +62,7 @@ function UserDetailPanel({ userId, onUserUpdated }: IUserDetailPanelProps) {
           user={user}
           onSuccess={() => {
             setEditing(false);
+            getUsersByCoachId({ coachId: coach?.id });
             if (typeof onUserUpdated === "function") onUserUpdated();
           }}
           onCancel={() => setEditing(false)}

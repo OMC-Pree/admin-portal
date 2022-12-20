@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useState } from "react";
+import React, { SyntheticEvent, useEffect, useState } from "react";
 import { Box, Breadcrumbs, Divider, Grid, Stack, Tab, Tabs, Typography } from "@mui/material";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import TableListFilter from "../components/table/TableListFilter";
@@ -21,7 +21,13 @@ function CoachDetailPage() {
   const { coachId } = useParams();
   const navigate = useNavigate();
   const { detailUser: coach, isFetching, refetch } = useDetailUser(coachId);
-  const { customers } = useCoachCustomers({ coachId: coach?.id });
+  const { customers, refetchCustomers } = useCoachCustomers(coach?.id);
+
+  useEffect(() => {
+    // Update customer list after a customer has been edited
+    refetchCustomers();
+  }, [customers]);
+
   const [filter, setFilter] = useState<string>("");
   const [tabValue, setTabValue] = useState(TabValues.ALL);
 
