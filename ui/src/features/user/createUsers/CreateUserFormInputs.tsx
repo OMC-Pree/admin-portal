@@ -17,6 +17,7 @@ interface ICreateUserFormInputsProps {
   trigger: () => void;
   toBeClient: boolean;
   toBeCoach: boolean;
+  toBeEnquirer: boolean;
 }
 
 function CreateUserFormInputs({
@@ -24,6 +25,7 @@ function CreateUserFormInputs({
   setValue,
   trigger,
   toBeClient = true,
+  toBeEnquirer = true,
   toBeCoach = false,
 }: ICreateUserFormInputsProps) {
   const { isAdmin } = useAuth();
@@ -64,7 +66,7 @@ function CreateUserFormInputs({
       <TextInput control={control} name="firstName" label="First name" rules={{ required: true }} />
       <TextInput control={control} name="lastName" label="Last name" rules={{ required: true }} />
       <TextInput control={control} name="airTableId" label="AirTable ID" />
-      {toBeClient ? (
+      {toBeClient || toBeEnquirer ? (
         <SelectInput
           sx={{ pt: 1 }}
           control={control}
@@ -94,6 +96,7 @@ function CreateUserFormInputs({
           )}
         />
       )}
+
       <CheckboxInput
         control={control}
         label="Send password creation email to new user"
@@ -113,6 +116,7 @@ function generateTypeOptions(isAdmin: boolean) {
   const ret = [
     { label: upperFirst(UserType.CLIENT), value: UserType.CLIENT },
     { label: upperFirst(UserType.COACH), value: UserType.COACH },
+    { label: upperFirst(UserType.ENQUIRER), value: UserType.ENQUIRER },
   ];
   if (isAdmin) ret.push({ label: upperFirst(UserType.MANAGER), value: UserType.MANAGER });
   return ret;

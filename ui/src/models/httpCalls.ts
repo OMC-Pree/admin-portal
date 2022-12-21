@@ -129,5 +129,6 @@ export type UpdateUserAccessRequest = Pick<IUser, "id"> &
       | "clientUserId"
       | "associateUserId"
       | "organisationIdentityId"
+      | "journeyStage"
     >
   >;

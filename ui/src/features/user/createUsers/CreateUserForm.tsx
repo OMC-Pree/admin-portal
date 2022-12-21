@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Box, Button, Stack } from "@mui/material";
 import { FieldValues, useForm } from "react-hook-form";
-import { UserPermissions, UserType } from "../userEnums";
+import { UserJourneyStages, UserPermissions, UserType } from "../userEnums";
 import { IUser } from "../userModels";
 import { IDPNewUser } from "../../../models/httpCalls";
 import { useBulkCreateUserMutation, useUpdateUserAccessMutation } from "../../../api/users";
@@ -43,6 +43,12 @@ function CreateUserForm() {
     defaultValues,
   });
 
+  const generateUserJourneyStage = (userType: UserType) => {
+    if (userType === UserType.ENQUIRER) {
+      return UserJourneyStages.BOOKED_DISCOVERY;
+    }
+  };
+
   const onSubmit = async (data: FieldValues) => {
     setSaveModalOpen(true);
     setUserToCreate(formatUserToCreate(data));
@@ -58,6 +64,7 @@ function CreateUserForm() {
         id: newUser.id,
         type: userType,
         permissions: generateUserPermissions(userType),
+        journeyStage: generateUserJourneyStage(userType),
       }).unwrap();
       newUser = updatedUserResult[0];
       if (newUser.type === UserType.COACH) dispatch(addCoaches([newUser]));
@@ -76,6 +83,7 @@ function CreateUserForm() {
             setValue={setValue}
             toBeClient={getValues("type") === UserType.CLIENT}
             toBeCoach={getValues("type") === UserType.COACH}
+            toBeEnquirer={getValues("type") === UserType.ENQUIRER}
           />
           <Button
             type="submit"
@@ -132,6 +140,7 @@ function generateUserPermissions(type: UserType): IUser["permissions"] {
   if (type === UserType.COACH) permissions.push(UserPermissions.COACH);
   if (type === UserType.MANAGER) permissions.push(UserPermissions.MANAGER);
   if (type === UserType.CLIENT) permissions.push(UserPermissions.CLIENT);
+  if (type === UserType.ENQUIRER) permissions.push(UserPermissions.ENQUIRER);
   return permissions;
 }
 
