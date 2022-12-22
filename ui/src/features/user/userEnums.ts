@@ -15,12 +15,12 @@ export enum UserRole {
 }
 
 export enum UserPermissions {
-  UNSECURE_ROOT = "UNSECURE_ROOT",
   ADMIN = "ADMIN",
   MANAGER = "MANAGER",
   CLIENT = "CLIENT",
   COACH = "COACH",
   ENQUIRER = "ENQUIRER",
+  BLOCKED = "BLOCKED",
 }
 
 export enum UserJourneyStages {

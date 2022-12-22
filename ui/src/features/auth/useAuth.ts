@@ -59,7 +59,6 @@ function useAuth(): IUseAuthReturnValues {
         identityUser: { permissions },
       } = decryptedToken;
       const hasPermission =
-        permissions.includes(UserPermissions.UNSECURE_ROOT) ||
         permissions.includes(UserPermissions.ADMIN) ||
         permissions.includes(UserPermissions.MANAGER);
       if (!hasPermission) throw new Error("unauthorised");
@@ -84,10 +83,7 @@ function useAuth(): IUseAuthReturnValues {
       accessMessage,
       isCoach: storedUser ? storedUser.permissions.includes(UserPermissions.COACH) : false,
       isManager: storedUser ? storedUser.permissions.includes(UserPermissions.MANAGER) : false,
-      isAdmin: storedUser
-        ? storedUser.permissions.includes(UserPermissions.ADMIN) ||
-          storedUser.permissions.includes(UserPermissions.UNSECURE_ROOT)
-        : false,
+      isAdmin: !!storedUser?.permissions.includes(UserPermissions.ADMIN),
       signin: onSignIn,
       logout: onLogout,
     }),

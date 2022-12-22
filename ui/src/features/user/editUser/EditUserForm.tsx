@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback } from "react";
 import { Box, Button, Stack } from "@mui/material";
 import { FormProvider, useForm, FieldValues } from "react-hook-form";
 import TextInput from "../../../components/form/TextInput";
@@ -43,7 +43,7 @@ function EditUserForm({ user, onSuccess, onCancel = noop }: EditUserFormProps) {
   const { coaches } = useCoaches();
 
   const type = watch("type");
-  const isClient = useMemo(() => type === UserType.CLIENT, [type]);
+  const isClientOrEnquirer = type === UserType.CLIENT || type === UserType.ENQUIRER;
 
   const onSubmit = useCallback(
     async (data_: FieldValues) => {
@@ -128,14 +128,14 @@ function EditUserForm({ user, onSuccess, onCancel = noop }: EditUserFormProps) {
             label="Permissions"
             multiple
             defaultValue={user.permissions}
-            options={Object.keys(UserPermissions)
-              .filter((perm) => perm !== UserPermissions.UNSECURE_ROOT)
-              .map((perm) => ({
-                label: upperFirst(startCase(perm).toLowerCase()),
-                value: perm,
-              }))}
+            options={Object.keys(UserPermissions).map((perm) => ({
+              label: upperFirst(startCase(perm).toLowerCase()),
+              value: perm,
+            }))}
           />
-          {isClient && coaches && <CoachAutocomplete fieldName="coachUserId" client={user} />}
+          {isClientOrEnquirer && coaches && (
+            <CoachAutocomplete fieldName="coachUserId" client={user} />
+          )}
           <Stack direction="row" alignItems="center" justifyContent="space-between">
             <Button variant="outlined" onClick={onCancel}>
               CANCEL
