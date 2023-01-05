@@ -1,4 +1,3 @@
-import React from "react";
 import userEvent from "@testing-library/user-event";
 import App from "../../app/App";
 import { NAV_MENU_TOGGLE_BTN_ID } from "../../components/AppHeader";

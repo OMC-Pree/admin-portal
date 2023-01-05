@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Divider, Stack, Typography } from "@mui/material";
 import { IUser } from "../userModels";
 import UserDetailItems from "./UserDetailItems";

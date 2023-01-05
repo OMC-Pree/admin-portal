@@ -1,4 +1,4 @@
-import React from "react";
+import { StrictMode } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
@@ -18,7 +18,7 @@ if (process.env.NODE_ENV === "development") {
 // Ignore Provider error. App still works, its just a type warning.
 // https://github.com/facebook/react/issues/24304
 ReactDOM.render(
-  <React.StrictMode>
+  <StrictMode>
     {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
     {/* @ts-ignore */}
     <Provider store={store}>
@@ -28,7 +28,7 @@ ReactDOM.render(
         </ThemeProvider>
       </BrowserRouter>
     </Provider>
-  </React.StrictMode>,
+  </StrictMode>,
   document.getElementById("root"),
 );
 

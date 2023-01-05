@@ -1,4 +1,3 @@
-import React from "react";
 import { Button } from "@mui/material";
 import { NavLink as RrNavLink } from "react-router-dom";
 import { COLOURS } from "../theme/colours";

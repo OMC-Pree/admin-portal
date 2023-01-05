@@ -1,4 +1,3 @@
-import React from "react";
 import { Stack } from "@mui/material";
 import { UserPermissions } from "../userEnums";
 import { startCase, upperFirst } from "lodash";

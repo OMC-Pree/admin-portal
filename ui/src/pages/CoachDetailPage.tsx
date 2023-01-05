@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useEffect, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import { Box, Breadcrumbs, Divider, Grid, Stack, Tab, Tabs, Typography } from "@mui/material";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import TableListFilter from "../components/table/TableListFilter";

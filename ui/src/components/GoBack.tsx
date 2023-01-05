@@ -1,4 +1,3 @@
-import React from "react";
 import { Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import ArrowLeft from "@mui/icons-material/ArrowLeft";

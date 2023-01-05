@@ -1,5 +1,5 @@
 import { Box, MenuItem, MenuList, Typography } from "@mui/material";
-import React, { createRef } from "react";
+import { createRef } from "react";
 import useOutsideClick from "../hooks/useOutsideClick";
 import { COLOURS } from "../theme/colours";
 

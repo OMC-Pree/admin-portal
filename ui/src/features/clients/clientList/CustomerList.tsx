@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, MouseEvent, ChangeEvent } from "react";
 import {
   Table,
   TableBody,
@@ -22,26 +22,24 @@ interface CustomerListProps {
 
 function CustomerList({ users }: CustomerListProps) {
   const navigate = useNavigate();
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [order, setOrder] = React.useState<SortOrder>("asc");
-  const [orderBy, setOrderBy] = React.useState<keyof IClientTableData>("lastName");
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [order, setOrder] = useState<SortOrder>("asc");
+  const [orderBy, setOrderBy] = useState<keyof IClientTableData>("lastName");
   const rows = formatTableData(users);
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
-  const onSort = (event: React.MouseEvent<unknown>, property: string) => {
+  const onSort = (event: MouseEvent<unknown>, property: string) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property as keyof IClientTableData);
   };
 
-  const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
+  const handleChangePage = (event: MouseEvent<HTMLButtonElement> | null, newPage: number) => {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
+  const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };

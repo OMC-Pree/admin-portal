@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material";
-import React from "react";
+
 import GoBack from "../components/GoBack";
 import RequireAuth from "../features/auth/RequireAuth";
 import CreateUserForm from "../features/user/createUsers/CreateUserForm";
