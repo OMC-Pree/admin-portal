@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Box, Button, Stack } from "@mui/material";
 import { FieldValues, useForm } from "react-hook-form";
-import { UserJourneyStages, UserPermissions, UserType } from "../userEnums";
+import { UserJourneyStage, UserPermissions, UserType } from "../userEnums";
 import { IUser } from "../userModels";
 import { IDPNewUser } from "../../../models/httpCalls";
 import { useBulkCreateUserMutation, useUpdateUserAccessMutation } from "../../../api/users";
@@ -45,7 +45,7 @@ function CreateUserForm() {
 
   const generateUserJourneyStage = (userType: UserType) => {
     if (userType === UserType.ENQUIRER) {
-      return UserJourneyStages.BOOKED_DISCOVERY;
+      return UserJourneyStage.BOOKED_DISCOVERY;
     }
   };
 

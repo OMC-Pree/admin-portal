@@ -1,6 +1,6 @@
 import { ECountries } from "../../enums/ECountries";
 import { Country } from "../../models/countriesAndRegions";
-import { UserJourneyStages, UserPermissions, UserType } from "./userEnums";
+import { UserJourneyStage, UserPermissions, UserType } from "./userEnums";
 
 export type UserPhoneNumber = {
   type: string;
@@ -77,5 +77,5 @@ export interface IUser extends INewUser {
   nationalitiesIds?: UserNationalityId[] | null;
   usCitizen?: boolean;
   bankDetails?: UserBankDetails[];
-  journeyStage?: UserJourneyStages;
+  journeyStage?: UserJourneyStage;
 }
