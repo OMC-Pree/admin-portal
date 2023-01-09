@@ -12,6 +12,8 @@ import { updateStoredCoach } from "../../coaches/coachesSlice";
 import useCoaches from "../../coaches/useCoaches";
 import CoachAutocomplete from "./CoachAutocomplete";
 import { UpdateUserAccessRequest, UpdateUserRequest } from "../../../models/httpCalls";
+import { UserJourneyStage } from "../userEnums";
+import { journeyStageList } from "../userConstants";
 
 interface EditUserFormProps {
   user: IUser;
@@ -25,6 +27,7 @@ interface FormData {
   type: UserType;
   permissions: UserPermissions[];
   coachUserId?: string;
+  journeyStage: UserJourneyStage;
 }
 
 function EditUserForm({ user, onSuccess, onCancel = noop }: EditUserFormProps) {
@@ -66,6 +69,7 @@ function EditUserForm({ user, onSuccess, onCancel = noop }: EditUserFormProps) {
         ...defaultUserData,
         type: data.type,
         permissions: data.permissions,
+        journeyStage: data.journeyStage,
       };
       const hasNewType = newAccessData.type !== user.type;
       const hasNewPermissions =
@@ -74,8 +78,9 @@ function EditUserForm({ user, onSuccess, onCancel = noop }: EditUserFormProps) {
           (acc, next) => !(newAccessData.permissions || []).includes(next),
           false,
         );
+      const hasNewJourneyStage = newAccessData.journeyStage !== user.journeyStage;
 
-      if (hasNewType || hasNewPermissions || hasNewCoach) {
+      if (hasNewType || hasNewPermissions || hasNewCoach || hasNewJourneyStage) {
         if (
           data.type === UserType.CLIENT &&
           newAccessData.permissions?.includes(UserPermissions.CLIENT) &&
@@ -121,6 +126,13 @@ function EditUserForm({ user, onSuccess, onCancel = noop }: EditUserFormProps) {
               { label: upperFirst(UserType.COACH), value: UserType.COACH },
               { label: upperFirst(UserType.MANAGER), value: UserType.MANAGER },
             ]}
+          />
+          <SelectInput
+            control={control}
+            name="journeyStage"
+            label="User Journey Stage"
+            defaultValue={user.journeyStage}
+            options={journeyStageList}
           />
           <SelectInput
             control={control}

@@ -4,6 +4,7 @@ import { startCase, upperFirst } from "lodash";
 import { format, parseISO } from "date-fns";
 import { IUser } from "../userModels";
 import UserDetailItem from "./UserDetailItem";
+import { journeyStageList } from "../userConstants";
 
 interface IUserDetailItemsProps {
   user: IUser;
@@ -49,6 +50,7 @@ function generateDetailItems(user: IUser) {
     "id",
     "type",
     "permissions",
+    "journeyStage",
     "createdAt",
   ];
   return props.map((key) => (
@@ -67,6 +69,11 @@ function formatValue(user: IUser, prop: keyof IUser) {
       .join(", ");
   } else if (prop === "type" && typeof value === "string") {
     value = upperFirst(value);
+  } else if (prop === "journeyStage") {
+    const matchingJourneyStageItem = journeyStageList.find(
+      (journeyStageItem) => journeyStageItem.value === value,
+    );
+    value = matchingJourneyStageItem?.label || "-";
   } else {
     value = value ? value?.toString() : "-";
   }

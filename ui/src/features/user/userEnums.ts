@@ -23,7 +23,7 @@ export enum UserPermissions {
   BLOCKED = "BLOCKED",
 }
 
-export enum UserJourneyStages {
+export enum UserJourneyStage {
   PROSPECT = "PROSPECT",
   BOOKED_DISCOVERY = "BOOKED_DISCOVERY",
   OUT_OF_CRITERIA_PRE_DISCOVERY = "OUT_OF_CRITERIA_PRE_DISCOVERY",
