@@ -41,6 +41,19 @@ export type UserNationalityId = {
   identifiers: NationalityIdentifier[];
 };
 
+export type UserAnswerAggList = {
+  UK_MY_PROFILE_MINI_V1?: string;
+  UK_MY_PROFILE_V2?: string;
+  UK_MY_PROFILE_V2_1?: string;
+  UK_RISK_TOLERANCE_QUESTIONNAIRE_V1?: string;
+  UK_RISK_TOLERANCE_LEVEL_V1?: string;
+  UK_INVESTMENT_ADVICE_V1?: string;
+};
+
+export type UserQAClient = {
+  answerAggregationList: UserAnswerAggList;
+};
+
 export interface INewUser {
   type: UserType;
   email: string;
@@ -78,4 +91,5 @@ export interface IUser extends INewUser {
   usCitizen?: boolean;
   bankDetails?: UserBankDetails[];
   journeyStage?: UserJourneyStage;
+  qaClient: UserQAClient | null;
 }

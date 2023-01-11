@@ -34,6 +34,7 @@ export const MOCK_CLIENTS: IUser[] = [
     metadata: {},
     createdAt: "2021-10-23T16:23:42.138Z",
     updatedAt: "2022-02-08T11:39:35.210Z",
+    qaClient: null,
   },
   {
     id: "217db1a5-d0f1-4cbe-ab61-3de935c302eb",
@@ -67,6 +68,7 @@ export const MOCK_CLIENTS: IUser[] = [
     metadata: {},
     createdAt: "2021-07-02T10:12:42.138Z",
     updatedAt: "2022-02-08T11:39:35.210Z",
+    qaClient: null,
   },
   {
     id: "5e465c0d-6dc9-47c6-af98-29126a332164",
@@ -100,6 +102,7 @@ export const MOCK_CLIENTS: IUser[] = [
     metadata: {},
     createdAt: "2021-07-02T10:12:42.138Z",
     updatedAt: "2022-02-08T11:39:35.210Z",
+    qaClient: null,
   },
   {
     id: "ee5d3662-a86a-48f0-86b6-e08a1e9633f0",
@@ -133,5 +136,6 @@ export const MOCK_CLIENTS: IUser[] = [
     metadata: {},
     createdAt: "2021-07-02T10:12:42.138Z",
     updatedAt: "2022-02-08T11:39:35.210Z",
+    qaClient: null,
   },
 ];

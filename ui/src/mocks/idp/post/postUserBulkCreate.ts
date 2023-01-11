@@ -20,6 +20,7 @@ export const postUserBulkCreate: MockRestHandler = (req, res, ctx) => {
     metadata: {},
     createdAt: "2022-02-15T10:45:34.383Z",
     updatedAt: "2022-02-15T10:45:34.383Z",
+    qaClient: null,
   }));
   const response: GetUsersResponse = {
     data: newUsers,

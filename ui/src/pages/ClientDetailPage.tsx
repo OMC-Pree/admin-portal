@@ -10,6 +10,7 @@ import { NavOptions } from "../features/user/UserNavEnums";
 import UserAddress from "../features/user/userDetail/UserAddress";
 import UserBankDetails from "../features/user/userDetail/UserBankDetails";
 import UserTaxDetails from "../features/user/userDetail/UserTaxDetails";
+import UserInvestments from "../features/user/userDetail/UserInvestments";
 
 function ClientDetailPage() {
   const { clientId } = useParams();
@@ -59,6 +60,7 @@ function ClientDetailPage() {
               {currentPage === NavOptions.ADDRESS && <UserAddress client={client} />}
               {currentPage === NavOptions.BANK_DETAILS && <UserBankDetails client={client} />}
               {currentPage === NavOptions.TAX_INFO && <UserTaxDetails client={client} />}
+              {currentPage === NavOptions.INVESTMENTS && <UserInvestments client={client} />}
             </Grid>
           </Grid>
         ) : null}

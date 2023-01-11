@@ -5,11 +5,13 @@ import managersReducer from "../features/managers/managersSlice";
 import userDetailReducer from "../features/user/userDetail/userDetailSlice";
 import { idpApi } from "../api/idpApi";
 import { getCookie } from "../utils/cookie";
+import { cpbApi } from "../api/cpbApi";
 
 // Combine the reducers so that they can be wrapped in a root reducer.
 // Having a root reducer allows us to clear the store when a user logs out.
 const combinedReducer = combineReducers({
   [idpApi.reducerPath]: idpApi.reducer,
+  [cpbApi.reducerPath]: cpbApi.reducer,
   auth: authReducer,
   coaches: coachesReducer,
   managers: managersReducer,

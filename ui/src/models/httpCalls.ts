@@ -2,7 +2,7 @@ import { UserRole } from "../features/user/userEnums";
 import { INewUser, IUser } from "../features/user/userModels";
 
 export type IdpErrors = string[];
-export interface IdpStandardResponse {
+export interface OmcApiStandardResponse {
   data: unknown[];
   errors: IdpErrors;
   meta: { [key: string]: unknown };
@@ -10,14 +10,14 @@ export interface IdpStandardResponse {
 
 export type IdpErrorResponse = {
   status: number;
-  data: IdpStandardResponse;
+  data: OmcApiStandardResponse;
 };
 
 export type IdpRequestErrorListProps = {
   apiResponse: IdpErrorResponse;
 };
 
-export interface StandardUsersResponse extends IdpStandardResponse {
+export interface StandardUsersResponse extends OmcApiStandardResponse {
   data: IUser[];
 }
 

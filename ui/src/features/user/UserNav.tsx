@@ -59,6 +59,11 @@ const UserNav = ({ currentPage, setCurrentPage }: UserNavProps) => {
         active={currentPage === NavOptions.TAX_INFO}
         onClick={() => setCurrentPage(NavOptions.TAX_INFO)}
       />
+      <NavButton
+        text="Investments"
+        active={currentPage === NavOptions.INVESTMENTS}
+        onClick={() => setCurrentPage(NavOptions.INVESTMENTS)}
+      />
     </Stack>
   );
 };

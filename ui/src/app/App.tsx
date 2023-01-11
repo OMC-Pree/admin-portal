@@ -7,6 +7,7 @@ import CoachDetailPage from "../pages/CoachDetailPage";
 import ClientDetailPage from "../pages/ClientDetailPage";
 import CreateUserPage from "../pages/CreateUserPage";
 import LoginPage from "../pages/LoginPage";
+import InvestmentDetailPage from "../pages/InvestmentDetailPage";
 
 const App = () => (
   <div className="App">
@@ -19,6 +20,10 @@ const App = () => (
         <Route path="/coaches" element={<CoachListPage />} />
         <Route path="/coaches/:coachId" element={<CoachDetailPage />} />
         <Route path="/clients/:clientId" element={<ClientDetailPage />} />
+        <Route
+          path="/clients/:clientId/investments/:investmentId"
+          element={<InvestmentDetailPage />}
+        />
         <Route path="/user/create" element={<CreateUserPage />} />
       </Routes>
     </Box>

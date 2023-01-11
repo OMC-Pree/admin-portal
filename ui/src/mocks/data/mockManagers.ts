@@ -27,6 +27,7 @@ export const MOCK_MANAGERS: IUser[] = [
     metadata: {},
     createdAt: "2021-10-23T16:23:42.138Z",
     updatedAt: "2022-02-08T11:39:35.210Z",
+    qaClient: null,
   },
   {
     id: "28aa712e-56dd-4ee1-b6c3-e382f7e3868b",
@@ -53,5 +54,6 @@ export const MOCK_MANAGERS: IUser[] = [
     metadata: {},
     createdAt: "2021-10-23T16:23:42.138Z",
     updatedAt: "2022-02-08T11:39:35.210Z",
+    qaClient: null,
   },
 ];

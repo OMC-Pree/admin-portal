@@ -27,6 +27,7 @@ export const MOCK_COACHES: IUser[] = [
     metadata: {},
     createdAt: "2021-10-23T16:23:42.138Z",
     updatedAt: "2022-02-08T11:39:35.210Z",
+    qaClient: null,
   },
   {
     id: "0f132a73-842b-4494-abcd-5a88f41b5314",
@@ -53,6 +54,7 @@ export const MOCK_COACHES: IUser[] = [
     metadata: {},
     createdAt: "2021-09-12T16:23:42.138Z",
     updatedAt: "2022-02-08T11:39:35.210Z",
+    qaClient: null,
   },
   {
     id: "ae835bb2-b73f-4ac5-a9c8-84f148bc992b",
@@ -79,5 +81,6 @@ export const MOCK_COACHES: IUser[] = [
     metadata: {},
     createdAt: "2021-04-08T16:23:42.138Z",
     updatedAt: "2022-02-08T11:39:35.210Z",
+    qaClient: null,
   },
 ];
