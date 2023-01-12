@@ -16,6 +16,12 @@ export const clientsApi = idpApi.injectEndpoints({
         params,
       }),
     }),
+    getAdmins: builder.query<GetUsersResponse, GetUsersRequest>({
+      query: (params) => ({
+        url: "v1/users",
+        params: { ...params, permission: "ADMIN" },
+      }),
+    }),
     getManagers: builder.query<GetUsersResponse, GetUsersRequest>({
       query: (params) => ({
         url: "v1/users",
@@ -79,6 +85,7 @@ export const clientsApi = idpApi.injectEndpoints({
 export const {
   useBulkCreateUserMutation,
   useGetUsersQuery,
+  useLazyGetAdminsQuery,
   useLazyGetManagersQuery,
   useLazyGetCoachesQuery,
   useGetClientsQuery,

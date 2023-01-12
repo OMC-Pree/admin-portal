@@ -3,14 +3,14 @@ import { visuallyHidden } from "@mui/utils";
 
 import { IHeadCell, SortOrder } from "./table";
 
-export interface IEnhancedTableProps {
+export interface EnhancedTableHeadProps {
   cells: IHeadCell[];
   onRequestSort: (event: React.MouseEvent<unknown>, property: string) => void;
   order: SortOrder;
   orderBy: string;
 }
 
-function EnhancedTableHead(props: IEnhancedTableProps) {
+function EnhancedTableHead(props: EnhancedTableHeadProps) {
   const { cells, order, orderBy, onRequestSort } = props;
 
   const createSortHandler = (property: string) => (event: React.MouseEvent<unknown>) => {

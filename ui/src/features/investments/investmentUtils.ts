@@ -92,9 +92,9 @@ export const formatData = (data: AllDataAnswerAggregation): FormattedInvestmentD
     if (answerType === GenericAnswerValueType.JSON) {
       const answer: JSONAnswer = item.answer?.valueJSON as JSONAnswer;
       if (answer.data) {
-        //This is an Array
         const arrayAnswer: unknown[] = answer.data as unknown[];
         const tableRows = arrayAnswer.map((item) => {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const data = Object.entries(item as any).map(([key, value]) => {
             const parsedDate = parseISO(value as string);
             const isValidDate = isValid(parsedDate);

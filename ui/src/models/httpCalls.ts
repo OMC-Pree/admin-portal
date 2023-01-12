@@ -1,3 +1,4 @@
+import { Organisation } from "../features/organisations/organisationModel";
 import { UserRole } from "../features/user/userEnums";
 import { INewUser, IUser } from "../features/user/userModels";
 
@@ -16,6 +17,20 @@ export type IdpErrorResponse = {
 export type IdpRequestErrorListProps = {
   apiResponse: IdpErrorResponse;
 };
+
+export interface GetOrganisationsResponse extends OmcApiStandardResponse {
+  data: Organisation[];
+  meta: {
+    count: number;
+    lastEvaluatedKey?: string;
+  };
+}
+
+export interface GetOrganisationsRequest {
+  id?: string;
+  lastEvaluatedKey?: string;
+  max?: number;
+}
 
 export interface StandardUsersResponse extends OmcApiStandardResponse {
   data: IUser[];

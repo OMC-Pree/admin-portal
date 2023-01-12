@@ -5,7 +5,6 @@ import { COLOURS } from "../theme/colours";
 interface INavLinkProps {
   to: string;
   title: string;
-  end?: boolean;
 }
 
 const NavLink = ({ to, title, ...rest }: INavLinkProps) => {

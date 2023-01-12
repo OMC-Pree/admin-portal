@@ -1,15 +1,15 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, KeyboardEvent, SetStateAction } from "react";
 import { Stack, TextField, Tooltip } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
 
-interface ITableListFilterProps {
+interface TableListFilterProps {
   filter: string;
   setFilter: Dispatch<SetStateAction<string>>;
   onKeyUp?: (key: string) => void;
 }
 
-const TableListFilter = ({ filter, setFilter, onKeyUp }: ITableListFilterProps) => {
-  function handleKeyUp(e: React.KeyboardEvent<HTMLInputElement>) {
+const TableListFilter = ({ filter, setFilter, onKeyUp }: TableListFilterProps) => {
+  function handleKeyUp(e: KeyboardEvent<HTMLInputElement>) {
     if (e.key === "Escape") setFilter("");
     if (typeof onKeyUp === "function") onKeyUp(e.key);
   }
@@ -23,7 +23,7 @@ const TableListFilter = ({ filter, setFilter, onKeyUp }: ITableListFilterProps) 
         onKeyUp={handleKeyUp}
         onChange={(e) => setFilter(e.target.value)}
       />
-      <Tooltip title="clear the list filter">
+      <Tooltip title="Clear the list filter">
         <ClearIcon onClick={() => setFilter("")} sx={{ cursor: "pointer" }} />
       </Tooltip>
     </Stack>

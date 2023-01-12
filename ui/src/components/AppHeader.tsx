@@ -33,7 +33,8 @@ function AppHeader() {
           )}
           {user && (
             <Stack direction="row" alignItems="center" spacing={1}>
-              <NavLink to="/coaches" title="all coaches" end />
+              <NavLink to="/organisations" title="all organisations" />
+              <NavLink to="/coaches" title="all coaches" />
               <Button
                 id={NAV_MENU_TOGGLE_BTN_ID}
                 data-testid={NAV_MENU_TOGGLE_BTN_ID}
