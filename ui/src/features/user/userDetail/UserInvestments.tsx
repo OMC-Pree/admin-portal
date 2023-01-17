@@ -11,7 +11,6 @@ const UserInvestments = ({ client }: UserInvestmentsProps) => {
   const [investments] = useState<UserAnswerAggList["UK_INVESTMENT_ADVICE_V1"] | null>(
     client.qaClient?.answerAggregationList.UK_INVESTMENT_ADVICE_V1 || null,
   );
-  console.log(investments);
 
   return (
     <Stack spacing={2}>

@@ -12,6 +12,8 @@ import { Organisation } from "./organisationModel";
 import EnhancedTableHead from "../../components/table/EnhancedTableHead";
 import { ChangeEvent, MouseEvent, useState } from "react";
 import { SortOrder } from "../../components/table/table";
+import { useNavigate } from "react-router-dom";
+import { COLOURS } from "../../theme/colours";
 
 interface OrganisationTableProps {
   rows: Organisation[];
@@ -22,6 +24,7 @@ function OrganisationTable({ rows }: OrganisationTableProps) {
   const [orderBy, setOrderBy] = useState<keyof Organisation>("name");
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const navigate = useNavigate();
 
   const onSort = (event: MouseEvent<unknown>, property: string) => {
     const isAsc = orderBy === property && order === "asc";
@@ -55,7 +58,12 @@ function OrganisationTable({ rows }: OrganisationTableProps) {
             .sort(getOrganisationComparator(order, orderBy))
             .map((row) => {
               return (
-                <TableRow key={row.id}>
+                <TableRow
+                  key={row.id}
+                  onClick={() => navigate(`/organisations/${row.id}`)}
+                  sx={{ cursor: "pointer", "&:hover": { bgcolor: COLOURS.PURPLE[100] } }}
+                  title={`Open details page for ${row.name}`}
+                >
                   <TableCell>{row.id}</TableCell>
                   <TableCell>{row.name}</TableCell>
                   <TableCell>{row.createdAt}</TableCell>

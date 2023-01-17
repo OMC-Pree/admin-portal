@@ -9,6 +9,7 @@ import CreateUserPage from "../pages/CreateUserPage";
 import LoginPage from "../pages/LoginPage";
 import InvestmentDetailPage from "../pages/InvestmentDetailPage";
 import OrganisationTablePage from "../pages/OrganisationTablePage";
+import OrganisationDetailsPage from "../pages/OrganisationDetailsPage";
 
 const App = () => (
   <div className="App">
@@ -19,6 +20,7 @@ const App = () => (
         <Route path="/login" element={<LoginPage />} />
         <Route path="/public" element={<div>Public</div>} />
         <Route path="/organisations" element={<OrganisationTablePage />} />
+        <Route path="/organisations/:organisationId" element={<OrganisationDetailsPage />} />
         <Route path="/coaches" element={<CoachListPage />} />
         <Route path="/coaches/:coachId" element={<CoachDetailPage />} />
         <Route path="/clients/:clientId" element={<ClientDetailPage />} />

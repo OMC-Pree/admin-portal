@@ -3,7 +3,7 @@ import { UserPermissions } from "../userEnums";
 import { startCase, upperFirst } from "lodash";
 import { format, parseISO } from "date-fns";
 import { IUser } from "../userModels";
-import UserDetailItem from "./UserDetailItem";
+import DetailItem from "../../../components/DetailItem";
 import { journeyStageList } from "../userConstants";
 
 interface IUserDetailItemsProps {
@@ -17,7 +17,7 @@ const UserDetailItems = ({ user, associate, coach }: IUserDetailItemsProps) => {
 
   if (coach)
     detailItems.push(
-      <UserDetailItem
+      <DetailItem
         key={`user-detail-assigned-coach`}
         prop="Assigned coach"
         value={`${coach.firstName} ${coach.lastName}`}
@@ -26,7 +26,7 @@ const UserDetailItems = ({ user, associate, coach }: IUserDetailItemsProps) => {
     );
   if (associate)
     detailItems.push(
-      <UserDetailItem
+      <DetailItem
         key={`user-detail-associated-user`}
         prop="Associated user"
         value={`${associate.firstName} ${associate.lastName}`}
@@ -54,7 +54,7 @@ function generateDetailItems(user: IUser) {
     "createdAt",
   ];
   return props.map((key) => (
-    <UserDetailItem key={`user-detail-${key}`} prop={key} value={formatValue(user, key)} />
+    <DetailItem key={`user-detail-${key}`} prop={key} value={formatValue(user, key)} />
   ));
 }
 

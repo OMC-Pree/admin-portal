@@ -36,7 +36,6 @@ function useOrganisations() {
   };
 
   useEffect(() => {
-    console.log("starting useEffect");
     if (data?.data) doLoad(data.data);
   }, [data]);
 

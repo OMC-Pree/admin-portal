@@ -15,7 +15,16 @@ export const organisationsApi = idpApi.injectEndpoints({
             };
       },
     }),
+    getOrganisationById: builder.query<GetOrganisationsResponse, GetOrganisationsRequest>({
+      query: (params) => ({
+        url: `v1/organisation-identity?id=${params.id}`,
+      }),
+    }),
   }),
 });
 
-export const { useGetOrganisationsQuery, useLazyGetOrganisationsQuery } = organisationsApi;
+export const {
+  useGetOrganisationsQuery,
+  useLazyGetOrganisationsQuery,
+  useGetOrganisationByIdQuery,
+} = organisationsApi;
