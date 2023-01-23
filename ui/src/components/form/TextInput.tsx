@@ -1,13 +1,13 @@
 import { InputProps, TextField } from "@mui/material";
 import { Control, Controller, RegisterOptions } from "react-hook-form";
 
-interface ITextInputProps extends InputProps {
+interface TextInputProps extends InputProps {
   control: Control;
   name: string;
   label: string;
   rules?: RegisterOptions;
 }
-const TextInput = ({ label, type = "text", size = "small", ...rest }: ITextInputProps) => (
+const TextInput = ({ label, type = "text", size = "small", ...rest }: TextInputProps) => (
   <Controller
     {...rest}
     render={({ field, fieldState: { error } }) => (

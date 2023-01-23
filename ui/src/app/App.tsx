@@ -10,6 +10,7 @@ import LoginPage from "../pages/LoginPage";
 import InvestmentDetailPage from "../pages/InvestmentDetailPage";
 import OrganisationTablePage from "../pages/OrganisationTablePage";
 import OrganisationDetailsPage from "../pages/OrganisationDetailsPage";
+import CreateOrganisationPage from "../pages/CreateOrganisationPage";
 
 const App = () => (
   <div className="App">
@@ -29,6 +30,7 @@ const App = () => (
           element={<InvestmentDetailPage />}
         />
         <Route path="/user/create" element={<CreateUserPage />} />
+        <Route path="/organisation/create" element={<CreateOrganisationPage />} />
       </Routes>
     </Box>
   </div>

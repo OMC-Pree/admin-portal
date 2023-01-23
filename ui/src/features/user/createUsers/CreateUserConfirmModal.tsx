@@ -1,12 +1,12 @@
 import { Box, Button, Modal, Stack, Typography } from "@mui/material";
 
-interface ICreateUserConfirmModalProps {
+interface CreateUserConfirmModalProps {
   isOpen: boolean;
   close: () => void;
   onSave: () => void;
 }
 
-const CreateUserConfirmModal = ({ isOpen, close, onSave }: ICreateUserConfirmModalProps) => {
+const CreateUserConfirmModal = ({ isOpen, close, onSave }: CreateUserConfirmModalProps) => {
   const modalTitleId = "create-user-modal-title";
   const modalDescriptionId = "create-user-modal-description";
   return (
@@ -15,7 +15,7 @@ const CreateUserConfirmModal = ({ isOpen, close, onSave }: ICreateUserConfirmMod
       onClose={close}
       aria-labelledby={modalTitleId}
       aria-describedby={modalDescriptionId}
-      BackdropProps={{ sx: { backgroundColor: "rgba(0, 0, 0, 0.75)" } }}
+      componentsProps={{ backdrop: { style: { backgroundColor: "rgba(0, 0, 0, 0.75)" } } }}
     >
       <Box
         sx={{

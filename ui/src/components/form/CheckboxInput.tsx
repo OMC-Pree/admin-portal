@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { Control, Controller, RegisterOptions } from "react-hook-form";
 
-interface ICheckboxInputProps extends CheckboxProps {
+interface CheckboxInputProps extends CheckboxProps {
   control: Control;
   name: string;
   label: string;
@@ -24,7 +24,7 @@ const CheckboxInput = ({
   size,
   sx,
   ...rest
-}: ICheckboxInputProps) => (
+}: CheckboxInputProps) => (
   <Box sx={sx}>
     <Controller
       {...rest}

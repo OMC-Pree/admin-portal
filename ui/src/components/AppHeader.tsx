@@ -10,7 +10,7 @@ import HeaderMenu from "./HeaderMenu";
 export const NAV_MENU_TOGGLE_BTN_ID = "nav-menu-toggle";
 
 function AppHeader() {
-  const { user, logout } = useAuth();
+  const { user, logout, isAdmin } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -33,7 +33,7 @@ function AppHeader() {
           )}
           {user && (
             <Stack direction="row" alignItems="center" spacing={1}>
-              <NavLink to="/organisations" title="all organisations" />
+              {isAdmin && <NavLink to="/organisations" title="all organisations" />}
               <NavLink to="/coaches" title="all coaches" />
               <Button
                 id={NAV_MENU_TOGGLE_BTN_ID}

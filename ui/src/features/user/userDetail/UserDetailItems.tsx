@@ -6,13 +6,13 @@ import { IUser } from "../userModels";
 import DetailItem from "../../../components/DetailItem";
 import { journeyStageList } from "../userConstants";
 
-interface IUserDetailItemsProps {
+interface UserDetailItemsProps {
   user: IUser;
   associate?: IUser;
   coach?: IUser;
 }
 
-const UserDetailItems = ({ user, associate, coach }: IUserDetailItemsProps) => {
+const UserDetailItems = ({ user, associate, coach }: UserDetailItemsProps) => {
   const detailItems = generateDetailItems(user);
 
   if (coach)

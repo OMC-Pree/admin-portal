@@ -10,7 +10,7 @@ import useManagers from "../../managers/useManagers";
 import useAuth from "../../auth/useAuth";
 import { EMAIL_VALIDATION_REGEX } from "../../../utils/inputValidationRegex";
 
-interface ICreateUserFormInputsProps {
+interface CreateUserFormInputsProps {
   control: Control;
   setValue: (key: string, value: string) => void;
   trigger: () => void;
@@ -26,7 +26,7 @@ function CreateUserFormInputs({
   toBeClient = true,
   toBeEnquirer = true,
   toBeCoach = false,
-}: ICreateUserFormInputsProps) {
+}: CreateUserFormInputsProps) {
   const { isAdmin } = useAuth();
   const { coaches } = useCoaches();
   const { managers } = useManagers();

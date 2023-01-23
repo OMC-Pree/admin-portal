@@ -2,12 +2,12 @@ import { Button } from "@mui/material";
 import { NavLink as RrNavLink } from "react-router-dom";
 import { COLOURS } from "../theme/colours";
 
-interface INavLinkProps {
+interface NavLinkProps {
   to: string;
   title: string;
 }
 
-const NavLink = ({ to, title, ...rest }: INavLinkProps) => {
+const NavLink = ({ to, title, ...rest }: NavLinkProps) => {
   return (
     <Button>
       <RrNavLink

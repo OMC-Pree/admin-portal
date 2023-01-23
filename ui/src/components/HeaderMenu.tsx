@@ -3,12 +3,12 @@ import { createRef } from "react";
 import useOutsideClick from "../hooks/useOutsideClick";
 import { COLOURS } from "../theme/colours";
 
-interface IHeaderMenuProps {
+interface HeaderMenuProps {
   onLogout: () => void;
   onCloseMenu: () => void;
 }
 
-function HeaderMenu({ onLogout, onCloseMenu }: IHeaderMenuProps) {
+function HeaderMenu({ onLogout, onCloseMenu }: HeaderMenuProps) {
   const ref = createRef<HTMLUListElement>();
   useOutsideClick(ref, onCloseMenu);
 

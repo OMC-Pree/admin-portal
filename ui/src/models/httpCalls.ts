@@ -32,6 +32,11 @@ export interface GetOrganisationsRequest {
   max?: number;
 }
 
+export interface CreateOrganisationRequest {
+  type: string;
+  name: string;
+}
+
 export interface StandardUsersResponse extends OmcApiStandardResponse {
   data: IUser[];
 }

@@ -16,11 +16,11 @@ import { formatDate, formatTableData, getComparator, headCells } from "./coachLi
 import { useNavigate } from "react-router-dom";
 import { COLOURS } from "../../../theme/colours";
 
-interface ICoachListProps {
+interface CoachListProps {
   coaches: IUser[];
 }
 
-function CoachList({ coaches }: ICoachListProps) {
+function CoachList({ coaches }: CoachListProps) {
   const navigate = useNavigate();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);

@@ -16,13 +16,13 @@ function useOutsideClick(ref: React.RefObject<Element>, callback: () => void) {
 
 export default useOutsideClick;
 
-interface IEventHandlerProps {
+interface EventHandlerProps {
   ref: React.RefObject<Element>;
   callback: () => void;
 }
 
 const createOutsideClickHandler =
-  ({ ref, callback }: IEventHandlerProps) =>
+  ({ ref, callback }: EventHandlerProps) =>
   (event: Event) => {
     const target = event.target as Element;
     const isNavMenuBtn = target.id === NAV_MENU_TOGGLE_BTN_ID;

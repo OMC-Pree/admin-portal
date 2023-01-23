@@ -25,7 +25,7 @@ const OrganisationDetailsPage = () => {
         </Breadcrumbs>
       </Stack>
       <Grid container>
-        <Grid xs={12} md={6}>
+        <Grid xs={12} md={6} item={true}>
           <Typography variant="h3" sx={{ mb: 2 }}>
             Organisation details
           </Typography>

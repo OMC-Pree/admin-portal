@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Stack, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import RequireAuth from "../features/auth/RequireAuth";
 import TableListFilter from "../components/table/TableListFilter";
 import OrganisationTable from "../features/organisations/OrganisationTable";
 import useOrganisations from "../features/organisations/useOrganisations";
+import { NavLink } from "react-router-dom";
 
 function OrganisationTablePage() {
   const [filter, setFilter] = useState("");
@@ -27,6 +28,13 @@ function OrganisationTablePage() {
       >
         <Typography variant="h4">Organisations</Typography>
         <TableListFilter filter={filter} setFilter={setFilter} />
+        <Stack direction="row" spacing={1}>
+          <Box component={NavLink} to="/organisation/create" sx={{ textDecoration: "none" }}>
+            <Button sx={{ width: 200 }} variant="contained">
+              new organisation
+            </Button>
+          </Box>
+        </Stack>
       </Stack>
       <OrganisationTable rows={filteredOrganisationRowData} />
     </RequireAuth>

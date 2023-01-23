@@ -5,12 +5,12 @@ import UserDetailItems from "./UserDetailItems";
 import EditUserForm from "../editUser/EditUserForm";
 import { useLazyGetUserByIdQuery, useLazyGetUsersByCoachIdQuery } from "../../../api/users";
 
-interface IUserDetailPanelProps {
+interface UserDetailPanelProps {
   userId: string;
   onUserUpdated?: () => void;
 }
 
-function UserDetailPanel({ userId, onUserUpdated }: IUserDetailPanelProps) {
+function UserDetailPanel({ userId, onUserUpdated }: UserDetailPanelProps) {
   const [user, setUser] = useState<IUser | undefined>();
   const [associate, setAssociate] = useState<IUser | undefined>();
   const [coach, setCoach] = useState<IUser | undefined>();

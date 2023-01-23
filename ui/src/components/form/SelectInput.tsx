@@ -15,7 +15,7 @@ interface ISelectOption {
   value: string | number;
 }
 
-interface ISelectInputProps extends SelectProps {
+interface SelectInputProps extends SelectProps {
   control: Control;
   name: string;
   label: string;
@@ -33,7 +33,7 @@ const SelectInput = ({
   sx,
   onChange,
   ...rest
-}: ISelectInputProps) => (
+}: SelectInputProps) => (
   <Box sx={sx}>
     <Controller
       {...rest}
