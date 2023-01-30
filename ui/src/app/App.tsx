@@ -9,7 +9,7 @@ import CreateUserPage from "../pages/CreateUserPage";
 import LoginPage from "../pages/LoginPage";
 import InvestmentDetailPage from "../pages/InvestmentDetailPage";
 import OrganisationTablePage from "../pages/OrganisationTablePage";
-import OrganisationDetailsPage from "../pages/OrganisationDetailsPage";
+import OrganisationDetailsPanel from "../features/organisations/OrganisationDetailPanel";
 import CreateOrganisationPage from "../pages/CreateOrganisationPage";
 
 const App = () => (
@@ -21,7 +21,7 @@ const App = () => (
         <Route path="/login" element={<LoginPage />} />
         <Route path="/public" element={<div>Public</div>} />
         <Route path="/organisations" element={<OrganisationTablePage />} />
-        <Route path="/organisations/:organisationId" element={<OrganisationDetailsPage />} />
+        <Route path="/organisations/:organisationId" element={<OrganisationDetailsPanel />} />
         <Route path="/coaches" element={<CoachListPage />} />
         <Route path="/coaches/:coachId" element={<CoachDetailPage />} />
         <Route path="/clients/:clientId" element={<ClientDetailPage />} />

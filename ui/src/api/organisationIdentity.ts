@@ -1,3 +1,4 @@
+import { Organisation } from "../features/organisations/organisationModel";
 import {
   CreateOrganisationRequest,
   GetOrganisationsRequest,
@@ -25,6 +26,15 @@ export const organisationsApi = idpApi.injectEndpoints({
         url: `v1/organisation-identity?id=${params.id}`,
       }),
     }),
+    updateOrganisationById: builder.mutation<GetOrganisationsResponse, Partial<Organisation>>({
+      query: (params) => ({
+        url: `v1/organisation-identity/${params.id}`,
+        method: "PATCH",
+        body: {
+          name: params.name,
+        },
+      }),
+    }),
 
     createOrganisations: builder.mutation<GetOrganisationsResponse, CreateOrganisationRequest>({
       query: (body) => ({
@@ -40,5 +50,6 @@ export const {
   useGetOrganisationsQuery,
   useLazyGetOrganisationsQuery,
   useGetOrganisationByIdQuery,
+  useUpdateOrganisationByIdMutation,
   useCreateOrganisationsMutation,
 } = organisationsApi;
