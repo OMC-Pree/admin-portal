@@ -26,11 +26,6 @@ const UserAddress = ({ client }: UserAddressProps): JSX.Element => {
         </Stack>
       )}
       {!address && <Typography variant="body1">No address found</Typography>}
-      <Divider />
-      <Typography variant="h3">Other Info</Typography>
-      <Stack gap={3} sx={{ pl: 1 }}>
-        <InfoField label="Biological Sex" answer={client.biologicalSex} />
-      </Stack>
     </Stack>
   );
 };

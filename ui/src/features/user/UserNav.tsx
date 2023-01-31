@@ -1,5 +1,13 @@
-import { Stack, Typography, Box } from "@mui/material";
+import { Stack, Typography, Box, Divider } from "@mui/material";
 import { NavOptions } from "./UserNavEnums";
+
+const navItems: { text: string; page: NavOptions }[] = [
+  { text: "Personal Info", page: NavOptions.PERSONAL_INFO },
+  { text: "Address", page: NavOptions.ADDRESS },
+  { text: "Bank Details", page: NavOptions.BANK_DETAILS },
+  { text: "Tax Info", page: NavOptions.TAX_INFO },
+  { text: "Investments", page: NavOptions.INVESTMENTS },
+];
 
 interface NavButtonProps {
   text: string;
@@ -7,65 +15,37 @@ interface NavButtonProps {
   onClick: () => void;
 }
 
-const NavButton = ({ text, active, onClick }: NavButtonProps) => {
-  return (
-    <Box
-      sx={{
-        height: 90,
-        display: "flex",
-        width: "100%",
-        justifyContent: "center",
-        alignItems: "center",
-        borderTop: "1px solid #E5E5E5",
-        borderBottom: "1px solid #E5E5E5",
-        backgroundColor: active ? "#2E18AF" : "#2C1949",
-        cursor: "pointer",
-        borderRadius: 3,
-      }}
-      onClick={onClick}
-    >
-      <Typography variant="h2" sx={{ color: "#FFF" }}>
+const NavButton = ({ text, active, onClick }: NavButtonProps) => (
+  <>
+    <Box sx={{ p: 1, cursor: "pointer" }} onClick={onClick}>
+      <Typography
+        variant="h4"
+        sx={{ textDecoration: active ? "underline" : "none" }}
+        onClick={onClick}
+      >
         {text}
       </Typography>
     </Box>
-  );
-};
+    <Divider />
+  </>
+);
 
 interface UserNavProps {
   currentPage: NavOptions;
   setCurrentPage: (page: NavOptions) => void;
 }
 
-const UserNav = ({ currentPage, setCurrentPage }: UserNavProps) => {
-  return (
-    <Stack sx={{ height: 500, width: "100%" }}>
+const UserNav = ({ currentPage, setCurrentPage }: UserNavProps) => (
+  <Stack sx={{ height: 500, width: "100%" }}>
+    {navItems.map(({ text, page }) => (
       <NavButton
-        text="Personal Info"
-        active={currentPage === NavOptions.PERSONAL_INFO}
-        onClick={() => setCurrentPage(NavOptions.PERSONAL_INFO)}
+        key={page}
+        text={text}
+        active={currentPage === page}
+        onClick={() => setCurrentPage(page)}
       />
-      <NavButton
-        text="Address"
-        active={currentPage === NavOptions.ADDRESS}
-        onClick={() => setCurrentPage(NavOptions.ADDRESS)}
-      />
-      <NavButton
-        text="Bank Details"
-        active={currentPage === NavOptions.BANK_DETAILS}
-        onClick={() => setCurrentPage(NavOptions.BANK_DETAILS)}
-      />
-      <NavButton
-        text="Tax Info"
-        active={currentPage === NavOptions.TAX_INFO}
-        onClick={() => setCurrentPage(NavOptions.TAX_INFO)}
-      />
-      <NavButton
-        text="Investments"
-        active={currentPage === NavOptions.INVESTMENTS}
-        onClick={() => setCurrentPage(NavOptions.INVESTMENTS)}
-      />
-    </Stack>
-  );
-};
+    ))}
+  </Stack>
+);
 
 export default UserNav;

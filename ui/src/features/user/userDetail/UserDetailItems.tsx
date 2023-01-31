@@ -46,6 +46,8 @@ function generateDetailItems(user: IUser) {
   const props: Array<keyof IUser> = [
     "firstName",
     "lastName",
+    "dateOfBirth",
+    "biologicalSex",
     "email",
     "id",
     "type",
