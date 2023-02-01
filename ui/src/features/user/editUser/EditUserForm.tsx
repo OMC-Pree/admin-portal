@@ -67,6 +67,7 @@ function EditUserForm({ user, onSuccess, onCancel = noop }: EditUserFormProps) {
         type: data.type,
         permissions: data.permissions,
         journeyStage: data.journeyStage,
+        coachUserId: data.coachUserId,
       };
       const hasNewType = newAccessData.type !== user.type;
       const hasNewPermissions =
