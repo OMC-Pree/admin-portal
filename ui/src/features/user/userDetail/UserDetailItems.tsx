@@ -8,11 +8,10 @@ import { journeyStageList } from "../userConstants";
 
 interface UserDetailItemsProps {
   user: IUser;
-  associate?: IUser;
   coach?: IUser;
 }
 
-const UserDetailItems = ({ user, associate, coach }: UserDetailItemsProps) => {
+const UserDetailItems = ({ user, coach }: UserDetailItemsProps) => {
   const detailItems = generateDetailItems(user);
 
   if (coach)
@@ -22,15 +21,6 @@ const UserDetailItems = ({ user, associate, coach }: UserDetailItemsProps) => {
         prop="Assigned coach"
         value={`${coach.firstName} ${coach.lastName}`}
         to={`/coaches/${coach.id}`}
-      />,
-    );
-  if (associate)
-    detailItems.push(
-      <DetailItem
-        key={`user-detail-associated-user`}
-        prop="Associated user"
-        value={`${associate.firstName} ${associate.lastName}`}
-        to={`/clients/${associate.id}`}
       />,
     );
   return <Stack spacing={1}>{detailItems}</Stack>;

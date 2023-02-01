@@ -1,3 +1,4 @@
+import { IdpApiTags } from "../features/auth/authEnums";
 import { Organisation } from "../features/organisations/organisationModel";
 import {
   CreateOrganisationRequest,
@@ -19,12 +20,20 @@ export const organisationsApi = idpApi.injectEndpoints({
               url: "v1/organisation-identity",
             };
       },
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.data.map(({ id }) => ({ type: IdpApiTags.ORG, id })),
+              { type: IdpApiTags.ORG },
+            ]
+          : [{ type: IdpApiTags.ORG }],
     }),
 
     getOrganisationById: builder.query<GetOrganisationsResponse, GetOrganisationsRequest>({
       query: (params) => ({
         url: `v1/organisation-identity?id=${params.id}`,
       }),
+      providesTags: (result, error, { id }) => [{ type: IdpApiTags.ORG, id }],
     }),
     updateOrganisationById: builder.mutation<GetOrganisationsResponse, Partial<Organisation>>({
       query: (params) => ({
@@ -34,6 +43,7 @@ export const organisationsApi = idpApi.injectEndpoints({
           name: params.name,
         },
       }),
+      invalidatesTags: (result, error, { id }) => [{ type: IdpApiTags.ORG, id: id }],
     }),
 
     createOrganisations: builder.mutation<GetOrganisationsResponse, CreateOrganisationRequest>({
@@ -42,6 +52,7 @@ export const organisationsApi = idpApi.injectEndpoints({
         method: "POST",
         body,
       }),
+      invalidatesTags: [IdpApiTags.ORG],
     }),
   }),
 });

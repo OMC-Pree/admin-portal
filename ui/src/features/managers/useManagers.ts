@@ -1,38 +1,53 @@
-import { useEffect, useMemo } from "react";
-import { useLazyGetManagersQuery } from "../../api/users";
-import { useAppDispatch, useAppSelector } from "../../hooks/store";
-import { addManagers, selectManagers } from "./managersSlice";
+import { useEffect, useMemo, useState } from "react";
+import { useGetUsersByTypeQuery, useLazyGetUsersByTypeQuery } from "../../api/users";
+import { GetUsersResponse } from "../../models/httpCalls";
+import { UserType } from "../user/userEnums";
+import { IUser } from "../user/userModels";
 
 const numResultsPerCall = 50;
 
 function useManagers() {
-  const dispatch = useAppDispatch();
-  const storedManagers = useAppSelector(selectManagers);
-  const [getManagers, result] = useLazyGetManagersQuery();
+  const [managers, setManagers] = useState<IUser[]>([]);
 
-  useEffect(() => {
-    if (storedManagers.length) return;
-    getManagers({ max: numResultsPerCall });
-  }, []);
+  const { data: response } = useGetUsersByTypeQuery({
+    type: UserType.MANAGER,
+    max: numResultsPerCall,
+  });
+  const [loadManagers, { isLoading }] = useLazyGetUsersByTypeQuery();
 
-  useEffect(() => {
-    if (result.data) {
-      const {
-        data,
-        meta: { count, lastEvaluatedKey },
-      } = result.data;
-      dispatch(addManagers(data));
-      if (count === numResultsPerCall) {
-        getManagers({ max: numResultsPerCall, lastEvaluatedKey });
+  const doLoad = async (firstBatch: IUser[] = []) => {
+    let _managers: IUser[] = [...firstBatch];
+    let keepLoading = _managers.length === numResultsPerCall;
+    let lastMangerId: string | undefined = _managers[_managers.length - 1]?.id;
+    while (keepLoading) {
+      const { data, meta } = (await loadManagers({
+        type: UserType.MANAGER,
+        max: numResultsPerCall,
+        lastEvaluatedKey: lastMangerId,
+      }).unwrap()) as GetUsersResponse;
+      if (data.length) {
+        lastMangerId = meta.lastEvaluatedKey;
+        _managers = _managers.concat(data);
+      } else {
+        lastMangerId = undefined;
       }
+      keepLoading = data.length === numResultsPerCall;
     }
-  }, [result]);
+    setManagers(_managers || []);
+  };
+
+  useEffect(() => {
+    if (response?.data) doLoad(response.data);
+    return () => {
+      setManagers([]);
+    };
+  }, [response]);
 
   return useMemo(
     () => ({
-      managers: storedManagers,
+      managers: managers,
     }),
-    [storedManagers],
+    [managers, isLoading],
   );
 }
 

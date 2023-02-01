@@ -6,9 +6,6 @@ import { IUser } from "../userModels";
 import { IDPNewUser } from "../../../models/httpCalls";
 import { useBulkCreateUserMutation, useUpdateUserAccessMutation } from "../../../api/users";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../../hooks/store";
-import { addCoaches } from "../../coaches/coachesSlice";
-import { addManagers } from "../../managers/managersSlice";
 import CreateUserFormInputs from "./CreateUserFormInputs";
 import CreateUserConfirmModal from "./CreateUserConfirmModal";
 
@@ -25,7 +22,6 @@ const defaultValues: FieldValues = {
 };
 
 function CreateUserForm() {
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [createUsers] = useBulkCreateUserMutation();
   const [updateUserAccess] = useUpdateUserAccessMutation();
@@ -57,22 +53,23 @@ function CreateUserForm() {
   const doSave = async () => {
     if (!userToCreate) return;
     const userType = userToCreate.type;
-    const { data: createdUserData } = await createUsers([userToCreate]).unwrap();
-    let newUser = createdUserData[0];
-    if (newUser) {
-      const { data: updatedUserResult } = await updateUserAccess({
-        id: newUser.id,
-        type: userType,
-        permissions: generateUserPermissions(userType),
-        journeyStage: generateUserJourneyStage(userType),
-      }).unwrap();
-      newUser = updatedUserResult[0];
-      if (newUser.type === UserType.COACH) dispatch(addCoaches([newUser]));
-      if (newUser.type === UserType.MANAGER) dispatch(addManagers([newUser]));
+    try {
+      const { data: createdUserData } = await createUsers([userToCreate]).unwrap();
+      let newUser = createdUserData[0];
+      if (newUser) {
+        const { data: updatedUserResult } = await updateUserAccess({
+          id: newUser.id,
+          type: userType,
+          permissions: generateUserPermissions(userType),
+          journeyStage: generateUserJourneyStage(userType),
+        }).unwrap();
+        newUser = updatedUserResult[0];
+      }
+      navigate(getUrlToNav(newUser.id, userType));
+    } catch (error: unknown) {
+      // do error handling
     }
-    navigate(getUrlToNav(newUser.id, userType));
   };
-
   return (
     <>
       <Box component="form" onSubmit={handleSubmit(onSubmit)}>

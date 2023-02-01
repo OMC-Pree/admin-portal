@@ -1,7 +1,5 @@
 import { configureStore, combineReducers, AnyAction, Reducer } from "@reduxjs/toolkit";
 import authReducer from "../features/auth/authSlice";
-import coachesReducer from "../features/coaches/coachesSlice";
-import managersReducer from "../features/managers/managersSlice";
 import userDetailReducer from "../features/user/userDetail/userDetailSlice";
 import { idpApi } from "../api/idpApi";
 import { getCookie } from "../utils/cookie";
@@ -13,8 +11,6 @@ const combinedReducer = combineReducers({
   [idpApi.reducerPath]: idpApi.reducer,
   [cpbApi.reducerPath]: cpbApi.reducer,
   auth: authReducer,
-  coaches: coachesReducer,
-  managers: managersReducer,
   userDetail: userDetailReducer,
 });
 

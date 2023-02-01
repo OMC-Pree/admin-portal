@@ -1,8 +1,8 @@
-import { useEffect, useMemo } from "react";
-import { useLazyGetCoachesQuery } from "../../api/users";
-import { useAppDispatch, useAppSelector } from "../../hooks/store";
+import { useEffect, useMemo, useState } from "react";
+import { useGetUsersByTypeQuery, useLazyGetUsersByTypeQuery } from "../../api/users";
+import { GetUsersResponse } from "../../models/httpCalls";
+import { UserType } from "../user/userEnums";
 import { IUser } from "../user/userModels";
-import { addCoaches, selectCoaches } from "./coachesSlice";
 
 export type CoachAutoCompleteOpts = {
   label: string;
@@ -15,37 +15,52 @@ function useCoaches(): {
   coaches: IUser[];
   coachOptions: CoachAutoCompleteOpts[];
 } {
-  const dispatch = useAppDispatch();
-  const storedCoaches = useAppSelector(selectCoaches);
-  const [getCoaches, result] = useLazyGetCoachesQuery();
+  const [coaches, setCoaches] = useState<IUser[]>([]);
 
-  useEffect(() => {
-    if (storedCoaches.length) return;
-    getCoaches({ max: numResultsPerCall });
-  }, []);
+  const { data: response } = useGetUsersByTypeQuery({
+    type: UserType.COACH,
+    max: numResultsPerCall,
+  });
+  const [loadCoaches, { isLoading }] = useLazyGetUsersByTypeQuery();
 
-  useEffect(() => {
-    if (result.data) {
-      const {
-        data,
-        meta: { count, lastEvaluatedKey },
-      } = result.data;
-      dispatch(addCoaches(data));
-      if (count === numResultsPerCall) {
-        getCoaches({ max: numResultsPerCall, lastEvaluatedKey });
+  const doLoad = async (firstBatch: IUser[] = []) => {
+    let _coaches: IUser[] = [...firstBatch];
+    let keepLoading = _coaches.length === numResultsPerCall;
+    let lastCoachId: string | undefined = _coaches[_coaches.length - 1]?.id;
+    while (keepLoading) {
+      const { data, meta } = (await loadCoaches({
+        type: UserType.COACH,
+        max: numResultsPerCall,
+        lastEvaluatedKey: lastCoachId,
+      }).unwrap()) as GetUsersResponse;
+      if (data.length) {
+        lastCoachId = meta.lastEvaluatedKey;
+        _coaches = _coaches.concat(data);
+      } else {
+        lastCoachId = undefined;
       }
+      keepLoading = data.length === numResultsPerCall;
     }
-  }, [result]);
+    setCoaches(_coaches || []);
+  };
+
+  useEffect(() => {
+    if (response?.data) doLoad(response.data);
+    return () => {
+      setCoaches([]);
+    };
+  }, [response]);
 
   return useMemo(
     () => ({
-      coaches: storedCoaches,
-      coachOptions: storedCoaches.map((coach) => ({
+      coaches: coaches,
+      isLoading,
+      coachOptions: coaches.map((coach) => ({
         label: `${coach.firstName} ${coach.lastName}`,
         id: coach.id,
       })),
     }),
-    [storedCoaches],
+    [coaches, isLoading],
   );
 }
 

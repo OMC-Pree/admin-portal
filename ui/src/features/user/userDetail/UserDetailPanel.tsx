@@ -3,7 +3,11 @@ import { Button, Divider, Stack, Typography } from "@mui/material";
 import { IUser } from "../userModels";
 import UserDetailItems from "./UserDetailItems";
 import EditUserForm from "../editUser/EditUserForm";
-import { useLazyGetUserByIdQuery, useLazyGetUsersByCoachIdQuery } from "../../../api/users";
+import {
+  useGetUserByIdQuery,
+  useLazyGetUserByIdQuery,
+  useLazyGetUsersByCoachIdQuery,
+} from "../../../api/users";
 
 interface UserDetailPanelProps {
   userId: string;
@@ -11,36 +15,24 @@ interface UserDetailPanelProps {
 }
 
 function UserDetailPanel({ userId, onUserUpdated }: UserDetailPanelProps) {
-  const [user, setUser] = useState<IUser | undefined>();
-  const [associate, setAssociate] = useState<IUser | undefined>();
   const [coach, setCoach] = useState<IUser | undefined>();
   const [getUser] = useLazyGetUserByIdQuery();
   const [editing, setEditing] = useState(false);
-
   const [getUsersByCoachId] = useLazyGetUsersByCoachIdQuery();
 
-  async function loadUsers(_userId: string) {
-    const { data: userResponse } = await getUser(_userId).unwrap();
-    const user = userResponse[0];
-    setUser(user);
-    if (user.associateUserId) {
-      const { data: associates } = await getUser(user.associateUserId).unwrap();
-      setAssociate(associates[0]);
-    }
-    if (user.coachUserId) {
+  const { data: userData } = useGetUserByIdQuery(userId);
+  const user = userData?.data[0];
+
+  async function getCoachData(user: IUser | undefined) {
+    if (user?.coachUserId) {
       const { data: coaches } = await getUser(user.coachUserId).unwrap();
       setCoach(coaches[0]);
     }
   }
 
   useEffect(() => {
-    loadUsers(userId);
-    return () => {
-      setUser(undefined);
-      setAssociate(undefined);
-      setCoach(undefined);
-    };
-  }, [userId]);
+    getCoachData(user);
+  }, [user]);
 
   if (!user) return null;
 
@@ -68,7 +60,7 @@ function UserDetailPanel({ userId, onUserUpdated }: UserDetailPanelProps) {
           onCancel={() => setEditing(false)}
         />
       ) : (
-        <UserDetailItems user={user} associate={associate} coach={coach} />
+        <UserDetailItems user={user} coach={coach} />
       )}
     </Stack>
   );

@@ -7,8 +7,6 @@ import SelectInput from "../../../components/form/SelectInput";
 import { UserPermissions, UserType } from "../userEnums";
 import { noop, startCase, upperFirst } from "lodash";
 import { useUpdateUserAccessMutation, useUpdateUserMutation } from "../../../api/users";
-import { useAppDispatch } from "../../../hooks/store";
-import { updateStoredCoach } from "../../coaches/coachesSlice";
 import useCoaches from "../../coaches/useCoaches";
 import CoachAutocomplete from "./CoachAutocomplete";
 import { UpdateUserAccessRequest, UpdateUserRequest } from "../../../models/httpCalls";
@@ -31,7 +29,6 @@ interface FormData {
 }
 
 function EditUserForm({ user, onSuccess, onCancel = noop }: EditUserFormProps) {
-  const dispatch = useAppDispatch();
   const [updateUser] = useUpdateUserMutation();
   const [updateUserAccess] = useUpdateUserAccessMutation();
   const methods = useForm<FieldValues>({ mode: "onChange" });
@@ -89,7 +86,6 @@ function EditUserForm({ user, onSuccess, onCancel = noop }: EditUserFormProps) {
           newAccessData.coachUserId = data.coachUserId;
 
         await updateUserAccess(newAccessData);
-        if (user.type === UserType.COACH) dispatch(updateStoredCoach(newAccessData));
       }
 
       onSuccess();

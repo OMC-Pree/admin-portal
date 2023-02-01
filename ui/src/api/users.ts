@@ -1,3 +1,4 @@
+import { IdpApiTags } from "../features/auth/authEnums";
 import {
   GetUsersRequest,
   GetUsersResponse,
@@ -8,6 +9,19 @@ import {
 } from "../models/httpCalls";
 import { idpApi } from "./idpApi";
 
+const getUsersProvidesTags = (result: GetUsersResponse | undefined) => {
+  const providerTags = result
+    ? [
+        ...result.data.map(({ id }) => ({
+          type: IdpApiTags.USER,
+          id,
+        })),
+        IdpApiTags.USER,
+      ]
+    : [IdpApiTags.USER];
+  return providerTags;
+};
+
 export const clientsApi = idpApi.injectEndpoints({
   endpoints: (builder) => ({
     getUsers: builder.query<GetUsersResponse, GetUsersRequest>({
@@ -15,30 +29,14 @@ export const clientsApi = idpApi.injectEndpoints({
         url: "v1/users",
         params,
       }),
-    }),
-    getAdmins: builder.query<GetUsersResponse, GetUsersRequest>({
-      query: (params) => ({
-        url: "v1/users",
-        params: { ...params, permission: "ADMIN" },
-      }),
-    }),
-    getManagers: builder.query<GetUsersResponse, GetUsersRequest>({
-      query: (params) => ({
-        url: "v1/users",
-        params: { ...params, type: "manager" },
-      }),
-    }),
-    getCoaches: builder.query<GetUsersResponse, GetUsersRequest>({
-      query: (params) => ({
-        url: "v1/users",
-        params: { ...params, type: "coach" },
-      }),
+      providesTags: getUsersProvidesTags,
     }),
     getClients: builder.query<GetUsersResponse, GetUsersRequest>({
       query: (params) => ({
         url: "v1/users",
         params: { ...params, type: "client" },
       }),
+      providesTags: getUsersProvidesTags,
     }),
     getUsersByCoachId: builder.query<
       GetUsersResponse,
@@ -48,15 +46,22 @@ export const clientsApi = idpApi.injectEndpoints({
         url: `v1/users?coachUserId=${params.coachId}`,
         params: { max: params.max, lastEvaluatedKey: params.lastEvaluatedKey },
       }),
+      providesTags: getUsersProvidesTags,
     }),
-    getUserById: builder.query<GetUsersResponse, string | void>({
-      query: (id: string) => `v1/users?id=${id}`,
+    getUserById: builder.query<GetUsersResponse, string | undefined>({
+      query: (id) => ({ url: "v1/users", method: "GET", params: { id } }),
+      providesTags: getUsersProvidesTags,
+    }),
+    getUsersByType: builder.query<GetUsersResponse, GetUsersRequest>({
+      query: ({ type, ...rest }) => ({ url: "v1/users", method: "GET", params: { type, ...rest } }),
+      providesTags: getUsersProvidesTags,
     }),
     myAccount: builder.query<StandardUsersResponse, void>({
       query: () => ({
         url: `v1/user/myaccount`,
         method: "GET",
       }),
+      providesTags: (result) => [{ type: IdpApiTags.USER, id: result?.data[0].id }],
     }),
     updateUser: builder.mutation<GetUsersResponse, UpdateUserRequest>({
       query: (user) => ({
@@ -64,6 +69,7 @@ export const clientsApi = idpApi.injectEndpoints({
         method: "PATCH",
         body: user,
       }),
+      invalidatesTags: (result, error, { id }) => [{ type: IdpApiTags.USER, id }],
     }),
     updateUserAccess: builder.mutation<GetUsersResponse, UpdateUserAccessRequest>({
       query: ({ id, ...rest }) => ({
@@ -71,6 +77,7 @@ export const clientsApi = idpApi.injectEndpoints({
         method: "PATCH",
         body: { ...rest },
       }),
+      invalidatesTags: (result, error, { id }) => [{ type: IdpApiTags.USER, id }],
     }),
     bulkCreateUser: builder.mutation<GetUsersResponse, IDPNewUser[]>({
       query: (body) => ({
@@ -78,6 +85,7 @@ export const clientsApi = idpApi.injectEndpoints({
         method: "POST",
         body,
       }),
+      invalidatesTags: [IdpApiTags.USER],
     }),
   }),
 });
@@ -85,16 +93,14 @@ export const clientsApi = idpApi.injectEndpoints({
 export const {
   useBulkCreateUserMutation,
   useGetUsersQuery,
-  useLazyGetAdminsQuery,
-  useLazyGetManagersQuery,
-  useLazyGetCoachesQuery,
   useGetClientsQuery,
   useLazyGetClientsQuery,
-  useGetCoachesQuery,
   useGetUsersByCoachIdQuery,
   useLazyGetUsersByCoachIdQuery,
   useGetUserByIdQuery,
   useLazyGetUserByIdQuery,
+  useGetUsersByTypeQuery,
+  useLazyGetUsersByTypeQuery,
   useUpdateUserMutation,
   useUpdateUserAccessMutation,
   useMyAccountQuery,

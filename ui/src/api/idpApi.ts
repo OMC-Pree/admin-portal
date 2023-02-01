@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../app/store";
+import { IdpApiTags } from "../features/auth/authEnums";
 
 export const idpBaseUrl =
   process.env.REACT_APP_ENV === "prod"
@@ -20,5 +21,6 @@ export const idpApi = createApi({
       return headers;
     },
   }),
+  tagTypes: [IdpApiTags.USER, IdpApiTags.ORG],
   endpoints: () => ({}),
 });
