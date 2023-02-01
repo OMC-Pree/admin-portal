@@ -27,7 +27,7 @@ export interface GenericAnswer {
   valueString?: string;
   valueNumber?: number;
   valueBoolean?: boolean;
-  valueJSON?: unknown;
+  valueJSON?: { data: unknown[] };
   createdAt?: string;
   createdBy?: string;
 }

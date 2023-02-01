@@ -1,5 +1,6 @@
 import { Page, Text, View, Document } from "@react-pdf/renderer";
-import { FormattedInvestmentData, styles } from "./investmentUtils";
+import { FormattedInvestmentData } from "./investmentDataTableUtils";
+import { styles } from "./pdfStyles";
 interface SuitabilityReportProps {
   aggId: string;
   tableData: FormattedInvestmentData;

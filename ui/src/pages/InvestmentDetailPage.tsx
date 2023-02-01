@@ -7,22 +7,30 @@ import InvestmentDetails from "../features/investments/InvestmentDetails";
 import DownloadPDF from "../features/investments/DownloadPDF";
 import useAnswerAggregation from "../features/aggregations/useAnswerAggregation";
 import { useEffect, useState } from "react";
-import { formatData, FormattedInvestmentData } from "../features/investments/investmentUtils";
+import {
+  formatData,
+  FormattedInvestmentData,
+} from "../features/investments/investmentDataTableUtils";
+import { InvestmentForm } from "../features/investments/models";
 
 const InvestmentDetailPage = () => {
   const { clientId, investmentId } = useParams();
   const { detailUser: client, isFetching } = useDetailUser(clientId);
 
-  const { aggregation: investmentAgg } = useAnswerAggregation(investmentId, clientId);
+  const { aggregation: investmentAgg, formData } = useAnswerAggregation<InvestmentForm>(
+    investmentId,
+    clientId,
+  );
+
   const [formattedInvestmentData, setFormattedInvestmentData] =
     useState<FormattedInvestmentData | null>(null);
 
   useEffect(() => {
-    if (investmentAgg) {
-      const formattedData = formatData(investmentAgg);
+    if (investmentAgg && formData) {
+      const formattedData = formatData(investmentAgg, formData);
       setFormattedInvestmentData(formattedData);
     }
-  }, [investmentAgg]);
+  }, [investmentAgg, formData]);
 
   if (!clientId || !investmentId) return null;
 

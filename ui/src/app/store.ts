@@ -35,7 +35,8 @@ const preloadedState = {
 export const store = configureStore({
   reducer: rootReducer,
   preloadedState,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(idpApi.middleware),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(idpApi.middleware).concat(cpbApi.middleware),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

@@ -1,6 +1,6 @@
 import { usePDF } from "@react-pdf/renderer";
 import SuitabilityReport from "./SuitabilityReport";
-import { FormattedInvestmentData } from "./investmentUtils";
+import { FormattedInvestmentData } from "./investmentDataTableUtils";
 
 const DownloadPDF = ({
   aggId,
