@@ -12,9 +12,9 @@ import { idpApi } from "./idpApi";
 
 export const authApi = idpApi.injectEndpoints({
   endpoints: (builder) => ({
-    login2FA: builder.mutation<LoginResponse, LoginRequest>({
+    login: builder.mutation<LoginResponse, LoginRequest>({
       query: (credentials) => ({
-        url: "v2/user/signin",
+        url: "v1/user/signin",
         method: "POST",
         body: credentials,
       }),
@@ -68,7 +68,7 @@ export const authApi = idpApi.injectEndpoints({
 export const {
   useLazyDecryptTokenQuery,
   useEmailVerifiedQuery,
-  useLogin2FAMutation,
+  useLoginMutation,
   useForgotPasswordMutation,
   useRecoverPasswordMutation,
   useRegisterUserMutation,
