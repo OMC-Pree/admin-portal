@@ -43,7 +43,11 @@ const InvestmentDetailPage = () => {
           <Typography variant="h5">
             {client.firstName} {client.lastName}
           </Typography>
-          <DownloadPDF aggId={investmentAgg.id} tableData={formattedInvestmentData} />
+          <DownloadPDF
+            client={client}
+            tableData={formattedInvestmentData}
+            rawData={investmentAgg}
+          />
           <InvestmentDetails
             mainTable={formattedInvestmentData.mainTable}
             otherTables={formattedInvestmentData.otherTables}

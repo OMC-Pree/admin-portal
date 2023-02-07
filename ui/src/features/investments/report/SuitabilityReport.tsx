@@ -1,23 +1,21 @@
 import { Page, Text, View, Document } from "@react-pdf/renderer";
-import { FormattedInvestmentData } from "./investmentDataTableUtils";
+import { IUser } from "../../user/userModels";
+import { FormattedInvestmentData } from "../investmentDataTableUtils";
 import { styles } from "./pdfStyles";
+import { AllDataAnswerAggregation } from "../../aggregations/types";
+import Page1 from "./Page1";
 interface SuitabilityReportProps {
-  aggId: string;
+  client: IUser;
   tableData: FormattedInvestmentData;
+  rawData: AllDataAnswerAggregation;
 }
 
-const SuitabilityReport = ({ aggId, tableData }: SuitabilityReportProps) => {
+const SuitabilityReport = ({ client, tableData, rawData }: SuitabilityReportProps) => {
   return (
     <Document title="My Report">
-      <Page size="A4" style={styles.homePage}>
-        <View style={styles.section}>
-          <Text style={styles.titleText}>Suitability Report</Text>
-        </View>
-        <View style={styles.section}>
-          <Text style={styles.idText}>{`id: ${aggId}`}</Text>
-        </View>
-      </Page>
-      <Page size="A4" wrap style={styles.homePage}>
+      <Page1 client={client} rawData={rawData} />
+
+      <Page size="A4" wrap>
         <View style={styles.section}>
           <Text>Section #1 - Main Table</Text>
           <View style={styles.tableSection}>
@@ -42,7 +40,7 @@ const SuitabilityReport = ({ aggId, tableData }: SuitabilityReportProps) => {
           </View>
         </View>
       </Page>
-      <Page size="A4" wrap style={styles.homePage}>
+      <Page size="A4" wrap>
         <View style={styles.section}>
           <Text>Section #2 - Sub Tables</Text>
           {tableData.otherTables.map((table, index) => {

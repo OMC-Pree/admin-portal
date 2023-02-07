@@ -1,16 +1,20 @@
 import { usePDF } from "@react-pdf/renderer";
-import SuitabilityReport from "./SuitabilityReport";
+import SuitabilityReport from "./report/SuitabilityReport";
 import { FormattedInvestmentData } from "./investmentDataTableUtils";
+import { IUser } from "../user/userModels";
+import { AllDataAnswerAggregation } from "../aggregations/types";
 
 const DownloadPDF = ({
-  aggId,
   tableData,
+  client,
+  rawData,
 }: {
-  aggId: string;
+  client: IUser;
   tableData: FormattedInvestmentData;
+  rawData: AllDataAnswerAggregation;
 }) => {
   const [instance] = usePDF({
-    document: <SuitabilityReport aggId={aggId} tableData={tableData} />,
+    document: <SuitabilityReport client={client} tableData={tableData} rawData={rawData} />,
   });
 
   if (instance.loading || !instance.url) return <div>Loading ...</div>;
