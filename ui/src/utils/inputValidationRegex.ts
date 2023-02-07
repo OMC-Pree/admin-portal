@@ -7,6 +7,8 @@ export const IS_NUMBER_REGEX = /^-?(0|[1-9]\d*)(\.\d+)?$/;
 
 export const HAS_DIGIT_REGEX = /\d/;
 
+export const IS_DECIMAL_REGEX = /\./;
+
 export const HAS_UPPERCASE_REGEX = /[A-Z]/;
 
 export const generateNumberRegexWithXDecimalPlaces = (decimalPlaces: number): RegExp => {

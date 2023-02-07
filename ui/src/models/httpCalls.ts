@@ -64,6 +64,7 @@ export interface GetUsersResponse extends StandardUsersResponse {
 export interface LoginRequest {
   email: string;
   password: string;
+  email2FACode?: string;
 }
 
 export interface LoginResponse {
