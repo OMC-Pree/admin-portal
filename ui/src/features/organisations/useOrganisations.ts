@@ -11,7 +11,7 @@ const numResultsPerCall = 100;
 
 function useOrganisations() {
   const [getOrganisations] = useLazyGetOrganisationsQuery();
-  const { data } = useGetOrganisationsQuery();
+  const { data } = useGetOrganisationsQuery({ max: numResultsPerCall });
 
   const [organisationRowData, setOrganisationRowData] = useState<Organisation[]>([]);
 
